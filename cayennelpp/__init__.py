@@ -1,4 +1,4 @@
-from cayennelpp.lpp_data import LppData
-from cayennelpp.lpp_frame import LppFrame
+from .lpp_data import LppData
+from .lpp_frame import LppFrame
 
 __all__ = ['LppData', 'LppFrame']
