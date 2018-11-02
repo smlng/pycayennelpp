@@ -1,12 +1,14 @@
 from setuptools import setup
 
+
 def readme():
     with open('README.rst') as f:
         return f.read()
 
+
 setup(name='pycayennelpp',
       version='0.2',
-      description='Encoder and Decoder for the Cayenne Low Power Payload (LLP)',
+      description='Encoder and Decoder for CayenneLLP',
       long_description=readme(),
       classifiers=[
         'Development Status :: 3 - Alpha',
