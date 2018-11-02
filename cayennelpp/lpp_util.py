@@ -6,7 +6,7 @@ import logging
 
 def lpp_digital_io_from_bytes(buf):
     logging.debug("lpp_digital_io_from_bytes")
-    logging.debug("  in:    bytes = %s, length = %d", str(buf.hex()), len(buf))
+    logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
     assert(len(buf) == 1)
     val = buf[0]
     logging.debug("  out:   value = %d", val)
@@ -22,20 +22,20 @@ def lpp_digital_io_to_bytes(data):
     logging.debug("  in:    value = %d", val)
     buf = bytearray([0x00])
     buf[0] = (val) & 0xff
-    logging.debug("  out:   bytes = %s, length = %d", str(buf.hex()), len(buf))
+    logging.debug("  out:   bytes = %s, length = %d", buf, len(buf))
     return buf
 
 
 def lpp_analog_io_from_bytes(buf):
     logging.debug("lpp_analog_io_from_bytes")
-    logging.debug("  in:    bytes = %s, length = %d", str(buf.hex()), len(buf))
+    logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
     assert(len(buf) == 2)
     val_i = (buf[0] << 8 | buf[1])
     logging.debug("  out:   value = %d", val_i)
     if val_i >= (1 << 15):
         val_i = -1 - (val_i ^ 0xffff)
     logging.debug("  out:   value = %d", val_i)
-    val = val_i / 100
+    val = val_i / 100.0
     logging.debug("  out:   value = %f", val)
     return (val,)
 
@@ -55,13 +55,13 @@ def lpp_analog_io_to_bytes(data):
     logging.debug("  in:    value = %d", val_i)
     buf[0] = (val_i >> 8) & 0xff
     buf[1] = (val_i) & 0xff
-    logging.debug("  out:   bytes = %s, length = %d", str(buf.hex()), len(buf))
+    logging.debug("  out:   bytes = %s, length = %d", buf, len(buf))
     return buf
 
 
 def lpp_illuminance_from_bytes(buf):
     logging.debug("lpp_illuminance_from_bytes")
-    logging.debug("  in:    bytes = %s, length = %d", str(buf.hex()), len(buf))
+    logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
     assert(len(buf) == 2)
     val = int(buf[0] << 8 | buf[1])
     logging.debug("  out:   value = %d", val)
@@ -79,13 +79,13 @@ def lpp_illuminance_to_bytes(data):
     buf = bytearray([0x00, 0x00])
     buf[0] = (val >> 8) & 0xff
     buf[1] = (val) & 0xff
-    logging.debug("  out:   bytes = %s, length = %d", str(buf.hex()), len(buf))
+    logging.debug("  out:   bytes = %s, length = %d", buf, len(buf))
     return buf
 
 
 def lpp_presence_from_bytes(buf):
     logging.debug("lpp_presence_from_bytes")
-    logging.debug("  in:    bytes = %s, length = %d", str(buf.hex()), len(buf))
+    logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
     assert(len(buf) == 1)
     val = buf[0]
     logging.debug("  out:   value = %d", val)
@@ -102,20 +102,20 @@ def lpp_presence_to_bytes(data):
     assert(val >= 0)
     buf = bytearray([0x00])
     buf[0] = (val) & 0xff
-    logging.debug("  out:   bytes = %s, length = %d", str(buf.hex()), len(buf))
+    logging.debug("  out:   bytes = %s, length = %d", buf, len(buf))
     return buf
 
 
 def lpp_temperature_from_bytes(buf):
     logging.debug("lpp_temperature_from_bytes")
-    logging.debug("  in:    bytes = %s, length = %d", str(buf.hex()), len(buf))
+    logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
     assert(len(buf) == 2)
     val_i = (buf[0] << 8 | buf[1])
     logging.debug("  out:   value = %d", val_i)
     if val_i >= (1 << 15):
         val_i = -1 - (val_i ^ 0xffff)
     logging.debug("  out:   value = %d", val_i)
-    val = val_i / 10
+    val = val_i / 10.0
     logging.debug("  out:   value = %f", val)
     return (val, )
 
@@ -135,17 +135,17 @@ def lpp_temperature_to_bytes(data):
     logging.debug("  in:    value = %d", val_i)
     buf[0] = (val_i >> 8) & 0xff
     buf[1] = (val_i) & 0xff
-    logging.debug("  out:   bytes = %s, length = %d", str(buf.hex()), len(buf))
+    logging.debug("  out:   bytes = %s, length = %d", buf, len(buf))
     return buf
 
 
 def lpp_humidity_from_bytes(buf):
     logging.debug("lpp_humidity_from_bytes")
-    logging.debug("  in:    bytes = %s, length = %d", str(buf.hex()), len(buf))
+    logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
     assert(len(buf) == 1)
     val_i = buf[0]
     logging.debug("  out:   value = %d", val_i)
-    val = val_i / 2
+    val = val_i / 2.0
     logging.debug("  out:   value = %f", val)
     return (val, )
 
@@ -162,13 +162,13 @@ def lpp_humidity_to_bytes(data):
     val_i = int(val * 2)
     logging.debug("  in:    value = %d", val_i)
     buf[0] = (val_i) & 0xff
-    logging.debug("  out:   bytes = %s, length = %d", str(buf.hex()), len(buf))
+    logging.debug("  out:   bytes = %s, length = %d", buf, len(buf))
     return buf
 
 
 def lpp_accel_from_bytes(buf):
     logging.debug("lpp_accel_from_bytes")
-    logging.debug("  in:    bytes = %s, length = %d", str(buf.hex()), len(buf))
+    logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
     assert(len(buf) == 6)
     val_xi = int(buf[0] << 8 | buf[1])
     val_yi = int(buf[2] << 8 | buf[3])
@@ -181,9 +181,9 @@ def lpp_accel_from_bytes(buf):
     if val_zi >= (1 << 15):
         val_zi = -1 - (val_zi ^ 0xffff)
     logging.debug("  out:   x = %d, y = %d, z = %d", val_xi, val_yi, val_zi)
-    val_x = val_xi / 1000
-    val_y = val_yi / 1000
-    val_z = val_zi / 1000
+    val_x = val_xi / 1000.0
+    val_y = val_yi / 1000.0
+    val_z = val_zi / 1000.0
     logging.debug("  out:   x = %f, y = %f, z = %f", val_x, val_y, val_z)
     return (val_x, val_y, val_z,)
 
@@ -214,15 +214,15 @@ def lpp_accel_to_bytes(data):
     buf[3] = (val_yi) & 0xff
     buf[4] = (val_zi >> 8) & 0xff
     buf[5] = (val_zi) & 0xff
-    logging.debug("  out:   bytes = %s, length = %d", str(buf.hex()), len(buf))
+    logging.debug("  out:   bytes = %s, length = %d", buf, len(buf))
     return buf
 
 
 def lpp_baro_from_bytes(buf):
     logging.debug("lpp_baro_from_bytes")
-    logging.debug("  in:    bytes = %s, length = %d", str(buf.hex()), len(buf))
+    logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
     assert(len(buf) == 2)
-    val = (buf[0] << 8 | buf[1]) / 10
+    val = (buf[0] << 8 | buf[1]) / 10.0
     logging.debug("  out:   value = %f", val)
     return (val,)
 
@@ -239,13 +239,13 @@ def lpp_baro_to_bytes(data):
     val_i = int(val * 10)
     buf[0] = (val_i >> 8) & 0xff
     buf[1] = (val_i) & 0xff
-    logging.debug("  out:   bytes = %s, length = %d", str(buf.hex()), len(buf))
+    logging.debug("  out:   bytes = %s, length = %d", buf, len(buf))
     return buf
 
 
 def lpp_gyro_from_bytes(buf):
     logging.debug("lpp_gyro_from_bytes")
-    logging.debug("  in:    bytes = %s, length = %d", str(buf.hex()), len(buf))
+    logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
     assert(len(buf) == 6)
     val_xi = int(buf[0] << 8 | buf[1])
     val_yi = int(buf[2] << 8 | buf[3])
@@ -258,9 +258,9 @@ def lpp_gyro_from_bytes(buf):
     if val_zi >= (1 << 15):
         val_zi = -1 - (val_zi ^ 0xffff)
     logging.debug("  out:   x = %d, y = %d, z = %d", val_xi, val_yi, val_zi)
-    val_x = val_xi / 100
-    val_y = val_yi / 100
-    val_z = val_zi / 100
+    val_x = val_xi / 100.0
+    val_y = val_yi / 100.0
+    val_z = val_zi / 100.0
     logging.debug("  out:   x = %f, y = %f, z = %f", val_x, val_y, val_z)
     return (val_x, val_y, val_z,)
 
@@ -291,13 +291,13 @@ def lpp_gyro_to_bytes(data):
     buf[3] = (val_yi) & 0xff
     buf[4] = (val_zi >> 8) & 0xff
     buf[5] = (val_zi) & 0xff
-    logging.debug("  out:   bytes = %s, length = %d", str(buf.hex()), len(buf))
+    logging.debug("  out:   bytes = %s, length = %d", buf, len(buf))
     return buf
 
 
 def lpp_gps_from_bytes(buf):
     logging.debug("lpp_gps_from_bytes")
-    logging.debug("  in:    bytes = %s, length = %d", str(buf.hex()), len(buf))
+    logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
     assert(len(buf) == 9)
     lat_i = int(buf[0] << 16 | buf[1] << 8 | buf[2])
     lon_i = int(buf[3] << 16 | buf[4] << 8 | buf[5])
@@ -312,9 +312,9 @@ def lpp_gps_from_bytes(buf):
         alt_i = -1 - (alt_i ^ 0xffffff)
     logging.debug("  out:   latitude = %d, longitude = %d, altitude = %d",
                   lat_i, lon_i, alt_i)
-    lat = lat_i / 10000
-    lon = lon_i / 10000
-    alt = alt_i / 100
+    lat = lat_i / 10000.0
+    lon = lon_i / 10000.0
+    alt = alt_i / 100.0
     logging.debug("  out:   latitude = %f, longitude = %f, altitude = %f",
                   lat, lon, alt)
     return (lat, lon, alt,)
@@ -352,8 +352,7 @@ def lpp_gps_to_bytes(data):
     buf[6] = (alt_i >> 16) & 0xff
     buf[7] = (alt_i >> 8) & 0xff
     buf[8] = (alt_i) & 0xff
-    logging.debug("  out:   bytes = %s, length = %d",
-                  str(buf.hex()), len(buf))
+    logging.debug("  out:   bytes = %s, length = %d", buf, len(buf))
     return buf
 
 
@@ -395,56 +394,3 @@ LPP_DATA_TYPE = {
              'decode': lpp_gps_from_bytes,
              'encode': lpp_gps_to_bytes}
 }
-
-
-def main():
-    logging.basicConfig(level=logging.DEBUG)
-    # encode/decode digital io
-    dio_buf = lpp_digital_io_to_bytes(0)
-    lpp_digital_io_from_bytes(dio_buf)
-    dio_buf = lpp_digital_io_to_bytes(1)
-    lpp_digital_io_from_bytes(dio_buf)
-    # encode/decode analog io
-    aio_buf = lpp_analog_io_to_bytes(123.45)
-    lpp_analog_io_from_bytes(aio_buf)
-    aio_buf = lpp_analog_io_to_bytes(-123.45)
-    lpp_analog_io_from_bytes(aio_buf)
-    # encode/decode illuminance
-    illu_buf = lpp_illuminance_to_bytes(12345)
-    lpp_illuminance_from_bytes(illu_buf)
-    # encode/decode presence
-    pre_buf = lpp_presence_to_bytes(0)
-    lpp_presence_from_bytes(pre_buf)
-    pre_buf = lpp_presence_to_bytes(1)
-    lpp_presence_from_bytes(pre_buf)
-    # encode/decode temperature
-    temp_buf = lpp_temperature_to_bytes(32.1)
-    lpp_temperature_from_bytes(temp_buf)
-    temp_buf = lpp_temperature_to_bytes(-4.1)
-    lpp_temperature_from_bytes(temp_buf)
-    # encode/decode humidity
-    hum_buf = lpp_humidity_to_bytes(50.00)
-    lpp_humidity_from_bytes(hum_buf)
-    hum_buf = lpp_humidity_to_bytes(50.25)
-    lpp_humidity_from_bytes(hum_buf)
-    hum_buf = lpp_humidity_to_bytes(50.50)
-    lpp_humidity_from_bytes(hum_buf)
-    hum_buf = lpp_humidity_to_bytes(50.75)
-    lpp_humidity_from_bytes(hum_buf)
-    # encode decode accelerometer
-    accel_buf = lpp_accel_to_bytes((12.345, -12.345, 0.0))
-    lpp_accel_from_bytes(accel_buf)
-    # encode/decode barometer
-    baro_buf = lpp_baro_to_bytes(1234.5)
-    lpp_baro_from_bytes(baro_buf)
-    # encode/decode gps
-    gyro_buf = lpp_gyro_to_bytes((123.45, -123.45, 0.0))
-    lpp_gyro_from_bytes(gyro_buf)
-    # encode/decode gps
-    gps_buf = lpp_gps_to_bytes((42.3519, -87.9094, 10.00))
-    lpp_gps_from_bytes(gps_buf)
-
-
-if __name__ == '__main__':
-    # execute when run as program
-    main()
