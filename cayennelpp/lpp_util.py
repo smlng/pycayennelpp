@@ -2,7 +2,7 @@
 from __future__ import absolute_import
 
 import logging
-import types
+
 
 def lpp_digital_io_from_bytes(buf):
     logging.debug("lpp_digital_io_from_bytes")
@@ -10,19 +10,21 @@ def lpp_digital_io_from_bytes(buf):
     assert(len(buf) == 1)
     val = buf[0]
     logging.debug("  out:   value = %d", val)
-    return ( val, )
+    return (val,)
+
 
 def lpp_digital_io_to_bytes(data):
     logging.debug("lpp_digital_io_to_bytes")
     if not isinstance(data, tuple):
-        data = ( data, )
+        data = (data,)
     assert(len(data) == 1)
     val = data[0]
     logging.debug("  in:    value = %d", val)
-    buf = bytearray([ 0x00 ])
+    buf = bytearray([0x00])
     buf[0] = (val) & 0xff
     logging.debug("  out:   bytes = %s, length = %d", str(buf.hex()), len(buf))
     return buf
+
 
 def lpp_analog_io_from_bytes(buf):
     logging.debug("lpp_analog_io_from_bytes")
@@ -35,16 +37,17 @@ def lpp_analog_io_from_bytes(buf):
     logging.debug("  out:   value = %d", val_i)
     val = val_i / 100
     logging.debug("  out:   value = %f", val)
-    return ( val, )
+    return (val,)
+
 
 def lpp_analog_io_to_bytes(data):
     logging.debug("lpp_analog_io_to_bytes")
     if not isinstance(data, tuple):
-        data = ( data, )
+        data = (data,)
     assert(len(data) == 1)
     val = data[0]
     logging.debug("  in:    value = %f", val)
-    buf = bytearray([ 0x00, 0x00 ])
+    buf = bytearray([0x00, 0x00])
     val_i = int(val * 100)
     logging.debug("  in:    value = %d", val_i)
     if val_i < 0:
@@ -55,27 +58,30 @@ def lpp_analog_io_to_bytes(data):
     logging.debug("  out:   bytes = %s, length = %d", str(buf.hex()), len(buf))
     return buf
 
+
 def lpp_illuminance_from_bytes(buf):
     logging.debug("lpp_illuminance_from_bytes")
     logging.debug("  in:    bytes = %s, length = %d", str(buf.hex()), len(buf))
     assert(len(buf) == 2)
     val = int(buf[0] << 8 | buf[1])
     logging.debug("  out:   value = %d", val)
-    return ( val, )
+    return (val,)
+
 
 def lpp_illuminance_to_bytes(data):
     logging.debug("lpp_illuminance_to_bytes")
     if not isinstance(data, tuple):
-        data = ( data, )
+        data = (data,)
     assert(len(data) == 1)
     val = data[0]
     logging.debug("  in:    value = %d", val)
     assert(val >= 0)
-    buf = bytearray([ 0x00, 0x00 ])
+    buf = bytearray([0x00, 0x00])
     buf[0] = (val >> 8) & 0xff
     buf[1] = (val) & 0xff
     logging.debug("  out:   bytes = %s, length = %d", str(buf.hex()), len(buf))
     return buf
+
 
 def lpp_presence_from_bytes(buf):
     logging.debug("lpp_presence_from_bytes")
@@ -83,20 +89,22 @@ def lpp_presence_from_bytes(buf):
     assert(len(buf) == 1)
     val = buf[0]
     logging.debug("  out:   value = %d", val)
-    return ( val, )
+    return (val,)
+
 
 def lpp_presence_to_bytes(data):
     logging.debug("lpp_presence_to_bytes")
     if not isinstance(data, tuple):
-        data = ( data, )
+        data = (data,)
     assert(len(data) == 1)
     val = data[0]
     logging.debug("  in:    value = %d", val)
     assert(val >= 0)
-    buf = bytearray([ 0x00 ])
+    buf = bytearray([0x00])
     buf[0] = (val) & 0xff
     logging.debug("  out:   bytes = %s, length = %d", str(buf.hex()), len(buf))
     return buf
+
 
 def lpp_temperature_from_bytes(buf):
     logging.debug("lpp_temperature_from_bytes")
@@ -111,14 +119,15 @@ def lpp_temperature_from_bytes(buf):
     logging.debug("  out:   value = %f", val)
     return (val, )
 
+
 def lpp_temperature_to_bytes(data):
     logging.debug("lpp_temperature_to_bytes")
     if not isinstance(data, tuple):
-        data = ( data, )
+        data = (data,)
     assert(len(data) == 1)
     val = data[0]
     logging.debug("  in:    value = %f", val)
-    buf = bytearray([ 0x00, 0x00 ])
+    buf = bytearray([0x00, 0x00])
     val_i = int(val * 10)
     logging.debug("  in:    value = %d", val_i)
     if val_i < 0:
@@ -128,6 +137,7 @@ def lpp_temperature_to_bytes(data):
     buf[1] = (val_i) & 0xff
     logging.debug("  out:   bytes = %s, length = %d", str(buf.hex()), len(buf))
     return buf
+
 
 def lpp_humidity_from_bytes(buf):
     logging.debug("lpp_humidity_from_bytes")
@@ -139,20 +149,22 @@ def lpp_humidity_from_bytes(buf):
     logging.debug("  out:   value = %f", val)
     return (val, )
 
+
 def lpp_humidity_to_bytes(data):
     logging.debug("lpp_humidity_to_bytes")
     if not isinstance(data, tuple):
-        data = ( data, )
+        data = (data,)
     assert(len(data) == 1)
     val = data[0]
     logging.debug("  in:    value = %f", val)
     assert(val >= 0)
-    buf = bytearray([ 0x00 ])
+    buf = bytearray([0x00])
     val_i = int(val * 2)
     logging.debug("  in:    value = %d", val_i)
     buf[0] = (val_i) & 0xff
     logging.debug("  out:   bytes = %s, length = %d", str(buf.hex()), len(buf))
     return buf
+
 
 def lpp_accel_from_bytes(buf):
     logging.debug("lpp_accel_from_bytes")
@@ -173,7 +185,8 @@ def lpp_accel_from_bytes(buf):
     val_y = val_yi / 1000
     val_z = val_zi / 1000
     logging.debug("  out:   x = %f, y = %f, z = %f", val_x, val_y, val_z)
-    return ( val_x, val_y, val_z, )
+    return (val_x, val_y, val_z,)
+
 
 def lpp_accel_to_bytes(data):
     logging.debug("lpp_accel_to_bytes")
@@ -183,7 +196,7 @@ def lpp_accel_to_bytes(data):
     val_y = data[1]
     val_z = data[2]
     logging.debug("  in:    x = %f, y = %f, z = %f", val_x, val_y, val_z)
-    buf = bytearray([ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 ])
+    buf = bytearray([0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
     val_xi = int(val_x * 1000)
     val_yi = int(val_y * 1000)
     val_zi = int(val_z * 1000)
@@ -204,28 +217,31 @@ def lpp_accel_to_bytes(data):
     logging.debug("  out:   bytes = %s, length = %d", str(buf.hex()), len(buf))
     return buf
 
+
 def lpp_baro_from_bytes(buf):
     logging.debug("lpp_baro_from_bytes")
     logging.debug("  in:    bytes = %s, length = %d", str(buf.hex()), len(buf))
     assert(len(buf) == 2)
     val = (buf[0] << 8 | buf[1]) / 10
     logging.debug("  out:   value = %f", val)
-    return (val, )
+    return (val,)
+
 
 def lpp_baro_to_bytes(data):
     logging.debug("lpp_baro_to_bytes")
     if not isinstance(data, tuple):
-        data = ( data, )
+        data = (data,)
     assert(len(data) == 1)
     val = data[0]
     logging.debug("  in:    value = %f", val)
     assert(val >= 0)
-    buf = bytearray([ 0x00, 0x00 ])
+    buf = bytearray([0x00, 0x00])
     val_i = int(val * 10)
     buf[0] = (val_i >> 8) & 0xff
     buf[1] = (val_i) & 0xff
     logging.debug("  out:   bytes = %s, length = %d", str(buf.hex()), len(buf))
     return buf
+
 
 def lpp_gyro_from_bytes(buf):
     logging.debug("lpp_gyro_from_bytes")
@@ -246,7 +262,8 @@ def lpp_gyro_from_bytes(buf):
     val_y = val_yi / 100
     val_z = val_zi / 100
     logging.debug("  out:   x = %f, y = %f, z = %f", val_x, val_y, val_z)
-    return ( val_x, val_y, val_z, )
+    return (val_x, val_y, val_z,)
+
 
 def lpp_gyro_to_bytes(data):
     logging.debug("lpp_gyro_to_bytes")
@@ -256,7 +273,7 @@ def lpp_gyro_to_bytes(data):
     val_y = data[1]
     val_z = data[2]
     logging.debug("  in:    x = %f, y = %f, z = %f", val_x, val_y, val_z)
-    buf = bytearray([ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 ])
+    buf = bytearray([0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
     val_xi = int(val_x * 100)
     val_yi = int(val_y * 100)
     val_zi = int(val_z * 100)
@@ -277,6 +294,7 @@ def lpp_gyro_to_bytes(data):
     logging.debug("  out:   bytes = %s, length = %d", str(buf.hex()), len(buf))
     return buf
 
+
 def lpp_gps_from_bytes(buf):
     logging.debug("lpp_gps_from_bytes")
     logging.debug("  in:    bytes = %s, length = %d", str(buf.hex()), len(buf))
@@ -284,19 +302,23 @@ def lpp_gps_from_bytes(buf):
     lat_i = int(buf[0] << 16 | buf[1] << 8 | buf[2])
     lon_i = int(buf[3] << 16 | buf[4] << 8 | buf[5])
     alt_i = int(buf[6] << 16 | buf[7] << 8 | buf[8])
-    logging.debug("  out:   latitude = %d, longitude = %d, altitude = %d", lat_i, lon_i, alt_i)
+    logging.debug("  out:   latitude = %d, longitude = %d, altitude = %d",
+                  lat_i, lon_i, alt_i)
     if lat_i >= (1 << 23):
         lat_i = -1 - (lat_i ^ 0xffffff)
     if lon_i >= (1 << 23):
         lon_i = -1 - (lon_i ^ 0xffffff)
     if alt_i >= (1 << 23):
         alt_i = -1 - (alt_i ^ 0xffffff)
-    logging.debug("  out:   latitude = %d, longitude = %d, altitude = %d", lat_i, lon_i, alt_i)
+    logging.debug("  out:   latitude = %d, longitude = %d, altitude = %d",
+                  lat_i, lon_i, alt_i)
     lat = lat_i / 10000
     lon = lon_i / 10000
     alt = alt_i / 100
-    logging.debug("  out:   latitude = %f, longitude = %f, altitude = %f", lat, lon, alt)
-    return ( lat, lon, alt, )
+    logging.debug("  out:   latitude = %f, longitude = %f, altitude = %f",
+                  lat, lon, alt)
+    return (lat, lon, alt,)
+
 
 def lpp_gps_to_bytes(data):
     logging.debug("lpp_gps_to_bytes")
@@ -305,104 +327,122 @@ def lpp_gps_to_bytes(data):
     lat = data[0]
     lon = data[1]
     alt = data[2]
-    logging.debug("  in:    latitude = %f, longitude = %f, altitude = %f", lat, lon, alt)
-    buf = bytearray([ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 ])
+    logging.debug("  in:    latitude = %f, longitude = %f, altitude = %f",
+                  lat, lon, alt)
+    buf = bytearray([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
     lat_i = int(lat * 10000)
     lon_i = int(lon * 10000)
     alt_i = int(alt * 100)
-    logging.debug("  in:    latitude = %d, longitude = %d, altitude = %d", lat_i, lon_i, alt_i)
+    logging.debug("  in:    latitude = %d, longitude = %d, altitude = %d",
+                  lat_i, lon_i, alt_i)
     if lat_i < 0:
         lat_i = ~(-lat_i - 1)
     if lon_i < 0:
         lon_i = ~(-lon_i - 1)
     if alt_i < 0:
         alt_i = ~(-alt_i - 1)
-    logging.debug("  in:    latitude = %d, longitude = %d, altitude = %d", lat_i, lon_i, alt_i)
+    logging.debug("  in:    latitude = %d, longitude = %d, altitude = %d",
+                  lat_i, lon_i, alt_i)
     buf[0] = (lat_i >> 16) & 0xff
-    buf[1] = (lat_i >>  8) & 0xff
+    buf[1] = (lat_i >> 8) & 0xff
     buf[2] = (lat_i) & 0xff
     buf[3] = (lon_i >> 16) & 0xff
-    buf[4] = (lon_i >>  8) & 0xff
+    buf[4] = (lon_i >> 8) & 0xff
     buf[5] = (lon_i) & 0xff
     buf[6] = (alt_i >> 16) & 0xff
-    buf[7] = (alt_i >>  8) & 0xff
+    buf[7] = (alt_i >> 8) & 0xff
     buf[8] = (alt_i) & 0xff
-    logging.debug("  out:   bytes = %s, length = %d", str(buf.hex()), len(buf))
+    logging.debug("  out:   bytes = %s, length = %d",
+                  str(buf.hex()), len(buf))
     return buf
 
+
 LPP_DATA_TYPE = {
-    0:      { 'name': 'Digital Input',      'size': 1, 'num': 1,
-              'decode': lpp_digital_io_from_bytes, 'encode': lpp_digital_io_to_bytes },
-    1:      { 'name': 'Digital Output',     'size': 1, 'num': 1,
-              'decode': lpp_digital_io_from_bytes, 'encode': lpp_digital_io_to_bytes },
-    2:      { 'name': 'Analog Input',       'size': 2, 'num': 1,
-              'decode': lpp_analog_io_from_bytes, 'encode': lpp_analog_io_to_bytes },
-    3:      { 'name': 'Analog Output',      'size': 2, 'num': 1,
-              'decode': lpp_analog_io_from_bytes, 'encode': lpp_analog_io_to_bytes },
-    101:    { 'name': 'Illuminance Sensor', 'size': 2, 'num': 1,
-              'decode': lpp_illuminance_from_bytes, 'encode': lpp_illuminance_to_bytes },
-    102:    { 'name': 'Presence Sensor',    'size': 1, 'num': 1,
-              'decode': lpp_presence_from_bytes, 'encode': lpp_presence_to_bytes },
-    103:    { 'name': 'Temperature Sensor', 'size': 2, 'num': 1,
-              'decode': lpp_temperature_from_bytes, 'encode': lpp_temperature_to_bytes },
-    104:    { 'name': 'Humidity Sensor',    'size': 1, 'num': 1,
-              'decode': lpp_humidity_from_bytes, 'encode': lpp_humidity_to_bytes },
-    113:    { 'name': 'Accelerometer',      'size': 6, 'num': 3,
-              'decode': lpp_accel_from_bytes, 'encode': lpp_accel_to_bytes },
-    115:    { 'name': 'Barometer',          'size': 2, 'num': 1,
-              'decode': lpp_baro_from_bytes, 'encode': lpp_baro_to_bytes },
-    134:    { 'name': 'Gyrometer',          'size': 6, 'num': 3,
-              'decode': lpp_gyro_from_bytes, 'encode': lpp_gyro_to_bytes },
-    136:    { 'name': 'GPS Location',       'size': 9, 'num': 3,
-              'decode': lpp_gps_from_bytes, 'encode': lpp_gps_to_bytes }
+    0:      {'name': 'Digital Input', 'size': 1, 'num': 1,
+             'decode': lpp_digital_io_from_bytes,
+             'encode': lpp_digital_io_to_bytes},
+    1:      {'name': 'Digital Output', 'size': 1, 'num': 1,
+             'decode': lpp_digital_io_from_bytes,
+             'encode': lpp_digital_io_to_bytes},
+    2:      {'name': 'Analog Input', 'size': 2, 'num': 1,
+             'decode': lpp_analog_io_from_bytes,
+             'encode': lpp_analog_io_to_bytes},
+    3:      {'name': 'Analog Output', 'size': 2, 'num': 1,
+             'decode': lpp_analog_io_from_bytes,
+             'encode': lpp_analog_io_to_bytes},
+    101:    {'name': 'Illuminance Sensor', 'size': 2, 'num': 1,
+             'decode': lpp_illuminance_from_bytes,
+             'encode': lpp_illuminance_to_bytes},
+    102:    {'name': 'Presence Sensor', 'size': 1, 'num': 1,
+             'decode': lpp_presence_from_bytes,
+             'encode': lpp_presence_to_bytes},
+    103:    {'name': 'Temperature Sensor', 'size': 2, 'num': 1,
+             'decode': lpp_temperature_from_bytes,
+             'encode': lpp_temperature_to_bytes},
+    104:    {'name': 'Humidity Sensor', 'size': 1, 'num': 1,
+             'decode': lpp_humidity_from_bytes,
+             'encode': lpp_humidity_to_bytes},
+    113:    {'name': 'Accelerometer', 'size': 6, 'num': 3,
+             'decode': lpp_accel_from_bytes,
+             'encode': lpp_accel_to_bytes},
+    115:    {'name': 'Barometer', 'size': 2, 'num': 1,
+             'decode': lpp_baro_from_bytes,
+             'encode': lpp_baro_to_bytes},
+    134:    {'name': 'Gyrometer', 'size': 6, 'num': 3,
+             'decode': lpp_gyro_from_bytes,
+             'encode': lpp_gyro_to_bytes},
+    136:    {'name': 'GPS Location', 'size': 9, 'num': 3,
+             'decode': lpp_gps_from_bytes,
+             'encode': lpp_gps_to_bytes}
 }
+
 
 def main():
     logging.basicConfig(level=logging.DEBUG)
     # encode/decode digital io
     dio_buf = lpp_digital_io_to_bytes(0)
-    dio_val = lpp_digital_io_from_bytes(dio_buf)
+    lpp_digital_io_from_bytes(dio_buf)
     dio_buf = lpp_digital_io_to_bytes(1)
-    dio_val = lpp_digital_io_from_bytes(dio_buf)
+    lpp_digital_io_from_bytes(dio_buf)
     # encode/decode analog io
     aio_buf = lpp_analog_io_to_bytes(123.45)
-    aio_val = lpp_analog_io_from_bytes(aio_buf)
+    lpp_analog_io_from_bytes(aio_buf)
     aio_buf = lpp_analog_io_to_bytes(-123.45)
-    aio_val = lpp_analog_io_from_bytes(aio_buf)
+    lpp_analog_io_from_bytes(aio_buf)
     # encode/decode illuminance
     illu_buf = lpp_illuminance_to_bytes(12345)
-    illu_val = lpp_illuminance_from_bytes(illu_buf)
+    lpp_illuminance_from_bytes(illu_buf)
     # encode/decode presence
     pre_buf = lpp_presence_to_bytes(0)
-    pre_val = lpp_presence_from_bytes(pre_buf)
+    lpp_presence_from_bytes(pre_buf)
     pre_buf = lpp_presence_to_bytes(1)
-    pre_val = lpp_presence_from_bytes(pre_buf)
+    lpp_presence_from_bytes(pre_buf)
     # encode/decode temperature
     temp_buf = lpp_temperature_to_bytes(32.1)
-    temp_val = lpp_temperature_from_bytes(temp_buf)
+    lpp_temperature_from_bytes(temp_buf)
     temp_buf = lpp_temperature_to_bytes(-4.1)
-    temp_val = lpp_temperature_from_bytes(temp_buf)
+    lpp_temperature_from_bytes(temp_buf)
     # encode/decode humidity
     hum_buf = lpp_humidity_to_bytes(50.00)
-    hum_val = lpp_humidity_from_bytes(hum_buf)
+    lpp_humidity_from_bytes(hum_buf)
     hum_buf = lpp_humidity_to_bytes(50.25)
-    hum_val = lpp_humidity_from_bytes(hum_buf)
+    lpp_humidity_from_bytes(hum_buf)
     hum_buf = lpp_humidity_to_bytes(50.50)
-    hum_val = lpp_humidity_from_bytes(hum_buf)
+    lpp_humidity_from_bytes(hum_buf)
     hum_buf = lpp_humidity_to_bytes(50.75)
-    hum_val = lpp_humidity_from_bytes(hum_buf)
+    lpp_humidity_from_bytes(hum_buf)
     # encode decode accelerometer
     accel_buf = lpp_accel_to_bytes((12.345, -12.345, 0.0))
-    accel_val = lpp_accel_from_bytes(accel_buf)
+    lpp_accel_from_bytes(accel_buf)
     # encode/decode barometer
     baro_buf = lpp_baro_to_bytes(1234.5)
-    baro_val = lpp_baro_from_bytes(baro_buf)
+    lpp_baro_from_bytes(baro_buf)
     # encode/decode gps
     gyro_buf = lpp_gyro_to_bytes((123.45, -123.45, 0.0))
-    gyro_val = lpp_gyro_from_bytes(gyro_buf)
+    lpp_gyro_from_bytes(gyro_buf)
     # encode/decode gps
     gps_buf = lpp_gps_to_bytes((42.3519, -87.9094, 10.00))
-    gps_val = lpp_gps_from_bytes(gps_buf)
+    lpp_gps_from_bytes(gps_buf)
 
 
 if __name__ == '__main__':

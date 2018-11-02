@@ -4,7 +4,7 @@ from cayennelpp.lpp_data import LppData
 
 import base64
 import logging
-import types
+
 
 class LppFrame(object):
 
@@ -15,7 +15,8 @@ class LppFrame(object):
 
     @classmethod
     def from_bytes(cls, bytes):
-        logging.debug("LppFrame.from_bytes: bytes=%s, length=%d", bytes.hex(), len(bytes))
+        logging.debug("LppFrame.from_bytes: bytes=%s, length=%d",
+                      bytes.hex(), len(bytes))
         i = 0
         data = list()
         while i < len(bytes):
@@ -27,7 +28,8 @@ class LppFrame(object):
 
     @classmethod
     def from_base64(cls, strb64):
-        logging.debug("LppFrame.from_base64: base64=%d, length=%d", strb64, len(strb64))
+        logging.debug("LppFrame.from_base64: base64=%d, length=%d",
+                      strb64, len(strb64))
         return cls.from_bytes(base64.decodebytes(strb64.encode('ascii')))
 
     def data(self):
@@ -87,6 +89,7 @@ class LppFrame(object):
         gps = LppData(channel, 134, (lat, lon, alt, ))
         self._data.append(gps)
 
+
 def main():
     empty_frame = LppFrame()
     print("Frame without data:")
@@ -113,7 +116,7 @@ def main():
         print("  %s" % d)
     print("  BYTES: %s" % empty_frame.bytes().hex())
     # 03 67 01 10 05 67 00 FF = 27.2C + 25.5C
-    bytes = bytearray([ 0x03, 0x67, 0x01, 0x10, 0x05, 0x67, 0x00, 0xff ])
+    bytes = bytearray([0x03, 0x67, 0x01, 0x10, 0x05, 0x67, 0x00, 0xff])
     bytes_frame = LppFrame.from_bytes(bytes)
     print("Frame from bytes, data:")
     for d in bytes_frame.data():
@@ -125,6 +128,7 @@ def main():
     for d in base64_frame.data():
         print("  %s" % d)
     print("  BYTES: %s" % base64_frame.bytes().hex())
+
 
 if __name__ == '__main__':
     # execute when run as program
