@@ -22,3 +22,7 @@ def test_gps_from_bytes():
                          0x00, 0x03, 0xe8])
     gps_dat = LppData.from_bytes(gps_buf)
     assert gps_buf == gps_dat.bytes()
+
+
+def test_lpp_data_str():
+    print(LppData(0, 0, 0))
