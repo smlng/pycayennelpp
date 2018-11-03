@@ -8,7 +8,9 @@ way Pull Request are used (but not limited) to provide patches, make
 improvements to documentation, or add tests.
 
 To ensure and maintain code quality and robustness pull requests must
-pass Travis CI before being merged into master.
+pass Travis CI before being merged into master. Further, this projects
+uses [semantic commit messages](https://seesparkbox.com/foundry/semantic_commit_messages)
+in the format: `<type>: <short message>`, the `scope` can be omitted.
 
 ## Code of conduct
 
