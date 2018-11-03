@@ -16,6 +16,9 @@ class LppDataSizeError(Exception):
 class LppData(object):
 
     def __init__(self, chn, tid, data):
+        logging.debug("LppData.__init__")
+        if not isinstance(data, tuple):
+            data = (data,)
         logging.debug("LppData(channel=%d, type=%d, len=%d)",
                       chn, tid, len(data))
         if tid not in LPP_DATA_TYPE:
@@ -29,8 +32,9 @@ class LppData(object):
         self.data = data
 
     def __str__(self):
+        logging.debug("LppData.__str__")
         return 'LppData(channel = {}, type = {}, data = {})'.format(
-                self._chn, LPP_DATA_TYPE[self._tid].name, str(self.data))
+                self.channel, LPP_DATA_TYPE[self.type].name, str(self.data))
 
     @classmethod
     def from_bytes(class_object, bytes):
@@ -50,7 +54,7 @@ class LppData(object):
         return class_object(chn, tid, dat)
 
     def bytes(self):
-        logging.debug("LppData.get_bytes")
+        logging.debug("LppData.bytes")
         hdr_buf = bytearray([self.channel, self.type])
         dat_buf = LPP_DATA_TYPE[self.type].encode(self.data)
         buf = hdr_buf + dat_buf
