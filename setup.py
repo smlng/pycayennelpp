@@ -7,8 +7,8 @@ def readme():
 
 
 setup(name='pycayennelpp',
-      version='0.2',
-      python_requires='>=3.1',
+      version='0.3',
+      python_requires='>=3.4',
       description='Encoder and Decoder for CayenneLLP',
       long_description=readme(),
       classifiers=[
@@ -16,6 +16,7 @@ setup(name='pycayennelpp',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3 :: Only',
+        'Programming Language :: Python :: 3.4'
       ],
       keywords='cayenne lpp iot lora lorawan ttn',
       url='http://github.com/smlng/pycayennelpp',
