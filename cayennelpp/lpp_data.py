@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 
-from .lpp_util import LPP_DATA_TYPE
+from .lpp_type import LPP_DATA_TYPE
 
 import logging
 
