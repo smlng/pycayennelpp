@@ -11,7 +11,7 @@ class LppFrame(object):
     def __init__(self, data=list()):
         assert(isinstance(data, list))
         assert(isinstance(d, LppData) for d in data)
-        self._data = data
+        self.data = data
 
     @classmethod
     def from_bytes(cls, bytes):
@@ -32,62 +32,59 @@ class LppFrame(object):
                       strb64, len(strb64))
         return cls.from_bytes(base64.decodebytes(strb64.encode('ascii')))
 
-    def data(self):
-        return self._data
-
     def bytes(self):
         buf = bytearray()
-        for d in self._data:
+        for d in self.data:
             buf = buf + d.bytes()
         return buf
 
     def reset(self):
-        self._data.clear()
+        self.data.clear()
 
     def add_digital_input(self, channel, value):
         din = LppData(channel, 0, (value, ))
-        self._data.append(din)
+        self.data.append(din)
 
     def add_digital_output(self, channel, value):
         dout = LppData(channel, 1, (value, ))
-        self._data.append(dout)
+        self.data.append(dout)
 
     def add_analog_input(self, channel, value):
         ain = LppData(channel, 2, (value, ))
-        self._data.append(ain)
+        self.data.append(ain)
 
     def add_analog_output(self, channel, value):
         aout = LppData(channel, 3, (value, ))
-        self._data.append(aout)
+        self.data.append(aout)
 
     def add_luminosity(self, channel, value):
         lux = LppData(channel, 101, (value, ))
-        self._data.append(lux)
+        self.data.append(lux)
 
     def add_presence(self, channel, value):
         pre = LppData(channel, 102, (value, ))
-        self._data.append(pre)
+        self.data.append(pre)
 
     def add_temperature(self, channel, value):
         temp = LppData(channel, 103, (value, ))
-        self._data.append(temp)
+        self.data.append(temp)
 
     def add_humitidy(self, channel, value):
         hum = LppData(channel, 104, (value, ))
-        self._data.append(hum)
+        self.data.append(hum)
 
     def add_accelerometer(self, channel, x, y, z):
         acc = LppData(channel, 113, (x, y, z, ))
-        self._data.append(acc)
+        self.data.append(acc)
 
     def add_pressure(self, channel, value):
         press = LppData(channel, 115, (value, ))
-        self._data.append(press)
+        self.data.append(press)
 
     def add_gyrometer(self, channel, x, y, z):
         gyro = LppData(channel, 134, (x, y, z, ))
-        self._data.append(gyro)
+        self.data.append(gyro)
 
     def add_gps(self, channel, lat, lon, alt):
         gps = LppData(channel, 134, (lat, lon, alt, ))
-        self._data.append(gps)
+        self.data.append(gps)
