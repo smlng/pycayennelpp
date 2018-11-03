@@ -7,12 +7,12 @@ def readme():
 
 
 setup(name='pycayennelpp',
-      version='0.3',
+      version='0.4',
       python_requires='>=3.4',
       description='Encoder and Decoder for CayenneLLP',
       long_description=readme(),
       classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3 :: Only',
