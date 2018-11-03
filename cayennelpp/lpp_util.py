@@ -356,41 +356,42 @@ def lpp_gps_to_bytes(data):
     return buf
 
 
+class LppType(object):
+
+    def __init__(self, name, size, dim, decode, encode):
+        assert(isinstance(name, str))
+        assert(isinstance(size, int))
+        assert(isinstance(dim, int))
+        self.name = name
+        self.size = size
+        self.dimension = dim
+        self.decode = decode
+        self.encode = encode
+
+
 LPP_DATA_TYPE = {
-    0:      {'name': 'Digital Input', 'size': 1, 'num': 1,
-             'decode': lpp_digital_io_from_bytes,
-             'encode': lpp_digital_io_to_bytes},
-    1:      {'name': 'Digital Output', 'size': 1, 'num': 1,
-             'decode': lpp_digital_io_from_bytes,
-             'encode': lpp_digital_io_to_bytes},
-    2:      {'name': 'Analog Input', 'size': 2, 'num': 1,
-             'decode': lpp_analog_io_from_bytes,
-             'encode': lpp_analog_io_to_bytes},
-    3:      {'name': 'Analog Output', 'size': 2, 'num': 1,
-             'decode': lpp_analog_io_from_bytes,
-             'encode': lpp_analog_io_to_bytes},
-    101:    {'name': 'Illuminance Sensor', 'size': 2, 'num': 1,
-             'decode': lpp_illuminance_from_bytes,
-             'encode': lpp_illuminance_to_bytes},
-    102:    {'name': 'Presence Sensor', 'size': 1, 'num': 1,
-             'decode': lpp_presence_from_bytes,
-             'encode': lpp_presence_to_bytes},
-    103:    {'name': 'Temperature Sensor', 'size': 2, 'num': 1,
-             'decode': lpp_temperature_from_bytes,
-             'encode': lpp_temperature_to_bytes},
-    104:    {'name': 'Humidity Sensor', 'size': 1, 'num': 1,
-             'decode': lpp_humidity_from_bytes,
-             'encode': lpp_humidity_to_bytes},
-    113:    {'name': 'Accelerometer', 'size': 6, 'num': 3,
-             'decode': lpp_accel_from_bytes,
-             'encode': lpp_accel_to_bytes},
-    115:    {'name': 'Barometer', 'size': 2, 'num': 1,
-             'decode': lpp_baro_from_bytes,
-             'encode': lpp_baro_to_bytes},
-    134:    {'name': 'Gyrometer', 'size': 6, 'num': 3,
-             'decode': lpp_gyro_from_bytes,
-             'encode': lpp_gyro_to_bytes},
-    136:    {'name': 'GPS Location', 'size': 9, 'num': 3,
-             'decode': lpp_gps_from_bytes,
-             'encode': lpp_gps_to_bytes}
+    0:      LppType('Digital Input', 1, 1,
+                    lpp_digital_io_from_bytes, lpp_digital_io_to_bytes),
+    1:      LppType('Digital Output', 1, 1,
+                    lpp_digital_io_from_bytes, lpp_digital_io_to_bytes),
+    2:      LppType('Analog Input', 2, 1,
+                    lpp_analog_io_from_bytes, lpp_analog_io_to_bytes),
+    3:      LppType('Analog Output', 2, 1,
+                    lpp_analog_io_from_bytes, lpp_analog_io_to_bytes),
+    101:    LppType('Illuminance Sensor', 2, 1,
+                    lpp_illuminance_from_bytes, lpp_illuminance_to_bytes),
+    102:    LppType('Presence Sensor', 1, 1,
+                    lpp_presence_from_bytes, lpp_presence_to_bytes),
+    103:    LppType('Temperature Sensor', 2, 1,
+                    lpp_temperature_from_bytes, lpp_temperature_to_bytes),
+    104:    LppType('Humidity Sensor', 1, 1,
+                    lpp_humidity_from_bytes, lpp_humidity_to_bytes),
+    113:    LppType('Accelerometer', 6, 3,
+                    lpp_accel_from_bytes, lpp_accel_to_bytes),
+    115:    LppType('Barometer', 2, 1,
+                    lpp_baro_from_bytes, lpp_baro_to_bytes),
+    134:    LppType('Gyrometer', 6, 3,
+                    lpp_gyro_from_bytes, lpp_gyro_to_bytes),
+    136:    LppType('GPS Location', 9, 3,
+                    lpp_gps_from_bytes, lpp_gps_to_bytes)
 }
