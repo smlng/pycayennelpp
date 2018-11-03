@@ -1,4 +1,4 @@
-from cayennelpp.lpp_util import (lpp_digital_io_to_bytes,
+from cayennelpp.lpp_type import (lpp_digital_io_to_bytes,
                                  lpp_digital_io_from_bytes,
                                  lpp_analog_io_to_bytes,
                                  lpp_analog_io_from_bytes,
