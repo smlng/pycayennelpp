@@ -1,0 +1,12 @@
+language: python
+python:
+  - "3.4"
+  - "3.5"
+  - "3.6"
+# command to install dependencies
+install:
+  - pip install flake8 pytest
+# command to run tests
+script:
+  - python3 -m pytest
+  - python3 -m flake8
