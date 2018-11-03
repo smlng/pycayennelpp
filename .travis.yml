@@ -10,3 +10,4 @@ install:
 script:
   - python3 -m pytest
   - python3 -m flake8
+  - test -z "$(git log -E --grep='^(Merge|chore|docs|feat|fix|refactor|style|test)' --invert-grep)"
