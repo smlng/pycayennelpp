@@ -1,5 +1,7 @@
 from cayennelpp.lpp_data import LppData
 
+import pytest
+
 
 def test_temperature_from_bytes():
     # 01 67 FF D7 = -4.1C
@@ -22,6 +24,33 @@ def test_gps_from_bytes():
                          0x00, 0x03, 0xe8])
     gps_dat = LppData.from_bytes(gps_buf)
     assert gps_buf == gps_dat.bytes()
+
+
+def test_init_invalid_type():
+    with pytest.raises(Exception):
+        LppData(0, 4242, 0)
+
+
+def test_init_data_none():
+    with pytest.raises(Exception):
+        LppData(0, 0, None)
+
+
+def test_init_invalid_dimension():
+    with pytest.raises(Exception):
+        LppData(0, 136, 0)
+
+
+def test_any_from_bytes_invalid_size():
+    with pytest.raises(Exception):
+        buf = bytearray([0x00, 0x00])
+        LppData.from_bytes(buf)
+
+
+def test_gps_from_bytes_invalid_size():
+    with pytest.raises(Exception):
+        buf = bytearray([0x00, 0x88, 0x00])
+        LppData.from_bytes(buf)
 
 
 def test_lpp_data_str():

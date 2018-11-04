@@ -3,28 +3,20 @@ from .lpp_type import get_lpp_type
 import logging
 
 
-class LppDataTypeError(Exception):
-    pass
-
-
-class LppDataSizeError(Exception):
-    pass
-
-
 class LppData(object):
 
     def __init__(self, chn, tid, data):
         logging.debug("LppData.__init__")
+        if data is None:
+            raise ValueError("Empty data!")
         if not isinstance(data, tuple):
             data = (data,)
         logging.debug("LppData(channel=%d, type=%d, len=%d)",
                       chn, tid, len(data))
         if get_lpp_type(tid) is None:
-            logging.error("LppData.from_buffer: invalid data type!")
-            raise LppDataTypeError
+            raise ValueError("Invalid LPP data type!")
         if not len(data) == get_lpp_type(tid).dimension:
-            logging.error("LppData: invalid number of data values!")
-            raise LppDataSizeError
+            raise ValueError("Invalid number of data values!")
         self.channel = chn
         self.type = tid
         self.data = data
@@ -39,15 +31,13 @@ class LppData(object):
         logging.debug("LppData.from_bytes: bytes=%s, length=%d",
                       bytes, len(bytes))
         if len(bytes) < 3:
-            logging.error("LppData.from_bytes: invalid buffer size!")
-            raise LppDataSizeError
+            raise BufferError("Invalid buffer size!")
         chn = bytes[0]
         tid = bytes[1]
         size = get_lpp_type(tid).size
         logging.debug("LppData.from_bytes: date_size = %d", size)
         if len(bytes) < size + 2:
-            logging.error("LppData.from_bytes: buffer too small!")
-            raise LppDataSizeError
+            raise BufferError("Buffer too small!")
         dat = get_lpp_type(tid).decode(bytes[2:(2 + size)])
         return class_object(chn, tid, dat)
 
