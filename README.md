@@ -21,6 +21,15 @@ pip3 install pycayennelpp
 
 Simply add this import to your application to utilise PyCayenneLPP:
 
-```
-import cayennelpp
+```Python
+from cayennelpp import LppFrame
+
+
+# create empty frame
+frame = LppFrame()
+# add some sensor data
+frame.add_temperature(0, -1.2)
+frame.add_humidity(6, 34.5)
+# get byte buffer
+buffer = frame.bytes()
 ```

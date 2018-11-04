@@ -48,9 +48,10 @@ def test_add_sensors(frame):
     frame.add_presence(3, 1)
     frame.add_accelerometer(5, 1.234, -1.234, 0.0)
     frame.add_pressure(6, 1005.5)
+    frame.add_barometer(9, 999.9)
     frame.add_gyrometer(7, 1.234, -1.234, 0.0)
     frame.add_gps(8, 1.234, -1.234, 0.0)
-    assert len(frame.data) == 6
+    assert len(frame.data) == 7
 
 
 def test_add_temperature(frame):
