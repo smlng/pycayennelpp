@@ -2,6 +2,10 @@ import logging
 
 
 def lpp_digital_io_from_bytes(buf):
+    """
+    Decode digitial input/output from CyaenneLPP byte buffer,
+    and return the value as a tupel.
+    """
     logging.debug("lpp_digital_io_from_bytes")
     logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
     assert(len(buf) == 1)
@@ -11,6 +15,10 @@ def lpp_digital_io_from_bytes(buf):
 
 
 def lpp_digital_io_to_bytes(data):
+    """
+    Encode digitial input/output into CayenneLPP,
+    and return as a byte buffer
+    """
     logging.debug("lpp_digital_io_to_bytes")
     if not isinstance(data, tuple):
         data = (data,)
@@ -24,6 +32,10 @@ def lpp_digital_io_to_bytes(data):
 
 
 def lpp_analog_io_from_bytes(buf):
+    """
+    Decode analog input/output from CyaenneLPP byte buffer,
+    and return the value as a tupel.
+    """
     logging.debug("lpp_analog_io_from_bytes")
     logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
     assert(len(buf) == 2)
@@ -38,6 +50,10 @@ def lpp_analog_io_from_bytes(buf):
 
 
 def lpp_analog_io_to_bytes(data):
+    """
+    Encode analog input/output into CayenneLPP,
+    and return as a byte buffer
+    """
     logging.debug("lpp_analog_io_to_bytes")
     if not isinstance(data, tuple):
         data = (data,)
@@ -57,6 +73,10 @@ def lpp_analog_io_to_bytes(data):
 
 
 def lpp_illuminance_from_bytes(buf):
+    """
+    Decode illuminance sensor data from CyaenneLPP byte buffer,
+    and return the value as a tupel.
+    """
     logging.debug("lpp_illuminance_from_bytes")
     logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
     assert(len(buf) == 2)
@@ -66,6 +86,10 @@ def lpp_illuminance_from_bytes(buf):
 
 
 def lpp_illuminance_to_bytes(data):
+    """
+    Encode illuminance sensor data into CayenneLPP,
+    and return as a byte buffer
+    """
     logging.debug("lpp_illuminance_to_bytes")
     if not isinstance(data, tuple):
         data = (data,)
@@ -81,6 +105,10 @@ def lpp_illuminance_to_bytes(data):
 
 
 def lpp_presence_from_bytes(buf):
+    """
+    Decode presence sensor data from CyaenneLPP byte buffer,
+    and return the value as a tupel.
+    """
     logging.debug("lpp_presence_from_bytes")
     logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
     assert(len(buf) == 1)
@@ -90,6 +118,10 @@ def lpp_presence_from_bytes(buf):
 
 
 def lpp_presence_to_bytes(data):
+    """
+    Encode presence sensor data into CayenneLPP,
+    and return as a byte buffer
+    """
     logging.debug("lpp_presence_to_bytes")
     if not isinstance(data, tuple):
         data = (data,)
@@ -104,6 +136,10 @@ def lpp_presence_to_bytes(data):
 
 
 def lpp_temperature_from_bytes(buf):
+    """
+    Decode temperature sensor data from CyaenneLPP byte buffer,
+    and return the value as a tupel.
+    """
     logging.debug("lpp_temperature_from_bytes")
     logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
     assert(len(buf) == 2)
@@ -118,6 +154,10 @@ def lpp_temperature_from_bytes(buf):
 
 
 def lpp_temperature_to_bytes(data):
+    """
+    Encode temperature sensor data into CayenneLPP,
+    and return as a byte buffer
+    """
     logging.debug("lpp_temperature_to_bytes")
     if not isinstance(data, tuple):
         data = (data,)
@@ -137,6 +177,10 @@ def lpp_temperature_to_bytes(data):
 
 
 def lpp_humidity_from_bytes(buf):
+    """
+    Decode himidity sensor data from CyaenneLPP byte buffer,
+    and return the value as a tupel.
+    """
     logging.debug("lpp_humidity_from_bytes")
     logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
     assert(len(buf) == 1)
@@ -148,6 +192,10 @@ def lpp_humidity_from_bytes(buf):
 
 
 def lpp_humidity_to_bytes(data):
+    """
+    Encode humidity sensor data into CayenneLPP,
+    and return as a byte buffer
+    """
     logging.debug("lpp_humidity_to_bytes")
     if not isinstance(data, tuple):
         data = (data,)
@@ -164,6 +212,10 @@ def lpp_humidity_to_bytes(data):
 
 
 def lpp_accel_from_bytes(buf):
+    """
+    Decode accelerometer sensor data from CyaenneLPP byte buffer,
+    and return the values as a tupel.
+    """
     logging.debug("lpp_accel_from_bytes")
     logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
     assert(len(buf) == 6)
@@ -186,6 +238,10 @@ def lpp_accel_from_bytes(buf):
 
 
 def lpp_accel_to_bytes(data):
+    """
+    Encode accelerometer sensor data into CayenneLPP,
+    and return as a byte buffer
+    """
     logging.debug("lpp_accel_to_bytes")
     assert(isinstance(data, tuple))
     assert(len(data) == 3)
@@ -216,6 +272,10 @@ def lpp_accel_to_bytes(data):
 
 
 def lpp_baro_from_bytes(buf):
+    """
+    Decode barometer sensor data from CyaenneLPP byte buffer,
+    and return the value as a tupel.
+    """
     logging.debug("lpp_baro_from_bytes")
     logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
     assert(len(buf) == 2)
@@ -225,6 +285,10 @@ def lpp_baro_from_bytes(buf):
 
 
 def lpp_baro_to_bytes(data):
+    """
+    Encode barometer sensor data into CayenneLPP,
+    and return as a byte buffer
+    """
     logging.debug("lpp_baro_to_bytes")
     if not isinstance(data, tuple):
         data = (data,)
@@ -241,6 +305,10 @@ def lpp_baro_to_bytes(data):
 
 
 def lpp_gyro_from_bytes(buf):
+    """
+    Decode gyrometer sensor data from CyaenneLPP byte buffer,
+    and return the values as a tupel.
+    """
     logging.debug("lpp_gyro_from_bytes")
     logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
     assert(len(buf) == 6)
@@ -263,6 +331,10 @@ def lpp_gyro_from_bytes(buf):
 
 
 def lpp_gyro_to_bytes(data):
+    """
+    Encode gyrometer sensor data into CayenneLPP,
+    and return as a byte buffer
+    """
     logging.debug("lpp_gyro_to_bytes")
     assert(isinstance(data, tuple))
     assert(len(data) == 3)
@@ -293,6 +365,10 @@ def lpp_gyro_to_bytes(data):
 
 
 def lpp_gps_from_bytes(buf):
+    """
+    Decode GPS data from CyaenneLPP byte buffer,
+    and return the values as a tupel.
+    """
     logging.debug("lpp_gps_from_bytes")
     logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
     assert(len(buf) == 9)
@@ -318,6 +394,10 @@ def lpp_gps_from_bytes(buf):
 
 
 def lpp_gps_to_bytes(data):
+    """
+    Encode GPS data into CayenneLPP,
+    and return as a byte buffer
+    """
     logging.debug("lpp_gps_to_bytes")
     assert(isinstance(data, tuple))
     assert(len(data) == 3)
@@ -354,7 +434,16 @@ def lpp_gps_to_bytes(data):
 
 
 class LppType(object):
+    """Cayenne LPP type representation
 
+    Attributes:
+        id (int):   LPP type ID number
+        name (str): human readable type description
+        size (int): predefined/fixes byte size
+        dim (int):  dimension of the data, i.e. number of values
+        decode:     decode function name
+        encode:     encode function name
+    """
     def __init__(self, id, name, size, dim, decode, encode):
         assert(isinstance(id, int))
         assert(isinstance(name, str))
@@ -397,5 +486,6 @@ lpp_types = [
 
 
 def get_lpp_type(id):
+    """Returns the LppType instance for a given `id` or `None` if not found"""
     assert(isinstance(id, int))
     return next(filter(lambda x: x.id == id, lpp_types))

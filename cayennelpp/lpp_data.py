@@ -4,7 +4,13 @@ import logging
 
 
 class LppData(object):
+    """A single LPP data object representation
 
+    Attributes:
+        chn (int): data channel number
+        tid (int): data type ID
+        data (tuple): data value(s)
+    """
     def __init__(self, chn, tid, data):
         logging.debug("LppData.__init__")
         if data is None:
@@ -22,12 +28,14 @@ class LppData(object):
         self.data = data
 
     def __str__(self):
+        """Return a pretty string representation of the LppData instance"""
         logging.debug("LppData.__str__")
         return 'LppData(channel = {}, type = {}, data = {})'.format(
                 self.channel, get_lpp_type(self.type).name, str(self.data))
 
     @classmethod
     def from_bytes(class_object, bytes):
+        """Parse LppData from given a byte string"""
         logging.debug("LppData.from_bytes: bytes=%s, length=%d",
                       bytes, len(bytes))
         if len(bytes) < 3:
@@ -42,6 +50,7 @@ class LppData(object):
         return class_object(chn, tid, dat)
 
     def bytes(self):
+        """Convert LppData instance into a byte string"""
         logging.debug("LppData.bytes")
         hdr_buf = bytearray([self.channel, self.type])
         dat_buf = get_lpp_type(self.type).encode(self.data)
@@ -50,5 +59,6 @@ class LppData(object):
         return buf
 
     def bytes_size(self):
+        """Return the length of the LppData byte string representation"""
         logging.debug("LppData.bytes_size")
         return (get_lpp_type(self.type).size + 2)
