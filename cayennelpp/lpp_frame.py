@@ -10,10 +10,11 @@ class LppFrame(object):
     Attributes:
         data (list): a list of LppData objects
     """
-    def __init__(self, data=list()):
-        """Create a LppData instance with (optional) list of LppData"""
-        assert(isinstance(data, list))
-        assert(isinstance(d, LppData) for d in data)
+    def __init__(self, data=None):
+        data = data or []
+        for d in data:
+            if not isinstance(d, LppData):
+                raise AssertionError()
         self.data = data
 
     @classmethod
@@ -22,7 +23,7 @@ class LppFrame(object):
         logging.debug("LppFrame.from_bytes: bytes=%s, length=%d",
                       bytes, len(bytes))
         i = 0
-        data = list()
+        data = []
         while i < len(bytes):
             logging.debug("  loop: index = %d", i)
             lppdata = LppData.from_bytes(bytes[i:])
@@ -33,7 +34,7 @@ class LppFrame(object):
     @classmethod
     def from_base64(cls, strb64):
         """Parse LppFrame from a given base64 encoded string"""
-        logging.debug("LppFrame.from_base64: base64=%d, length=%d",
+        logging.debug("LppFrame.from_base64: base64=%s, length=%d",
                       strb64, len(strb64))
         return cls.from_bytes(base64.decodebytes(strb64.encode('ascii')))
 
