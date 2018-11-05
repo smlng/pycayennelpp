@@ -8,7 +8,8 @@ def lpp_digital_io_from_bytes(buf):
     """
     logging.debug("lpp_digital_io_from_bytes")
     logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
-    assert(len(buf) == 1)
+    if not len(buf) == 1:
+        raise AssertionError()
     val = buf[0]
     logging.debug("  out:   value = %d", val)
     return (val,)
@@ -22,7 +23,8 @@ def lpp_digital_io_to_bytes(data):
     logging.debug("lpp_digital_io_to_bytes")
     if not isinstance(data, tuple):
         data = (data,)
-    assert(len(data) == 1)
+    if not len(data) == 1:
+        raise AssertionError()
     val = data[0]
     logging.debug("  in:    value = %d", val)
     buf = bytearray([0x00])
@@ -38,7 +40,8 @@ def lpp_analog_io_from_bytes(buf):
     """
     logging.debug("lpp_analog_io_from_bytes")
     logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
-    assert(len(buf) == 2)
+    if not len(buf) == 2:
+        raise AssertionError()
     val_i = (buf[0] << 8 | buf[1])
     logging.debug("  out:   value = %d", val_i)
     if val_i >= (1 << 15):
@@ -57,7 +60,8 @@ def lpp_analog_io_to_bytes(data):
     logging.debug("lpp_analog_io_to_bytes")
     if not isinstance(data, tuple):
         data = (data,)
-    assert(len(data) == 1)
+    if not len(data) == 1:
+        raise AssertionError()
     val = data[0]
     logging.debug("  in:    value = %f", val)
     buf = bytearray([0x00, 0x00])
@@ -79,7 +83,8 @@ def lpp_illuminance_from_bytes(buf):
     """
     logging.debug("lpp_illuminance_from_bytes")
     logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
-    assert(len(buf) == 2)
+    if not len(buf) == 2:
+        raise AssertionError()
     val = int(buf[0] << 8 | buf[1])
     logging.debug("  out:   value = %d", val)
     return (val,)
@@ -93,10 +98,12 @@ def lpp_illuminance_to_bytes(data):
     logging.debug("lpp_illuminance_to_bytes")
     if not isinstance(data, tuple):
         data = (data,)
-    assert(len(data) == 1)
+    if not len(data) == 1:
+        raise AssertionError()
     val = data[0]
     logging.debug("  in:    value = %d", val)
-    assert(val >= 0)
+    if not val >= 0:
+        raise AssertionError()
     buf = bytearray([0x00, 0x00])
     buf[0] = (val >> 8) & 0xff
     buf[1] = (val) & 0xff
@@ -111,7 +118,8 @@ def lpp_presence_from_bytes(buf):
     """
     logging.debug("lpp_presence_from_bytes")
     logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
-    assert(len(buf) == 1)
+    if not len(buf) == 1:
+        raise AssertionError()
     val = buf[0]
     logging.debug("  out:   value = %d", val)
     return (val,)
@@ -125,10 +133,12 @@ def lpp_presence_to_bytes(data):
     logging.debug("lpp_presence_to_bytes")
     if not isinstance(data, tuple):
         data = (data,)
-    assert(len(data) == 1)
+    if not len(data) == 1:
+        raise AssertionError()
     val = data[0]
     logging.debug("  in:    value = %d", val)
-    assert(val >= 0)
+    if not val >= 0:
+        raise AssertionError()
     buf = bytearray([0x00])
     buf[0] = (val) & 0xff
     logging.debug("  out:   bytes = %s, length = %d", buf, len(buf))
@@ -142,7 +152,8 @@ def lpp_temperature_from_bytes(buf):
     """
     logging.debug("lpp_temperature_from_bytes")
     logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
-    assert(len(buf) == 2)
+    if not len(buf) == 2:
+        raise AssertionError()
     val_i = (buf[0] << 8 | buf[1])
     logging.debug("  out:   value = %d", val_i)
     if val_i >= (1 << 15):
@@ -161,7 +172,8 @@ def lpp_temperature_to_bytes(data):
     logging.debug("lpp_temperature_to_bytes")
     if not isinstance(data, tuple):
         data = (data,)
-    assert(len(data) == 1)
+    if not len(data) == 1:
+        raise AssertionError()
     val = data[0]
     logging.debug("  in:    value = %f", val)
     buf = bytearray([0x00, 0x00])
@@ -183,7 +195,8 @@ def lpp_humidity_from_bytes(buf):
     """
     logging.debug("lpp_humidity_from_bytes")
     logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
-    assert(len(buf) == 1)
+    if not len(buf) == 1:
+        raise AssertionError()
     val_i = buf[0]
     logging.debug("  out:   value = %d", val_i)
     val = val_i / 2.0
@@ -199,10 +212,12 @@ def lpp_humidity_to_bytes(data):
     logging.debug("lpp_humidity_to_bytes")
     if not isinstance(data, tuple):
         data = (data,)
-    assert(len(data) == 1)
+    if not len(data) == 1:
+        raise AssertionError()
     val = data[0]
     logging.debug("  in:    value = %f", val)
-    assert(val >= 0)
+    if not val >= 0:
+        raise AssertionError()
     buf = bytearray([0x00])
     val_i = int(val * 2)
     logging.debug("  in:    value = %d", val_i)
@@ -218,7 +233,8 @@ def lpp_accel_from_bytes(buf):
     """
     logging.debug("lpp_accel_from_bytes")
     logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
-    assert(len(buf) == 6)
+    if not len(buf) == 6:
+        raise AssertionError()
     val_xi = int(buf[0] << 8 | buf[1])
     val_yi = int(buf[2] << 8 | buf[3])
     val_zi = int(buf[4] << 8 | buf[5])
@@ -243,8 +259,10 @@ def lpp_accel_to_bytes(data):
     and return as a byte buffer
     """
     logging.debug("lpp_accel_to_bytes")
-    assert(isinstance(data, tuple))
-    assert(len(data) == 3)
+    if not isinstance(data, tuple):
+        raise AssertionError()
+    if not len(data) == 3:
+        raise AssertionError()
     val_x = data[0]
     val_y = data[1]
     val_z = data[2]
@@ -278,7 +296,8 @@ def lpp_baro_from_bytes(buf):
     """
     logging.debug("lpp_baro_from_bytes")
     logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
-    assert(len(buf) == 2)
+    if not len(buf) == 2:
+        raise AssertionError()
     val = (buf[0] << 8 | buf[1]) / 10.0
     logging.debug("  out:   value = %f", val)
     return (val,)
@@ -292,10 +311,12 @@ def lpp_baro_to_bytes(data):
     logging.debug("lpp_baro_to_bytes")
     if not isinstance(data, tuple):
         data = (data,)
-    assert(len(data) == 1)
+    if not len(data) == 1:
+        raise AssertionError()
     val = data[0]
     logging.debug("  in:    value = %f", val)
-    assert(val >= 0)
+    if not val >= 0:
+        raise AssertionError()
     buf = bytearray([0x00, 0x00])
     val_i = int(val * 10)
     buf[0] = (val_i >> 8) & 0xff
@@ -311,7 +332,8 @@ def lpp_gyro_from_bytes(buf):
     """
     logging.debug("lpp_gyro_from_bytes")
     logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
-    assert(len(buf) == 6)
+    if not len(buf) == 6:
+        raise AssertionError()
     val_xi = int(buf[0] << 8 | buf[1])
     val_yi = int(buf[2] << 8 | buf[3])
     val_zi = int(buf[4] << 8 | buf[5])
@@ -336,8 +358,10 @@ def lpp_gyro_to_bytes(data):
     and return as a byte buffer
     """
     logging.debug("lpp_gyro_to_bytes")
-    assert(isinstance(data, tuple))
-    assert(len(data) == 3)
+    if not isinstance(data, tuple):
+        raise AssertionError()
+    if not len(data) == 3:
+        raise AssertionError()
     val_x = data[0]
     val_y = data[1]
     val_z = data[2]
@@ -371,7 +395,8 @@ def lpp_gps_from_bytes(buf):
     """
     logging.debug("lpp_gps_from_bytes")
     logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
-    assert(len(buf) == 9)
+    if not len(buf) == 9:
+        raise AssertionError()
     lat_i = int(buf[0] << 16 | buf[1] << 8 | buf[2])
     lon_i = int(buf[3] << 16 | buf[4] << 8 | buf[5])
     alt_i = int(buf[6] << 16 | buf[7] << 8 | buf[8])
@@ -399,8 +424,10 @@ def lpp_gps_to_bytes(data):
     and return as a byte buffer
     """
     logging.debug("lpp_gps_to_bytes")
-    assert(isinstance(data, tuple))
-    assert(len(data) == 3)
+    if not isinstance(data, tuple):
+        raise AssertionError()
+    if not len(data) == 3:
+        raise AssertionError()
     lat = data[0]
     lon = data[1]
     alt = data[2]
@@ -445,10 +472,14 @@ class LppType(object):
         encode:     encode function name
     """
     def __init__(self, id, name, size, dim, decode, encode):
-        assert(isinstance(id, int))
-        assert(isinstance(name, str))
-        assert(isinstance(size, int))
-        assert(isinstance(dim, int))
+        if not isinstance(id, int):
+            raise AssertionError()
+        if not isinstance(name, str):
+            raise AssertionError()
+        if not isinstance(size, int):
+            raise AssertionError()
+        if not isinstance(dim, int):
+            raise AssertionError()
         self.id = id
         self.name = name
         self.size = size
@@ -487,5 +518,6 @@ lpp_types = [
 
 def get_lpp_type(id):
     """Returns the LppType instance for a given `id` or `None` if not found"""
-    assert(isinstance(id, int))
+    if not isinstance(id, int):
+        raise AssertionError()
     return next(filter(lambda x: x.id == id, lpp_types))

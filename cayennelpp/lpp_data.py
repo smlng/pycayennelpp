@@ -9,29 +9,29 @@ class LppData(object):
     Attributes:
         chn (int): data channel number
         tid (int): data type ID
-        data (tuple): data value(s)
+        value (tuple): data value(s)
     """
-    def __init__(self, chn, tid, data):
+    def __init__(self, chn, tid, value):
         logging.debug("LppData.__init__")
-        if data is None:
-            raise ValueError("Empty data!")
-        if not isinstance(data, tuple):
-            data = (data,)
+        if value is None:
+            raise ValueError("Empty value!")
+        if not isinstance(value, tuple):
+            value = (value,)
         logging.debug("LppData(channel=%d, type=%d, len=%d)",
-                      chn, tid, len(data))
+                      chn, tid, len(value))
         if get_lpp_type(tid) is None:
             raise ValueError("Invalid LPP data type!")
-        if not len(data) == get_lpp_type(tid).dimension:
+        if not len(value) == get_lpp_type(tid).dimension:
             raise ValueError("Invalid number of data values!")
         self.channel = chn
         self.type = tid
-        self.data = data
+        self.value = value
 
     def __str__(self):
         """Return a pretty string representation of the LppData instance"""
         logging.debug("LppData.__str__")
-        return 'LppData(channel = {}, type = {}, data = {})'.format(
-                self.channel, get_lpp_type(self.type).name, str(self.data))
+        return 'LppData(channel = {}, type = {}, value = {})'.format(
+                self.channel, get_lpp_type(self.type).name, str(self.value))
 
     @classmethod
     def from_bytes(class_object, bytes):
@@ -46,14 +46,14 @@ class LppData(object):
         logging.debug("LppData.from_bytes: date_size = %d", size)
         if len(bytes) < size + 2:
             raise BufferError("Buffer too small!")
-        dat = get_lpp_type(tid).decode(bytes[2:(2 + size)])
-        return class_object(chn, tid, dat)
+        value = get_lpp_type(tid).decode(bytes[2:(2 + size)])
+        return class_object(chn, tid, value)
 
     def bytes(self):
         """Convert LppData instance into a byte string"""
         logging.debug("LppData.bytes")
         hdr_buf = bytearray([self.channel, self.type])
-        dat_buf = get_lpp_type(self.type).encode(self.data)
+        dat_buf = get_lpp_type(self.type).encode(self.value)
         buf = hdr_buf + dat_buf
         logging.debug("  out:   bytes = %s, length = %d", buf, len(buf))
         return buf
