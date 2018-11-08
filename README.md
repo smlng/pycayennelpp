@@ -13,7 +13,7 @@ PyCayenneLPP does not have any external dependencies and only uses builtin
 functions and types of Python 3. It requires at least Python in version 3.4.
 The PyCayenneLPP package is available via PyPi using `pip`. To install it run:
 
-```
+```Shell
 pip3 install pycayennelpp
 ```
 
