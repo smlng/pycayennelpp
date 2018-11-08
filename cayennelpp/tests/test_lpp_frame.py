@@ -5,13 +5,13 @@ from cayennelpp.lpp_frame import LppFrame
 
 @pytest.fixture
 def frame():
-    frame = LppFrame()
-    frame.reset()
-    return frame
+    empty_frame = LppFrame()
+    empty_frame.reset()
+    return empty_frame
 
 
 def test_frame_empty(frame):
-    assert len(frame.value) == 0
+    assert len(frame.data) == 0
     assert len(frame.bytes()) == 0
 
 
@@ -20,19 +20,19 @@ def test_frame_from_bytes():
     buf = bytearray([0x03, 0x67, 0x01, 0x10, 0x05, 0x67, 0x00, 0xff])
     frame = LppFrame.from_bytes(buf)
     assert buf == frame.bytes()
-    assert len(frame.value) == 2
+    assert len(frame.data) == 2
 
 
 def test_frame_from_base64():
     base64 = "AYgILMMBiIMAAAACAAY="
     frame = LppFrame.from_base64(base64)
-    assert len(frame.value) == 2
+    assert len(frame.data) == 2
 
 
 def test_add_digital_io(frame):
     frame.add_digital_input(0, 21)
     frame.add_digital_output(1, 42)
-    assert len(frame.value) == 2
+    assert len(frame.data) == 2
 
 
 def test_add_analog_io(frame):
@@ -40,7 +40,7 @@ def test_add_analog_io(frame):
     frame.add_analog_input(1, -12.34)
     frame.add_analog_output(0, 56.78)
     frame.add_analog_output(1, -56.78)
-    assert len(frame.value) == 4
+    assert len(frame.data) == 4
 
 
 def test_add_sensors(frame):
@@ -50,17 +50,17 @@ def test_add_sensors(frame):
     frame.add_pressure(6, 1005.5)
     frame.add_gyrometer(7, 1.234, -1.234, 0.0)
     frame.add_gps(8, 1.234, -1.234, 0.0)
-    assert len(frame.value) == 6
+    assert len(frame.data) == 6
 
 
 def test_add_temperature(frame):
     frame.add_temperature(2, 12.3)
     frame.add_temperature(3, -32.1)
-    assert len(frame.value) == 2
+    assert len(frame.data) == 2
 
 
 def test_add_humidity(frame):
     frame.add_humitidy(2, 12.3)
     frame.add_humitidy(3, 45.6)
     frame.add_humitidy(4, 78.9)
-    assert len(frame.value) == 3
+    assert len(frame.data) == 3
