@@ -464,15 +464,15 @@ class LppType(object):
     """Cayenne LPP type representation
 
     Attributes:
-        id (int):   LPP type ID number
+        tid (int):  LPP type ID number
         name (str): human readable type description
         size (int): predefined/fixes byte size
         dim (int):  dimension of the data, i.e. number of values
         decode:     decode function name
         encode:     encode function name
     """
-    def __init__(self, id, name, size, dim, decode, encode):
-        if not isinstance(id, int):
+    def __init__(self, tid, name, size, dim, decode, encode):
+        if not isinstance(tid, int):
             raise AssertionError()
         if not isinstance(name, str):
             raise AssertionError()
@@ -480,7 +480,7 @@ class LppType(object):
             raise AssertionError()
         if not isinstance(dim, int):
             raise AssertionError()
-        self.id = id
+        self.tid = tid
         self.name = name
         self.size = size
         self.dimension = dim
@@ -516,8 +516,8 @@ lpp_types = [
 ]
 
 
-def get_lpp_type(id):
-    """Returns the LppType instance for a given `id` or `None` if not found"""
-    if not isinstance(id, int):
+def get_lpp_type(tid):
+    """Returns the LppType instance for a given `tid` or `None` if not found"""
+    if not isinstance(tid, int):
         raise AssertionError()
-    return next(filter(lambda x: x.id == id, lpp_types))
+    return next(filter(lambda x: x.tid == tid, lpp_types))
