@@ -18,15 +18,14 @@ class LppFrame(object):
         self.data = data
 
     @classmethod
-    def from_bytes(cls, bytes):
+    def from_bytes(cls, buf):
         """Parse LppFrame from a given byte string"""
-        logging.debug("LppFrame.from_bytes: bytes=%s, length=%d",
-                      bytes, len(bytes))
+        logging.debug("LppFrame.from_bytes: buf=%s, length=%d", buf, len(buf))
         i = 0
         data = []
-        while i < len(bytes):
+        while i < len(buf):
             logging.debug("  loop: index = %d", i)
-            lppdata = LppData.from_bytes(bytes[i:])
+            lppdata = LppData.from_bytes(buf[i:])
             data.append(lppdata)
             i = i + lppdata.bytes_size()
         return cls(data)

@@ -1,6 +1,6 @@
-from cayennelpp.lpp_data import LppData
-
 import pytest
+
+from cayennelpp.lpp_data import LppData
 
 
 def test_temperature_from_bytes():
