@@ -11,8 +11,8 @@ def frame():
 
 
 def test_frame_empty(frame):
-    assert len(frame.data) == 0
-    assert len(frame.bytes()) == 0
+    assert not frame.data
+    assert not frame.bytes()
 
 
 def test_frame_from_bytes():

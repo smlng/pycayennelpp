@@ -488,7 +488,7 @@ class LppType(object):
         self.encode = encode
 
 
-lpp_types = [
+LPP_TYPES = [
     LppType(0, 'Digital Input', 1, 1,
             lpp_digital_io_from_bytes, lpp_digital_io_to_bytes),
     LppType(1, 'Digital Output', 1, 1,
@@ -520,4 +520,4 @@ def get_lpp_type(tid):
     """Returns the LppType instance for a given `tid` or `None` if not found"""
     if not isinstance(tid, int):
         raise AssertionError()
-    return next(filter(lambda x: x.tid == tid, lpp_types))
+    return next(filter(lambda x: x.tid == tid, LPP_TYPES))
