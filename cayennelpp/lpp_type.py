@@ -520,4 +520,4 @@ def get_lpp_type(tid):
     """Returns the LppType instance for a given `tid` or `None` if not found"""
     if not isinstance(tid, int):
         raise AssertionError()
-    return next(filter(lambda x: x.tid == tid, LPP_TYPES))
+    return next(filter(lambda x: x.tid == tid, LPP_TYPES), None)

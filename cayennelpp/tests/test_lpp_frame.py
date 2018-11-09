@@ -15,6 +15,11 @@ def test_frame_empty(frame):
     assert not frame.bytes()
 
 
+def test_init_invalid_data():
+    with pytest.raises(Exception):
+        LppFrame([0])
+
+
 def test_frame_from_bytes():
     # 03 67 01 10 05 67 00 FF = 27.2C + 25.5C
     buf = bytearray([0x03, 0x67, 0x01, 0x10, 0x05, 0x67, 0x00, 0xff])
@@ -48,9 +53,10 @@ def test_add_sensors(frame):
     frame.add_presence(3, 1)
     frame.add_accelerometer(5, 1.234, -1.234, 0.0)
     frame.add_pressure(6, 1005.5)
+    frame.add_barometer(6, 999.0)
     frame.add_gyrometer(7, 1.234, -1.234, 0.0)
     frame.add_gps(8, 1.234, -1.234, 0.0)
-    assert len(frame.data) == 6
+    assert len(frame.data) == 7
 
 
 def test_add_temperature(frame):
