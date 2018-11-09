@@ -1,5 +1,7 @@
 # PyCayenneLPP
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/34a4c0980a1e4e438d8da33f2d3bbeb6)](https://app.codacy.com/app/smlng/pycayennelpp?utm_source=github.com&utm_medium=referral&utm_content=smlng/pycayennelpp&utm_campaign=Badge_Grade_Dashboard)
+
 A Cayenne Low Power Payload (CayenneLPP) decoder and encoder for Python.
 This is a free open source software project published under the permissive
 [MIT License](LICENSE).
