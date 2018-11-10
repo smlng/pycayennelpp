@@ -1,9 +1,10 @@
 # PyCayenneLPP
 
-[![GitHub](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/smlng/pycayennelpp/blob/master/LICENSE)
-[![pip](https://img.shields.io/badge/version-0.4-red.svg)](https://pypi.org/project/pycayennelpp/)
 [![Travis-CI](https://travis-ci.com/smlng/pycayennelpp.svg?branch=master)](https://travis-ci.com/smlng/pycayennelpp)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/169fb391fec84d7e83ee69b8dad3cdc3)](https://www.codacy.com/app/smlng/pycayennelpp?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=smlng/pycayennelpp&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/169fb391fec84d7e83ee69b8dad3cdc3)](https://www.codacy.com/app/smlng/pycayennelpp?utm_source=github.com&utm_medium=referral&utm_content=smlng/pycayennelpp&utm_campaign=Badge_Coverage)
+[![PyPi](https://badge.fury.io/py/codacy-coverage.svg)](https://badge.fury.io/py/codacy-coverage)
+[![GitHub](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/smlng/pycayennelpp/blob/master/LICENSE)
 
 A Cayenne Low Power Payload (CayenneLPP) decoder and encoder written in Python.
 The project is under active development. Releases will be published on the
