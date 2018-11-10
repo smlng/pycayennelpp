@@ -44,8 +44,8 @@ buffer = frame.bytes()
 ## Contributing
 
 Contributing to a free open source software project can take place in many
-different ways. Feel free to open issues and create pull request to help
-improving this project. Pull request have to pass some automatic tests and
+different ways. Feel free to open issues and create pull requests to help
+improving this project. Each pull request has to pass some automatic tests and
 checks run by Travis-CI before being merged into the master branch.
 
 Please take note of the [contributing guidelines](CONTRIBUTING.md) and the
@@ -53,5 +53,4 @@ Please take note of the [contributing guidelines](CONTRIBUTING.md) and the
 
 ## License
 
-This is a free open source software project published under the permissive
-[MIT License](LICENSE).
+This is a free open source software project published under the [MIT License](LICENSE).
