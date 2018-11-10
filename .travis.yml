@@ -5,9 +5,11 @@ python:
   - "3.6"
 # command to install dependencies
 install:
-  - pip install flake8 pytest
+  - pip install flake8 pytest coverage pytest-cov codacy-coverage
 # command to run tests
 script:
-  - python3 -m pytest
   - python3 -m flake8
+  - python3 -m pytest --cov=cayennelpp
+  - python3 -m coverage xml
+  - python3 -m codacy -r coverage.xml
   - test -z "$(git log -E --grep='^(Merge|chore|docs|feat|fix|refactor|style|test)' --invert-grep)"
