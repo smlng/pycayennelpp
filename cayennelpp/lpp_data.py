@@ -34,19 +34,19 @@ class LppData(object):
                 self.channel, get_lpp_type(self.type).name, str(self.value))
 
     @classmethod
-    def from_bytes(class_object, bytes):
+    def from_bytes(class_object, buf):
         """Parse LppData from given a byte string"""
-        logging.debug("LppData.from_bytes: bytes=%s, length=%d",
-                      bytes, len(bytes))
-        if len(bytes) < 3:
+        logging.debug("LppData.from_bytes: buf=%s, length=%d",
+                      buf, len(buf))
+        if len(buf) < 3:
             raise BufferError("Invalid buffer size!")
-        chn = bytes[0]
-        tid = bytes[1]
+        chn = buf[0]
+        tid = buf[1]
         size = get_lpp_type(tid).size
         logging.debug("LppData.from_bytes: date_size = %d", size)
-        if len(bytes) < size + 2:
+        if len(buf) < size + 2:
             raise BufferError("Buffer too small!")
-        value = get_lpp_type(tid).decode(bytes[2:(2 + size)])
+        value = get_lpp_type(tid).decode(buf[2:(2 + size)])
         return class_object(chn, tid, value)
 
     def bytes(self):
