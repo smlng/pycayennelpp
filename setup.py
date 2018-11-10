@@ -7,12 +7,12 @@ def readme():
 
 
 setup(name='pycayennelpp',
-      version='0.4',
+      version='1.0.0',
       python_requires='>=3.4',
       description='Encoder and Decoder for CayenneLLP',
       long_description=readme(),
       classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3 :: Only',
@@ -26,5 +26,4 @@ setup(name='pycayennelpp',
       packages=['cayennelpp'],
       setup_requires=["pytest-runner"],
       tests_require=['pytest'],
-      include_package_data=True,
-      zip_safe=False)
+      include_package_data=True)
