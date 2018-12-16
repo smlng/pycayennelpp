@@ -75,3 +75,13 @@ def test_add_humidity(frame):
     frame.add_humitidy(3, 45.6)
     frame.add_humitidy(4, 78.9)
     assert len(frame.data) == 3
+
+
+def test_lpp_frame_str_empty(frame):
+    print(frame)
+
+
+def test_lpp_frame_str_data(frame):
+    frame.add_temperature(2, 12.3)
+    frame.add_temperature(3, -32.1)
+    print(frame)

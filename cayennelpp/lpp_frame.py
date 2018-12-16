@@ -18,6 +18,17 @@ class LppFrame(object):
             if not isinstance(d, LppData):
                 raise AssertionError()
 
+    def __str__(self):
+        """Return a pretty string representation of the LppFrame instance"""
+        logging.debug("LppFrame.__str__")
+        out = "LppFrame(data = ["
+        if self.data:
+            out = out + "\n"
+        for d in self.data:
+            out = out + "  " + str(d) + "\n"
+        out = out + "])"
+        return out
+
     @classmethod
     def from_bytes(cls, buf):
         """Parse LppFrame from a given byte string"""
