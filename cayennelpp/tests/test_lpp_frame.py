@@ -15,7 +15,12 @@ def test_frame_empty(frame):
     assert not frame.bytes()
 
 
-def test_init_invalid_data():
+def test_init_invalid_data_nolist():
+    with pytest.raises(Exception):
+        LppFrame(42)
+
+
+def test_init_invalid_data_item():
     with pytest.raises(Exception):
         LppFrame([0])
 
