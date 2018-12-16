@@ -11,11 +11,12 @@ class LppFrame(object):
         data (list): a list of LppData objects
     """
     def __init__(self, data=None):
-        data = data or []
-        for d in data:
+        self.data = data or []
+        if not isinstance(self.data, list):
+            raise AssertionError()
+        for d in self.data:
             if not isinstance(d, LppData):
                 raise AssertionError()
-        self.data = data
 
     @classmethod
     def from_bytes(cls, buf):
