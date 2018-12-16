@@ -7,6 +7,9 @@
 [![GitHub](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/smlng/pycayennelpp/blob/master/LICENSE)
 
 A Cayenne Low Power Payload (CayenneLPP) decoder and encoder written in Python.
+See also [myDevicesIoT/CayenneLPP](https://github.com/myDevicesIoT/CayenneLPP)
+for more information on the format and a reference implementation in C++.
+
 The project is under active development. Releases will be published on the
 fly as soon as a certain number of new features and fixes have been made.
 
@@ -23,10 +26,12 @@ The PyCayenneLPP package is available via PyPi using `pip`. To install it run:
 pip3 install pycayennelpp
 ```
 
-### Usage Example
+### Usage Examples
 
-The following is a simple example showing how to utilise PyCayenneLPP in your
-own application:
+The following show how to utilise PyCayenneLPP in your own application
+to encode and decode data into and from CayenneLPP.
+
+## Encoding
 
 ```Python
 from cayennelpp import LppFrame
@@ -37,8 +42,23 @@ frame = LppFrame()
 # add some sensor data
 frame.add_temperature(0, -1.2)
 frame.add_humidity(6, 34.5)
-# get byte buffer
+# get byte buffer in CayenneLPP format
 buffer = frame.bytes()
+```
+
+## Decoding
+
+```Python
+from cayennelpp import LppFrame
+
+
+# byte buffer in CayenneLPP format with 1 data item
+# i.e. on channel 1, with a temperature of 25.5C
+buffer = bytearray([0x01, 0x67, 0x00, 0xff])
+# create frame from bytes
+frame = LppFrame().from_bytes(buffer)
+# print the frame and its data
+print(frame)
 ```
 
 ## Contributing
