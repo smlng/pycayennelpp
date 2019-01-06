@@ -31,7 +31,7 @@ pip3 install pycayennelpp
 The following show how to utilise PyCayenneLPP in your own application
 to encode and decode data into and from CayenneLPP.
 
-## Encoding
+***Encoding***
 
 ```Python
 from cayennelpp import LppFrame
@@ -46,7 +46,7 @@ frame.add_humidity(6, 34.5)
 buffer = frame.bytes()
 ```
 
-## Decoding
+***Decoding***
 
 ```Python
 from cayennelpp import LppFrame
