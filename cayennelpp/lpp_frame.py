@@ -1,7 +1,12 @@
 from .lpp_data import LppData
 
 import base64
-import logging
+try:
+    import logging
+except ImportError:
+    class logging:
+        def debug(self, *args, **kwargs):
+            pass
 
 
 class LppFrame(object):

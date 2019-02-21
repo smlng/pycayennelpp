@@ -18,12 +18,27 @@ fly as soon as a certain number of new features and fixes have been made.
 PyCayenneLPP does not have any external dependencies, but only uses builtin
 functions and types of Python 3. At least Python in version 3.4 is required.
 
-### Prerequisites
+### Python 3 Prerequisites
 
 The PyCayenneLPP package is available via PyPi using `pip`. To install it run:
 
 ```Shell
 pip3 install pycayennelpp
+```
+
+### MicroPython Prerequisites
+
+MicroPython does not include the libraries `base64` and `logging` per default.
+While the latter rather optional for embedded devices, the former is essential.
+It can be installed from the
+[micropython-lib](https://github.com/micropython/micropython-lib/tree/master/base64)
+project via tools like [ampy](https://github.com/adafruit/ampy).
+
+```Shell
+git clone https://github.com/micropython/micropython-lib.git
+cd micropython-lib/
+pip install ampy
+ampy -p /dev/ttyACM0 put base64/ # port may be different
 ```
 
 ### Usage Examples

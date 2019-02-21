@@ -1,4 +1,9 @@
-import logging
+try:
+    import logging
+except ImportError:
+    class logging:
+        def debug(self, *args, **kwargs):
+            pass
 
 
 def lpp_digital_io_from_bytes(buf):
@@ -520,4 +525,10 @@ def get_lpp_type(tid):
     """Returns the LppType instance for a given `tid` or `None` if not found"""
     if not isinstance(tid, int):
         raise AssertionError()
-    return next(filter(lambda x: x.tid == tid, LPP_TYPES), None)
+    # `next` on MicroPython does not support `default` parameter
+    # use try/except construct instead
+    # https://docs.micropython.org/en/latest/genrst/modules.html#second-argument-to-next-is-not-implemented
+    try:
+        return next(filter(lambda x: x.tid == tid, LPP_TYPES))
+    except StopIteration:
+        return None
