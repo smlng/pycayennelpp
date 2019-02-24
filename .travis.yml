@@ -5,7 +5,7 @@ python:
   - "3.6"
 # command to install dependencies
 install:
-  - pip install flake8 pytest coverage pytest-cov codacy-coverage
+  - pip install flake8 pytest coverage "pytest-cov<2.6.0" codacy-coverage
 # command to run tests
 script:
   - python3 -m flake8
