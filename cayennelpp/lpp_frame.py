@@ -121,5 +121,5 @@ class LppFrame(object):
 
     def add_gps(self, channel, lat, lon, alt):
         """Create and add a GPS LppData"""
-        gps = LppData(channel, 134, (lat, lon, alt, ))
+        gps = LppData(channel, 136, (lat, lon, alt, ))
         self.data.append(gps)
