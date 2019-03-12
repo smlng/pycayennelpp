@@ -8,8 +8,10 @@ install:
   - pip install flake8 pytest coverage "pytest-cov<2.6.0" codacy-coverage
 # command to run tests
 script:
+  - test -z "$(git log -E --grep='^(Merge|chore|docs|feat|fix|refactor|style|test)' --invert-grep)"
   - python3 -m flake8
   - python3 -m pytest --cov=cayennelpp
   - python3 -m coverage xml
+# upload codacy results
+after_success:
   - python3 -m codacy -r coverage.xml
-  - test -z "$(git log -E --grep='^(Merge|chore|docs|feat|fix|refactor|style|test)' --invert-grep)"
