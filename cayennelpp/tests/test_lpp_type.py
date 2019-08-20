@@ -20,6 +20,8 @@ from cayennelpp.lpp_type import (lpp_digital_io_to_bytes,
                                  lpp_gyro_from_bytes,
                                  lpp_gps_to_bytes,
                                  lpp_gps_from_bytes,
+                                 lpp_voltage_to_bytes,
+                                 lpp_voltage_from_bytes,
                                  get_lpp_type,
                                  LppType)
 
@@ -96,6 +98,30 @@ def test_illuminance_invalid_val():
 def test_illuminance_negative_val():
     with pytest.raises(Exception):
         lpp_illuminance_to_bytes((-1,))
+
+
+def test_voltage():
+    val = (2,)
+    vol_buf = lpp_voltage_to_bytes(val)
+    assert lpp_voltage_from_bytes(vol_buf) == val
+
+
+def test_voltage_invalid_buf():
+    with pytest.raises(Exception):
+        lpp_voltage_from_bytes(bytearray([0x00]))
+
+
+def test_voltage_invalid_val():
+    with pytest.raises(Exception):
+        lpp_voltage_to_bytes((0, 1))
+
+
+def test_voltage_negative_val():
+    with pytest.raises(Exception):
+        lpp_voltage_to_bytes((-1,))
+    with pytest.raises(Exception):
+        # -25.0V
+        lpp_voltage_from_bytes(bytearray([0xf6, 0x3c]))
 
 
 def test_presence():

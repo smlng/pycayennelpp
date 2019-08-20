@@ -38,6 +38,50 @@ def lpp_digital_io_to_bytes(data):
     return buf
 
 
+def lpp_voltage_from_bytes(buf):
+    """
+    Decode voltage from CyaenneLPP byte buffer,
+    and return the value as a tuple.
+    """
+    logging.debug("lpp_voltage_from_bytes")
+    logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
+    if not len(buf) == 2:
+        raise AssertionError()
+    val_i = (buf[0] << 8 | buf[1])
+    logging.debug("  out:   value = %d", val_i)
+    if val_i >= (1 << 15):
+        logging.error("Negative Voltage value is not allowed")
+        raise AssertionError("Negative values are not allowed.")
+    logging.debug("  out:   value = %d", val_i)
+    val = val_i / 100.0
+    logging.debug("  out:   value = %f", val)
+    return (val,)
+
+
+def lpp_voltage_to_bytes(data):
+    """
+    Encode voltage into CayenneLPP,
+    and return as a byte buffer
+    """
+    logging.debug("lpp_voltage_to_bytes")
+    if not isinstance(data, tuple):
+        data = (data,)
+    if not len(data) == 1:
+        raise AssertionError()
+    val = data[0]
+    if val < 0:
+        logging.error("Negative Voltage value is not allowed")
+        raise AssertionError("Negative values are not allowed")
+    logging.debug("  in:    value = %f", val)
+    buf = bytearray([0x00, 0x00])
+    val_i = int(val * 100)
+    logging.debug("  in:    value = %d", val_i)
+    buf[0] = (val_i >> 8) & 0xff
+    buf[1] = (val_i) & 0xff
+    logging.debug("  out:   bytes = %s, length = %d", buf, len(buf))
+    return buf
+
+
 def lpp_analog_io_from_bytes(buf):
     """
     Decode analog input/output from CyaenneLPP byte buffer,
@@ -514,6 +558,8 @@ LPP_TYPES = [
             lpp_accel_from_bytes, lpp_accel_to_bytes),
     LppType(115, 'Barometer', 2, 1,
             lpp_baro_from_bytes, lpp_baro_to_bytes),
+    LppType(116, 'Voltage', 2, 1,
+            lpp_voltage_from_bytes, lpp_voltage_to_bytes),
     LppType(134, 'Gyrometer', 6, 3,
             lpp_gyro_from_bytes, lpp_gyro_to_bytes),
     LppType(136, 'GPS Location', 9, 3,

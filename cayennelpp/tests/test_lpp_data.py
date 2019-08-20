@@ -26,6 +26,14 @@ def test_gps_from_bytes():
     assert gps_buf == gps_dat.bytes()
 
 
+def test_voltage_from_bytes():
+    # 25V on channel 1
+    buff = bytearray([0x01, 0x74, 0x9, 0xc4])
+    data = LppData.from_bytes(buff)
+    assert buff == data.bytes()
+    assert data.value == (25,)
+
+
 def test_init_invalid_type():
     with pytest.raises(Exception):
         LppData(0, 4242, 0)

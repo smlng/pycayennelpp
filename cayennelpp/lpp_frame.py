@@ -128,3 +128,8 @@ class LppFrame(object):
         """Create and add a GPS LppData"""
         gps = LppData(channel, 136, (lat, lon, alt, ))
         self.data.append(gps)
+
+    def add_voltage(self, channel, value):
+        """Create and add a voltage LppData"""
+        voltage = LppData(channel, 116, (value, ))
+        self.data.append(voltage)
