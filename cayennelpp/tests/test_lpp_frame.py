@@ -64,6 +64,17 @@ def test_add_sensors(frame):
     assert len(frame.data) == 7
 
 
+def test_add_voltage(frame):
+    frame.add_voltage(0, 25.2)
+    frame.add_voltage(1, 120.2)
+    assert len(frame.data) == 2
+    assert frame.data[0].type == 116
+    assert frame.data[1].type == 116
+    frame.add_voltage(2, -25)
+    with pytest.raises(Exception):
+        frame.bytes()
+
+
 def test_add_temperature(frame):
     frame.add_temperature(2, 12.3)
     frame.add_temperature(3, -32.1)
