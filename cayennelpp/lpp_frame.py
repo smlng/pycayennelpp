@@ -105,6 +105,11 @@ class LppFrame(object):
         hum = LppData(channel, 104, (value, ))
         self.data.append(hum)
 
+    def add_unix_time(self, channel, value):
+        """Create and add a unix time sensor LppData"""
+        hum = LppData(channel, 133, (value, ))
+        self.data.append(hum)
+
     def add_accelerometer(self, channel, x, y, z):
         """Create and add a accelerometer sensor LppData"""
         acc = LppData(channel, 113, (x, y, z, ))

@@ -1,3 +1,7 @@
+from datetime import datetime
+from datetime import timezone as tz
+from .utils import datetime_as_utc
+
 try:
     import logging
 except ImportError:
@@ -77,6 +81,61 @@ def lpp_analog_io_to_bytes(data):
     logging.debug("  in:    value = %d", val_i)
     buf[0] = (val_i >> 8) & 0xff
     buf[1] = (val_i) & 0xff
+    logging.debug("  out:   bytes = %s, length = %d", buf, len(buf))
+    return buf
+
+
+def lpp_unix_time_from_bytes(buf):
+    """
+    Convert a 4 byte unsigned integer (unix timestamp) to datetime object.
+    Assume timezone is utc.
+    """
+    logging.debug("lpp_unix_time_from_bytes")
+    logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
+    if not len(buf) == 4:
+        raise AssertionError()
+    val_i = ((buf[0] << 24) | (buf[1] << 16) | (buf[2] << 8) | buf[3])
+    logging.debug("  out:   value = %d", val_i)
+    if val_i >= (1 << 31):
+        raise ValueError("Unix timestamp can not be negative.")
+    logging.debug("  out:   value = %d", val_i)
+    val = datetime.fromtimestamp(val_i, tz.utc)
+    return (val,)
+
+
+def lpp_unix_time_to_bytes(data):
+    """
+    Convert a datetime object or integer to unsigned 4 byte unix timestamp.
+    integer. Convert the datetime to utc first.
+    If it is an integer, assume it already is in utc timezone.
+    If it is a naive datetime object, assume it is in the system timezone.
+    """
+    logging.debug("lpp_untix_time_to_bytes")
+    if not isinstance(data, tuple):
+        data = (data,)
+    if not len(data) == 1:
+        raise ValueError("Only one value allowed.")
+    val = data[0]
+    logging.debug("  in:    value = %s", val)
+    buf = bytearray([0x00, 0x00, 0x00, 0x00])
+    epoch = datetime.fromtimestamp(0, tz.utc)
+    if isinstance(val, datetime):
+        val = datetime_as_utc(val.replace(microsecond=0))
+        # val = val.replace(microsecond=0).astimezone(tz.utc)
+        if val < epoch:
+            raise ValueError("Date/times before 1970-01-01 08:00 UTC"
+                             "are not allowed")
+        val = val.timestamp()
+    logging.debug("  in:    value = %f", val)
+    val_i = int(val)
+    logging.debug("  in:    value = %i", val_i)
+    if val_i < 0:
+        raise ValueError("Negative values are not allowed")
+    logging.debug("  in:    value = %d", val_i)
+    buf[0] = (val_i >> 24) & 0xff
+    buf[1] = (val_i >> 16) & 0xff
+    buf[2] = (val_i >> 8) & 0xff
+    buf[3] = (val_i) & 0xff
     logging.debug("  out:   bytes = %s, length = %d", buf, len(buf))
     return buf
 
@@ -514,6 +573,8 @@ LPP_TYPES = [
             lpp_accel_from_bytes, lpp_accel_to_bytes),
     LppType(115, 'Barometer', 2, 1,
             lpp_baro_from_bytes, lpp_baro_to_bytes),
+    LppType(133, 'Unix Time', 4, 1,
+            lpp_unix_time_from_bytes, lpp_unix_time_to_bytes),
     LppType(134, 'Gyrometer', 6, 3,
             lpp_gyro_from_bytes, lpp_gyro_to_bytes),
     LppType(136, 'GPS Location', 9, 3,
