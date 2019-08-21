@@ -1,4 +1,7 @@
 import pytest
+from cayennelpp.utils import datetime_as_utc
+from datetime import datetime, timedelta
+from datetime import timezone as tz
 
 from cayennelpp.lpp_type import (lpp_digital_io_to_bytes,
                                  lpp_digital_io_from_bytes,
@@ -26,6 +29,8 @@ from cayennelpp.lpp_type import (lpp_digital_io_to_bytes,
                                  lpp_load_from_bytes,
                                  lpp_generic_to_bytes,
                                  lpp_generic_from_bytes,
+                                 lpp_unix_time_to_bytes,
+                                 lpp_unix_time_from_bytes,
                                  get_lpp_type,
                                  LppType)
 
@@ -175,6 +180,49 @@ def test_generic_invalid_val():
 def test_generic_negative_val():
     with pytest.raises(Exception):
         lpp_generic_to_bytes((-1,))
+
+
+def test_unix_time_datetime_without_tz():
+    now = datetime.now()
+    utcnow = datetime_as_utc(now.replace(microsecond=0))
+    vol_buf = lpp_unix_time_to_bytes((now,))
+    assert lpp_unix_time_from_bytes(vol_buf) == (utcnow,)
+
+
+def test_unix_time_datetime_with_tz():
+    now = datetime.now(tz=tz(timedelta(hours=-5)))
+    utcnow = datetime_as_utc(now.replace(microsecond=0))
+    vol_buf = lpp_unix_time_to_bytes((now,))
+    assert lpp_unix_time_from_bytes(vol_buf) == (utcnow,)
+
+
+def test_unix_time_int():
+    val = datetime.fromtimestamp(5, tz.utc)
+    vol_buf = lpp_unix_time_to_bytes((5,))
+    assert lpp_unix_time_from_bytes(vol_buf) == (val,)
+
+
+def test_unix_time_invalid_buf():
+    with pytest.raises(Exception):
+        lpp_unix_time_from_bytes(bytearray([0x00]))
+
+
+def test_unix_time_invalid_val():
+    with pytest.raises(Exception):
+        lpp_unix_time_to_bytes((0, 1))
+    val = datetime.fromtimestamp(-5, tz.utc)
+    with pytest.raises(ValueError):
+        # negative value
+        lpp_unix_time_to_bytes((val,))
+
+
+def test_unix_time_negative_val():
+    with pytest.raises(Exception):
+        lpp_unix_time_to_bytes((-1,))
+    with pytest.raises(Exception):
+        # -4 years (-4*365*24*3600 seconds)
+        buff = bytearray([0xf8, 0x7b, 0x32, 0x0])
+        lpp_unix_time_from_bytes(buff)
 
 
 def test_presence():

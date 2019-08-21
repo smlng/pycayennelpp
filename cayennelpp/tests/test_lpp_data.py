@@ -1,4 +1,6 @@
 import pytest
+from datetime import datetime
+from datetime import timezone as tz
 
 from cayennelpp.lpp_data import LppData
 
@@ -53,6 +55,14 @@ def test_load_from_bytes():
     buff = bytearray([0x00, 0x7A, 0x00, 0xA5, 0x51])
     data = LppData.from_bytes(buff)
     assert buff == data.bytes()
+
+
+def test_unix_time_from_bytes():
+    # 1970-01-01T08:00Z (ie unix time 0)
+    buff = bytearray([0x01, 0x85, 0x00, 0x00, 0x00, 0x00])
+    data = LppData.from_bytes(buff)
+    assert buff == data.bytes()
+    assert data.value == (datetime.fromtimestamp(0, tz.utc),)
 
 
 def test_init_invalid_type():
