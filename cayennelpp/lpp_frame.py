@@ -85,6 +85,11 @@ class LppFrame(object):
         aout = LppData(channel, 3, (value, ))
         self.data.append(aout)
 
+    def add_generic(self, channel, value):
+        """Create and add a generic 4-byte unsigned integer LppData"""
+        din = LppData(channel, 100, (value, ))
+        self.data.append(din)
+
     def add_luminosity(self, channel, value):
         """Create and add an illuminance sensor LppData"""
         lux = LppData(channel, 101, (value, ))

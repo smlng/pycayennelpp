@@ -64,6 +64,12 @@ def test_add_sensors(frame):
     assert len(frame.data) == 7
 
 
+def test_add_generic(frame):
+    frame.add_generic(0, 4294967295)
+    frame.add_generic(1, 1)
+    assert len(frame.data) == 2
+
+
 def test_add_temperature(frame):
     frame.add_temperature(2, 12.3)
     frame.add_temperature(3, -32.1)
