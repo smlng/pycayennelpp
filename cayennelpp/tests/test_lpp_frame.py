@@ -78,6 +78,11 @@ def test_add_voltage(frame):
 def test_add_load(frame):
     frame.add_load(0, -5.432)
     frame.add_load(1, 160.987)
+
+
+def test_add_generic(frame):
+    frame.add_generic(0, 4294967295)
+    frame.add_generic(1, 1)
     assert len(frame.data) == 2
 
 

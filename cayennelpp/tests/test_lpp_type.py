@@ -24,6 +24,8 @@ from cayennelpp.lpp_type import (lpp_digital_io_to_bytes,
                                  lpp_voltage_from_bytes,
                                  lpp_load_to_bytes,
                                  lpp_load_from_bytes,
+                                 lpp_generic_to_bytes,
+                                 lpp_generic_from_bytes,
                                  get_lpp_type,
                                  LppType)
 
@@ -148,6 +150,31 @@ def test_load_invalid_val_type():
 def test_load_invalid_val():
     with pytest.raises(Exception):
         lpp_load_to_bytes((0, 1))
+
+
+def test_generic():
+    val = 4294967295
+    vol_buf = lpp_generic_to_bytes((val,))
+    assert lpp_generic_from_bytes(vol_buf) == (val,)
+
+
+def test_generic_invalid_buf():
+    with pytest.raises(Exception):
+        lpp_generic_from_bytes(bytearray([0x00, 0x00, 0x00]))
+
+
+def test_generic_invalid_val():
+    with pytest.raises(Exception):
+        lpp_generic_to_bytes((0, 1))
+    with pytest.raises(ValueError):
+        # val exceeds 4 bytes
+        val = 4294967297
+        lpp_generic_to_bytes((val,))
+
+
+def test_generic_negative_val():
+    with pytest.raises(Exception):
+        lpp_generic_to_bytes((-1,))
 
 
 def test_presence():
