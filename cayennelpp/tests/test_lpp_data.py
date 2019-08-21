@@ -17,6 +17,20 @@ def test_accelerometer_from_bytes():
     assert acc_buf == acc_dat.bytes()
 
 
+def test_generic_from_bytes():
+    buff = bytearray([0x00, 0x64, 0xff, 0xff, 0xff, 0xfb])
+    data = LppData.from_bytes(buff)
+    assert buff == data.bytes()
+    assert data.type == 100
+    assert data.value == (4294967291,)
+
+
+def test_generic_from_bytes_invalid_size():
+    with pytest.raises(Exception):
+        buf = bytearray([0x00, 0x64, 0x00, 0x00, 0x00])
+        LppData.from_bytes(buf)
+
+
 def test_gps_from_bytes():
     # 01 88 06 76 5f f2 96 0a 00 03 e8
     gps_buf = bytearray([0x01, 0x88, 0x06, 0x76,

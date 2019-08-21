@@ -151,6 +151,46 @@ def lpp_analog_io_to_bytes(data):
     return buf
 
 
+def lpp_generic_from_bytes(buf):
+    """
+    Convert a 4 byte unsigned integer from bytes.
+    """
+    logging.debug("lpp_generic_from_bytes")
+    logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
+    if not len(buf) == 4:
+        raise AssertionError()
+    val_i = ((buf[0] << 24) | (buf[1] << 16) | (buf[2] << 8) | buf[3])
+    logging.debug("  out:   value = %d", val_i)
+    return (val_i,)
+
+
+def lpp_generic_to_bytes(data):
+    """
+    Convert an unsigned 4 byte integer to byte array.
+    """
+    logging.debug("lpp_generic_time_to_bytes")
+    if not isinstance(data, tuple):
+        data = (data,)
+    if not len(data) == 1:
+        raise ValueError("Only one value allowed.")
+    buf = bytearray([0x00, 0x00, 0x00, 0x00])
+    val = data[0]
+    logging.debug("  in:    value = %s", val)
+    val_i = int(val)
+    logging.debug("  in:    value = %i", val_i)
+    if val_i < 0:
+        raise ValueError("Negative values are not allowed")
+    if val_i > 4294967295:
+        raise ValueError("Values larger than 4294967295 are not allowed")
+    logging.debug("  in:    value = %d", val_i)
+    buf[0] = (val_i >> 24) & 0xff
+    buf[1] = (val_i >> 16) & 0xff
+    buf[2] = (val_i >> 8) & 0xff
+    buf[3] = (val_i) & 0xff
+    logging.debug("  out:   bytes = %s, length = %d", buf, len(buf))
+    return buf
+
+
 def lpp_illuminance_from_bytes(buf):
     """
     Decode illuminance sensor data from CyaenneLPP byte buffer,
@@ -584,6 +624,8 @@ LPP_TYPES = [
             lpp_analog_io_from_bytes, lpp_analog_io_to_bytes),
     LppType(3, 'Analog Output', 2, 1,
             lpp_analog_io_from_bytes, lpp_analog_io_to_bytes),
+    LppType(100, 'Generic', 4, 1,
+            lpp_generic_from_bytes, lpp_generic_to_bytes),
     LppType(101, 'Illuminance Sensor', 2, 1,
             lpp_illuminance_from_bytes, lpp_illuminance_to_bytes),
     LppType(102, 'Presence Sensor', 1, 1,
