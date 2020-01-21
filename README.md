@@ -17,6 +17,8 @@ fly as soon as a certain number of new features and fixes have been made.
 
 PyCayenneLPP does not have any external dependencies, but only uses builtin
 functions and types of Python 3. At least Python in version 3.4 is required.
+Since version 1.2.0 MicroPython is supported, and published as a separate
+package under `micropython-pycayennelpp`.
 
 ### Python 3 Prerequisites
 
@@ -30,21 +32,28 @@ pip3 install pycayennelpp
 
 MicroPython does not include the libraries `base64` and `logging` per default.
 While the latter rather optional for embedded devices, the former is essential.
-It can be installed from the
-[micropython-lib](https://github.com/micropython/micropython-lib/tree/master/base64)
-project via tools like [ampy](https://github.com/adafruit/ampy).
+Using MicroPythons `upip` module PyCayenneLPP can be installed as follows
+within MicroPython:
+
+```Python
+import upip
+upip.install("micropython-pycayennelpp")
+```
+
+Or alternatively run with in a shell:
 
 ```Shell
-git clone https://github.com/micropython/micropython-lib.git
-cd micropython-lib/
-pip install ampy
-ampy -p /dev/ttyACM0 put base64/ # port may be different
+micropython -m upip install micropython-pycayennelpp
 ```
+
+This will also install `micropython-base64` as a dependency.
 
 ### Usage Examples
 
 The following show how to utilise PyCayenneLPP in your own application
-to encode and decode data into and from CayenneLPP.
+to encode and decode data into and from CayenneLPP. The code snippets
+work with standard Python 3 as well as MicroPython, assuming you have
+installed the PyCayenneLPP package as shown above.
 
 ***Encoding***
 
