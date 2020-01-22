@@ -75,6 +75,12 @@ def test_add_voltage(frame):
         frame.bytes()
 
 
+def test_add_load(frame):
+    frame.add_load(0, -5.432)
+    frame.add_load(1, 160.987)
+    assert len(frame.data) == 2
+
+
 def test_add_temperature(frame):
     frame.add_temperature(2, 12.3)
     frame.add_temperature(3, -32.1)
