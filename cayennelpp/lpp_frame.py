@@ -133,3 +133,8 @@ class LppFrame(object):
         """Create and add a voltage LppData"""
         voltage = LppData(channel, 116, (value, ))
         self.data.append(voltage)
+
+    def add_load(self, channel, value):
+        """Create and add a load LppData"""
+        load = LppData(channel, 122, (value, ))
+        self.data.append(load)

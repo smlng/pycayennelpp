@@ -34,6 +34,13 @@ def test_voltage_from_bytes():
     assert data.value == (25,)
 
 
+def test_load_from_bytes():
+    # 42.321kg on channel 0
+    buff = bytearray([0x00, 0x7A, 0x00, 0xA5, 0x51])
+    data = LppData.from_bytes(buff)
+    assert buff == data.bytes()
+
+
 def test_init_invalid_type():
     with pytest.raises(Exception):
         LppData(0, 4242, 0)

@@ -509,6 +509,50 @@ def lpp_gps_to_bytes(data):
     return buf
 
 
+def lpp_load_from_bytes(buf):
+    """
+    Decode load from CyaenneLPP byte buffer,
+    and return the value as a tuple.
+    """
+    logging.debug("lpp_load_from_bytes")
+    logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
+    if not len(buf) == 3:
+        raise AssertionError()
+    val_i = (buf[0] << 8 | buf[1] << 8 | buf[2])
+    logging.debug("  out:   value = %d", val_i)
+    if val_i >= (1 << 23):
+        val_i = -1 - (val_i ^ 0xffffff)
+    logging.debug("  out:   value = %d", val_i)
+    val = val_i / 1000.0
+    logging.debug("  out:   value = %f", val)
+    return (val,)
+
+
+def lpp_load_to_bytes(data):
+    """
+    Encode load into CayenneLPP,
+    and return as a byte buffer
+    """
+    logging.debug("lpp_load_to_bytes")
+    if not isinstance(data, tuple):
+        data = (data,)
+    if not len(data) == 1:
+        raise AssertionError()
+    val = data[0]
+    logging.debug("  in:    value = %f", val)
+    buf = bytearray([0x00, 0x00, 0x00])
+    val_i = int(val * 1000)
+    logging.debug("  in:    value = %d", val_i)
+    if val_i < 0:
+        val_i = ~(-val_i - 1)
+    logging.debug("  in:    value = %d", val_i)
+    buf[0] = (val_i >> 16) & 0xff
+    buf[1] = (val_i >> 8) & 0xff
+    buf[2] = (val_i) & 0xff
+    logging.debug("  out:   bytes = %s, length = %d", buf, len(buf))
+    return buf
+
+
 class LppType(object):
     """Cayenne LPP type representation
 
@@ -560,6 +604,8 @@ LPP_TYPES = [
             lpp_baro_from_bytes, lpp_baro_to_bytes),
     LppType(116, 'Voltage', 2, 1,
             lpp_voltage_from_bytes, lpp_voltage_to_bytes),
+    LppType(122, 'Load', 3, 1,
+            lpp_load_from_bytes, lpp_load_to_bytes),
     LppType(134, 'Gyrometer', 6, 3,
             lpp_gyro_from_bytes, lpp_gyro_to_bytes),
     LppType(136, 'GPS Location', 9, 3,
