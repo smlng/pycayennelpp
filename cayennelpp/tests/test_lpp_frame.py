@@ -82,9 +82,9 @@ def test_add_temperature(frame):
 
 
 def test_add_humidity(frame):
-    frame.add_humitidy(2, 12.3)
-    frame.add_humitidy(3, 45.6)
-    frame.add_humitidy(4, 78.9)
+    frame.add_humidity(2, 12.3)
+    frame.add_humidity(3, 45.6)
+    frame.add_humidity(4, 78.9)
     assert len(frame.data) == 3
 
 
