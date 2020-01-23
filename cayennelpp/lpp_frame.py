@@ -100,7 +100,7 @@ class LppFrame(object):
         temp = LppData(channel, 103, (value, ))
         self.data.append(temp)
 
-    def add_humitidy(self, channel, value):
+    def add_humidity(self, channel, value):
         """Create and add a humidity sensor LppData"""
         hum = LppData(channel, 104, (value, ))
         self.data.append(hum)
