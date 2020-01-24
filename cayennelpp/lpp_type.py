@@ -518,7 +518,7 @@ def lpp_load_from_bytes(buf):
     logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
     if not len(buf) == 3:
         raise AssertionError()
-    val_i = (buf[0] << 8 | buf[1] << 8 | buf[2])
+    val_i = (buf[0] << 16 | buf[1] << 8 | buf[2])
     logging.debug("  out:   value = %d", val_i)
     if val_i >= (1 << 23):
         val_i = -1 - (val_i ^ 0xffffff)
