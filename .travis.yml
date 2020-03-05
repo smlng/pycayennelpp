@@ -3,11 +3,7 @@ python:
   - "3.4"
   - "3.5"
   - "3.6"
-matrix:
-  include:
-    - python: 3.7
-      dist: xenial
-      sudo: true
+  - "3.7"
 # command to install dependencies
 install:
   - pip install flake8 pytest coverage "pytest-cov<2.6.0" codacy-coverage
