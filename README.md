@@ -7,6 +7,26 @@
 [![GitHub](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/smlng/pycayennelpp/blob/master/LICENSE)
 
 A Cayenne Low Power Payload (CayenneLPP) decoder and encoder written in Python.
+The following table lists the currently supported data types with the LPP code
+(which equals IPSO code - 3200), data size in bytes, and data dimensions.
+
+| Type Name      | LPP | Size | Dim |
+|----------------|-----|------|-----|
+| Digital Input  |   0 |    1 |   1 |
+| Digital Output |   1 |    1 |   1 |
+| Analog Input   |   2 |    2 |   1 |
+| Analog Output  |   3 |    2 |   1 |
+| Illuminance    | 101 |    2 |   1 |
+| Presence       | 102 |    1 |   1 |
+| Temperature    | 103 |    2 |   1 |
+| Humidity       | 104 |    1 |   1 |
+| Accelerometer  | 113 |    6 |   3 |
+| Barometer      | 115 |    2 |   1 |
+| Voltage        | 116 |    2 |   1 |
+| Load           | 122 |    3 |   1 |
+| Gyrometer      | 134 |    6 |   3 |
+| GPS Location   | 136 |    9 |   3 |
+
 See also [myDevicesIoT/CayenneLPP](https://github.com/myDevicesIoT/CayenneLPP)
 for more information on the format and a reference implementation in C++.
 
