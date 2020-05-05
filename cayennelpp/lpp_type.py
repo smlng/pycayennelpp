@@ -6,6 +6,43 @@ except ImportError:
             pass
 
 
+def __from_bytes(buf, buflen):
+    """
+    internal function to parse number from buffer
+    """
+    logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
+    if not len(buf) == buflen:
+        raise AssertionError()
+    val = 0
+    for i in range(buflen):
+        shift = (buflen - i - 1) * 8
+        val |= buf[i] << shift
+    logging.debug("  out:   value = %d", val)
+    return val
+
+
+def __to_s16(val):
+    """
+    internal function to convert a 16bit number to signed
+    """
+    logging.debug("  in:    value = %d", val)
+    if val >= (1 << 15):
+        val = -1 - (val ^ 0xffff)
+    logging.debug("  out:   value = %d", val)
+    return val
+
+
+def __to_s24(val):
+    """
+    internal function to convert a 24bit number to signed
+    """
+    logging.debug("  in:    value = %d", val)
+    if val >= (1 << 23):
+        val = -1 - (val ^ 0xffffff)
+    logging.debug("  out:   value = %d", val)
+    return val
+
+
 def lpp_digital_io_from_bytes(buf):
     """
     Decode digitial input/output from CyaenneLPP byte buffer,
@@ -44,15 +81,10 @@ def lpp_voltage_from_bytes(buf):
     and return the value as a tuple.
     """
     logging.debug("lpp_voltage_from_bytes")
-    logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
-    if not len(buf) == 2:
-        raise AssertionError()
-    val_i = (buf[0] << 8 | buf[1])
-    logging.debug("  out:   value = %d", val_i)
+    val_i = __from_bytes(buf, 2)
     if val_i >= (1 << 15):
         logging.error("Negative Voltage value is not allowed")
         raise AssertionError("Negative values are not allowed.")
-    logging.debug("  out:   value = %d", val_i)
     val = val_i / 100.0
     logging.debug("  out:   value = %f", val)
     return (val,)
@@ -88,14 +120,8 @@ def lpp_analog_io_from_bytes(buf):
     and return the value as a tupel.
     """
     logging.debug("lpp_analog_io_from_bytes")
-    logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
-    if not len(buf) == 2:
-        raise AssertionError()
-    val_i = (buf[0] << 8 | buf[1])
-    logging.debug("  out:   value = %d", val_i)
-    if val_i >= (1 << 15):
-        val_i = -1 - (val_i ^ 0xffff)
-    logging.debug("  out:   value = %d", val_i)
+    val_i = __from_bytes(buf, 2)
+    val_i = __to_s16(val_i)
     val = val_i / 100.0
     logging.debug("  out:   value = %f", val)
     return (val,)
@@ -131,11 +157,7 @@ def lpp_illuminance_from_bytes(buf):
     and return the value as a tupel.
     """
     logging.debug("lpp_illuminance_from_bytes")
-    logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
-    if not len(buf) == 2:
-        raise AssertionError()
-    val = int(buf[0] << 8 | buf[1])
-    logging.debug("  out:   value = %d", val)
+    val = int(__from_bytes(buf, 2))
     return (val,)
 
 
@@ -166,11 +188,7 @@ def lpp_presence_from_bytes(buf):
     and return the value as a tupel.
     """
     logging.debug("lpp_presence_from_bytes")
-    logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
-    if not len(buf) == 1:
-        raise AssertionError()
-    val = buf[0]
-    logging.debug("  out:   value = %d", val)
+    val = __from_bytes(buf, 1)
     return (val,)
 
 
@@ -200,14 +218,8 @@ def lpp_temperature_from_bytes(buf):
     and return the value as a tupel.
     """
     logging.debug("lpp_temperature_from_bytes")
-    logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
-    if not len(buf) == 2:
-        raise AssertionError()
-    val_i = (buf[0] << 8 | buf[1])
-    logging.debug("  out:   value = %d", val_i)
-    if val_i >= (1 << 15):
-        val_i = -1 - (val_i ^ 0xffff)
-    logging.debug("  out:   value = %d", val_i)
+    val_i = __from_bytes(buf, 2)
+    val_i = __to_s16(val_i)
     val = val_i / 10.0
     logging.debug("  out:   value = %f", val)
     return (val, )
@@ -243,11 +255,7 @@ def lpp_humidity_from_bytes(buf):
     and return the value as a tupel.
     """
     logging.debug("lpp_humidity_from_bytes")
-    logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
-    if not len(buf) == 1:
-        raise AssertionError()
-    val_i = buf[0]
-    logging.debug("  out:   value = %d", val_i)
+    val_i = __from_bytes(buf, 1)
     val = val_i / 2.0
     logging.debug("  out:   value = %f", val)
     return (val, )
@@ -284,16 +292,13 @@ def lpp_accel_from_bytes(buf):
     logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
     if not len(buf) == 6:
         raise AssertionError()
-    val_xi = int(buf[0] << 8 | buf[1])
-    val_yi = int(buf[2] << 8 | buf[3])
-    val_zi = int(buf[4] << 8 | buf[5])
+    val_xi = __from_bytes(buf[0:2], 2)
+    val_yi = __from_bytes(buf[2:4], 2)
+    val_zi = __from_bytes(buf[4:6], 2)
     logging.debug("  out:   x = %d, y = %d, z = %d", val_xi, val_yi, val_zi)
-    if val_xi >= (1 << 15):
-        val_xi = -1 - (val_xi ^ 0xffff)
-    if val_yi >= (1 << 15):
-        val_yi = -1 - (val_yi ^ 0xffff)
-    if val_zi >= (1 << 15):
-        val_zi = -1 - (val_zi ^ 0xffff)
+    val_xi = __to_s16(val_xi)
+    val_yi = __to_s16(val_yi)
+    val_zi = __to_s16(val_zi)
     logging.debug("  out:   x = %d, y = %d, z = %d", val_xi, val_yi, val_zi)
     val_x = val_xi / 1000.0
     val_y = val_yi / 1000.0
@@ -347,7 +352,8 @@ def lpp_baro_from_bytes(buf):
     logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
     if not len(buf) == 2:
         raise AssertionError()
-    val = (buf[0] << 8 | buf[1]) / 10.0
+    val = __from_bytes(buf, 2)
+    val = val / 10.0
     logging.debug("  out:   value = %f", val)
     return (val,)
 
@@ -383,16 +389,13 @@ def lpp_gyro_from_bytes(buf):
     logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
     if not len(buf) == 6:
         raise AssertionError()
-    val_xi = int(buf[0] << 8 | buf[1])
-    val_yi = int(buf[2] << 8 | buf[3])
-    val_zi = int(buf[4] << 8 | buf[5])
+    val_xi = __from_bytes(buf[0:2], 2)
+    val_yi = __from_bytes(buf[2:4], 2)
+    val_zi = __from_bytes(buf[4:6], 2)
     logging.debug("  out:   x = %d, y = %d, z = %d", val_xi, val_yi, val_zi)
-    if val_xi >= (1 << 15):
-        val_xi = -1 - (val_xi ^ 0xffff)
-    if val_yi >= (1 << 15):
-        val_yi = -1 - (val_yi ^ 0xffff)
-    if val_zi >= (1 << 15):
-        val_zi = -1 - (val_zi ^ 0xffff)
+    val_xi = __to_s16(val_xi)
+    val_yi = __to_s16(val_yi)
+    val_zi = __to_s16(val_zi)
     logging.debug("  out:   x = %d, y = %d, z = %d", val_xi, val_yi, val_zi)
     val_x = val_xi / 100.0
     val_y = val_yi / 100.0
@@ -446,17 +449,14 @@ def lpp_gps_from_bytes(buf):
     logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
     if not len(buf) == 9:
         raise AssertionError()
-    lat_i = int(buf[0] << 16 | buf[1] << 8 | buf[2])
-    lon_i = int(buf[3] << 16 | buf[4] << 8 | buf[5])
-    alt_i = int(buf[6] << 16 | buf[7] << 8 | buf[8])
+    lat_i = __from_bytes(buf[0:3], 3)
+    lon_i = __from_bytes(buf[3:6], 3)
+    alt_i = __from_bytes(buf[6:9], 3)
     logging.debug("  out:   latitude = %d, longitude = %d, altitude = %d",
                   lat_i, lon_i, alt_i)
-    if lat_i >= (1 << 23):
-        lat_i = -1 - (lat_i ^ 0xffffff)
-    if lon_i >= (1 << 23):
-        lon_i = -1 - (lon_i ^ 0xffffff)
-    if alt_i >= (1 << 23):
-        alt_i = -1 - (alt_i ^ 0xffffff)
+    lat_i = __to_s24(lat_i)
+    lon_i = __to_s24(lon_i)
+    alt_i = __to_s24(alt_i)
     logging.debug("  out:   latitude = %d, longitude = %d, altitude = %d",
                   lat_i, lon_i, alt_i)
     lat = lat_i / 10000.0
@@ -515,14 +515,8 @@ def lpp_load_from_bytes(buf):
     and return the value as a tuple.
     """
     logging.debug("lpp_load_from_bytes")
-    logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
-    if not len(buf) == 3:
-        raise AssertionError()
-    val_i = (buf[0] << 16 | buf[1] << 8 | buf[2])
-    logging.debug("  out:   value = %d", val_i)
-    if val_i >= (1 << 23):
-        val_i = -1 - (val_i ^ 0xffffff)
-    logging.debug("  out:   value = %d", val_i)
+    val_i = __from_bytes(buf, 3)
+    val_i = __to_s24(val_i)
     val = val_i / 1000.0
     logging.debug("  out:   value = %f", val)
     return (val,)
