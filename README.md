@@ -16,6 +16,7 @@ The following table lists the currently supported data types with the LPP code
 | Digital Output |   1 |    1 |   1 |
 | Analog Input   |   2 |    2 |   1 |
 | Analog Output  |   3 |    2 |   1 |
+| Generic        | 100 |    4 |   1 |
 | Illuminance    | 101 |    2 |   1 |
 | Presence       | 102 |    1 |   1 |
 | Temperature    | 103 |    2 |   1 |
@@ -24,6 +25,7 @@ The following table lists the currently supported data types with the LPP code
 | Barometer      | 115 |    2 |   1 |
 | Voltage        | 116 |    2 |   1 |
 | Load           | 122 |    3 |   1 |
+| Unix Time      | 133 |    4 |   1 |
 | Gyrometer      | 134 |    6 |   3 |
 | GPS Location   | 136 |    9 |   3 |
 
