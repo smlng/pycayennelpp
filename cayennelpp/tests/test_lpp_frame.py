@@ -45,6 +45,8 @@ def test_add_digital_io(frame):
     frame.add_digital_input(0, 21)
     frame.add_digital_output(1, 42)
     assert len(frame) == 2
+    assert frame.data[0].type == 0
+    assert frame.data[1].type == 1
 
 
 def test_add_analog_io(frame):
@@ -53,6 +55,10 @@ def test_add_analog_io(frame):
     frame.add_analog_output(0, 56.78)
     frame.add_analog_output(1, -56.78)
     assert len(frame) == 4
+    assert frame.data[0].type == 2
+    assert frame.data[1].type == 2
+    assert frame.data[2].type == 3
+    assert frame.data[3].type == 3
 
 
 def test_add_sensors(frame):
@@ -64,6 +70,13 @@ def test_add_sensors(frame):
     frame.add_gyrometer(7, 1.234, -1.234, 0.0)
     frame.add_gps(8, 1.234, -1.234, 0.0)
     assert len(frame) == 7
+    assert frame.data[0].type == 101
+    assert frame.data[1].type == 102
+    assert frame.data[2].type == 113
+    assert frame.data[3].type == 115
+    assert frame.data[4].type == 115
+    assert frame.data[5].type == 134
+    assert frame.data[6].type == 136
 
 
 def test_add_voltage(frame):
@@ -80,12 +93,17 @@ def test_add_voltage(frame):
 def test_add_load(frame):
     frame.add_load(0, -5.432)
     frame.add_load(1, 160.987)
+    assert len(frame.data) == 2
+    assert frame.data[0].type == 122
+    assert frame.data[1].type == 122
 
 
 def test_add_generic(frame):
     frame.add_generic(0, 4294967295)
     frame.add_generic(1, 1)
     assert len(frame) == 2
+    assert frame.data[0].type == 100
+    assert frame.data[1].type == 100
 
 
 def test_add_unix_time(frame):
@@ -101,6 +119,8 @@ def test_add_temperature(frame):
     frame.add_temperature(2, 12.3)
     frame.add_temperature(3, -32.1)
     assert len(frame) == 2
+    assert frame.data[0].type == 103
+    assert frame.data[1].type == 103
 
 
 def test_add_humidity(frame):
@@ -108,6 +128,9 @@ def test_add_humidity(frame):
     frame.add_humidity(3, 45.6)
     frame.add_humidity(4, 78.9)
     assert len(frame) == 3
+    assert frame.data[0].type == 104
+    assert frame.data[1].type == 104
+    assert frame.data[2].type == 104
 
 
 def test_lpp_frame_str_empty(frame):
