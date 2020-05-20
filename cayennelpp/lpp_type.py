@@ -1,7 +1,3 @@
-from datetime import datetime
-from datetime import timezone as tz
-from .utils import datetime_as_utc
-
 try:
     import logging
 except ImportError:
@@ -200,6 +196,8 @@ def lpp_unix_time_from_bytes(buf):
     Convert a 4 byte unsigned integer (unix timestamp) to datetime object.
     Assume timezone is utc.
     """
+    from datetime import datetime
+    from datetime import timezone as tz
     logging.debug("lpp_unix_time_from_bytes")
     logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
     if not len(buf) == 4:
@@ -220,6 +218,8 @@ def lpp_unix_time_to_bytes(data):
     If it is an integer, assume it already is in utc timezone.
     If it is a naive datetime object, assume it is in the system timezone.
     """
+    from datetime import datetime
+    from datetime import timezone as tz
     logging.debug("lpp_untix_time_to_bytes")
     if not isinstance(data, tuple):
         data = (data,)
@@ -230,6 +230,7 @@ def lpp_unix_time_to_bytes(data):
     buf = bytearray([0x00, 0x00, 0x00, 0x00])
     epoch = datetime.fromtimestamp(0, tz.utc)
     if isinstance(val, datetime):
+        from .utils import datetime_as_utc
         val = datetime_as_utc(val.replace(microsecond=0))
         # val = val.replace(microsecond=0).astimezone(tz.utc)
         if val < epoch:
