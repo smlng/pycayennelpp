@@ -118,3 +118,14 @@ def test_lpp_frame_str_data(frame):
     frame.add_temperature(2, 12.3)
     frame.add_temperature(3, -32.1)
     print(frame)
+
+
+def test_lpp_frame_iterator(frame):
+    frame.add_temperature(2, 12.3)
+    frame.add_humidity(3, 45.6)
+    frame.add_load(1, 160.987)
+    counter = 0
+    for val in frame:
+        print(val)
+        counter += 1
+    assert counter == 3
