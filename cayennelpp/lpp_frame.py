@@ -38,6 +38,13 @@ class LppFrame(object):
         """Return number of data elements in a LppFrame"""
         return len(self.data)
 
+    def __iter__(self):
+        """Return an iterator over all data elements in a LppFrame"""
+        count = 0
+        while count < len(self.data):
+            yield self.data[count]
+            count += 1
+
     @classmethod
     def from_bytes(cls, buf):
         """Parse LppFrame from a given byte string"""
