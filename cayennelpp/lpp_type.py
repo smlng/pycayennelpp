@@ -1,7 +1,3 @@
-from datetime import datetime
-from datetime import timezone as tz
-from .utils import datetime_as_utc
-
 try:
     import logging
 except ImportError:
@@ -197,8 +193,7 @@ def lpp_generic_to_bytes(data):
 
 def lpp_unix_time_from_bytes(buf):
     """
-    Convert a 4 byte unsigned integer (unix timestamp) to datetime object.
-    Assume timezone is utc.
+    Convert a 4 byte unix timestamp (unsigned integer) from bytes.
     """
     logging.debug("lpp_unix_time_from_bytes")
     logging.debug("  in:    bytes = %s, length = %d", buf, len(buf))
@@ -209,18 +204,14 @@ def lpp_unix_time_from_bytes(buf):
     if val_i >= (1 << 31):
         raise ValueError("Unix timestamp can not be negative.")
     logging.debug("  out:   value = %d", val_i)
-    val = datetime.fromtimestamp(val_i, tz.utc)
-    return (val,)
+    return (val_i,)
 
 
 def lpp_unix_time_to_bytes(data):
     """
-    Convert a datetime object or integer to unsigned 4 byte unix timestamp.
-    integer. Convert the datetime to utc first.
-    If it is an integer, assume it already is in utc timezone.
-    If it is a naive datetime object, assume it is in the system timezone.
+    Convert an 4 byte unix timestamp (unsigned integer) to byte array.
     """
-    logging.debug("lpp_untix_time_to_bytes")
+    logging.debug("lpp_unix_time_to_bytes")
     if not isinstance(data, tuple):
         data = (data,)
     if not len(data) == 1:
@@ -228,14 +219,6 @@ def lpp_unix_time_to_bytes(data):
     val = data[0]
     logging.debug("  in:    value = %s", val)
     buf = bytearray([0x00, 0x00, 0x00, 0x00])
-    epoch = datetime.fromtimestamp(0, tz.utc)
-    if isinstance(val, datetime):
-        val = datetime_as_utc(val.replace(microsecond=0))
-        # val = val.replace(microsecond=0).astimezone(tz.utc)
-        if val < epoch:
-            raise ValueError("Date/times before 1970-01-01 08:00 UTC"
-                             "are not allowed")
-        val = val.timestamp()
     logging.debug("  in:    value = %f", val)
     val_i = int(val)
     logging.debug("  in:    value = %i", val_i)
@@ -701,7 +684,7 @@ LPP_TYPES = [
             lpp_voltage_from_bytes, lpp_voltage_to_bytes),
     LppType(122, 'Load', 3, 1,
             lpp_load_from_bytes, lpp_load_to_bytes),
-    LppType(133, 'Unix Time', 4, 1,
+    LppType(133, 'Unix Timestamp', 4, 1,
             lpp_unix_time_from_bytes, lpp_unix_time_to_bytes),
     LppType(134, 'Gyrometer', 6, 3,
             lpp_gyro_from_bytes, lpp_gyro_to_bytes),

@@ -1,7 +1,7 @@
 import pytest
-from cayennelpp.utils import datetime_as_utc
-from datetime import datetime, timedelta
-from datetime import timezone as tz
+
+from datetime import datetime
+from datetime import timezone
 
 from cayennelpp.lpp_type import (lpp_digital_io_to_bytes,
                                  lpp_digital_io_from_bytes,
@@ -182,23 +182,15 @@ def test_generic_negative_val():
         lpp_generic_to_bytes((-1,))
 
 
-def test_unix_time_datetime_without_tz():
-    now = datetime.now()
-    utcnow = datetime_as_utc(now.replace(microsecond=0))
+def test_unix_time_datetime():
+    now = datetime.now(timezone.utc).timestamp()
     vol_buf = lpp_unix_time_to_bytes((now,))
-    assert lpp_unix_time_from_bytes(vol_buf) == (utcnow,)
-
-
-def test_unix_time_datetime_with_tz():
-    now = datetime.now(tz=tz(timedelta(hours=-5)))
-    utcnow = datetime_as_utc(now.replace(microsecond=0))
-    vol_buf = lpp_unix_time_to_bytes((now,))
-    assert lpp_unix_time_from_bytes(vol_buf) == (utcnow,)
+    assert lpp_unix_time_from_bytes(vol_buf) == (int(now),)
 
 
 def test_unix_time_int():
-    val = datetime.fromtimestamp(5, tz.utc)
-    vol_buf = lpp_unix_time_to_bytes((5,))
+    val = 5
+    vol_buf = lpp_unix_time_to_bytes((val,))
     assert lpp_unix_time_from_bytes(vol_buf) == (val,)
 
 
@@ -210,7 +202,7 @@ def test_unix_time_invalid_buf():
 def test_unix_time_invalid_val():
     with pytest.raises(Exception):
         lpp_unix_time_to_bytes((0, 1))
-    val = datetime.fromtimestamp(-5, tz.utc)
+    val = -5
     with pytest.raises(ValueError):
         # negative value
         lpp_unix_time_to_bytes((val,))

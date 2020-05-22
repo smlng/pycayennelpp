@@ -1,6 +1,6 @@
 import pytest
 from datetime import datetime
-from datetime import timezone as tz
+from datetime import timezone
 
 from cayennelpp.lpp_frame import LppFrame
 
@@ -89,8 +89,8 @@ def test_add_generic(frame):
 
 
 def test_add_unix_time(frame):
-    frame.add_unix_time(0, datetime.now(tz.utc))
-    frame.add_unix_time(1, datetime.fromtimestamp(0))
+    frame.add_unix_time(0, datetime.now(timezone.utc).timestamp())
+    frame.add_unix_time(1, 0)
     assert len(frame.data) == 2
     assert frame.data[0].type == 133
     assert frame.data[1].type == 133
