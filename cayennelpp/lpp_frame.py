@@ -34,6 +34,10 @@ class LppFrame(object):
         out = out + "])"
         return out
 
+    def __len__(self):
+        """Return number of data elements in a LppFrame"""
+        return len(self.data)
+
     @classmethod
     def from_bytes(cls, buf):
         """Parse LppFrame from a given byte string"""
