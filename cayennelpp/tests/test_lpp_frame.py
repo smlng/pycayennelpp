@@ -8,12 +8,12 @@ from cayennelpp.lpp_frame import LppFrame
 @pytest.fixture
 def frame():
     empty_frame = LppFrame()
-    empty_frame.reset()
     return empty_frame
 
 
 def test_frame_empty(frame):
     assert not frame.data
+    assert len(frame) == 0
     assert not frame.bytes()
 
 
@@ -25,6 +25,13 @@ def test_init_invalid_data_nolist():
 def test_init_invalid_data_item():
     with pytest.raises(Exception):
         LppFrame([0])
+
+
+def test_frame_reset(frame):
+    frame.add_digital_input(0, 1)
+    assert len(frame) == 1
+    frame.reset()
+    assert len(frame) == 0
 
 
 def test_frame_from_bytes():
