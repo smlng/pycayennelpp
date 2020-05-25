@@ -12,24 +12,28 @@ class LppData(object):
     """A single LPP data object representation
 
     Attributes:
-        chn (int): data channel number
-        tid (int): data type ID
+        chn (int):     data channel number
+        type (int):    data type ID
         value (tuple): data value(s)
     """
-    def __init__(self, chn, tid, value):
+
+    def __init__(self, chn, type_, value):
+        """Create a LppData object with given attriubes
+        channel `chn`, type `type_`, and values `value`
+        """
         logging.debug("LppData.__init__")
         if value is None:
             raise ValueError("Empty value!")
         if not isinstance(value, tuple):
             value = (value,)
         logging.debug("LppData(channel=%d, type=%d, len=%d)",
-                      chn, tid, len(value))
-        if get_lpp_type(tid) is None:
+                      chn, type_, len(value))
+        if get_lpp_type(type_) is None:
             raise ValueError("Invalid LPP data type!")
-        if not len(value) == get_lpp_type(tid).dimension:
+        if not len(value) == get_lpp_type(type_).dimension:
             raise ValueError("Invalid number of data values!")
         self.channel = chn
-        self.type = tid
+        self.type = type_
         self.value = value
 
     def __str__(self):
@@ -46,13 +50,13 @@ class LppData(object):
         if len(buf) < 3:
             raise BufferError("Invalid buffer size!")
         chn = buf[0]
-        tid = buf[1]
-        size = get_lpp_type(tid).size
+        type_ = buf[1]
+        size = get_lpp_type(type_).size
         logging.debug("LppData.from_bytes: date_size = %d", size)
         if len(buf) < size + 2:
             raise BufferError("Buffer too small!")
-        value = get_lpp_type(tid).decode(buf[2:(2 + size)])
-        return class_object(chn, tid, value)
+        value = get_lpp_type(type_).decode(buf[2:(2 + size)])
+        return class_object(chn, type_, value)
 
     def bytes(self):
         """Convert LppData instance into a byte string"""
