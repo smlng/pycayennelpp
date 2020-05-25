@@ -100,7 +100,7 @@ def test_add_voltage(frame):
 def test_add_load(frame):
     frame.add_load(0, -5.432)
     frame.add_load(1, 160.987)
-    assert len(frame.data) == 2
+    assert len(frame) == 2
     assert frame.data[0].type == 122
     assert frame.data[1].type == 122
 
@@ -116,7 +116,7 @@ def test_add_generic(frame):
 def test_add_unix_time(frame):
     frame.add_unix_time(0, datetime.now(timezone.utc).timestamp())
     frame.add_unix_time(1, 0)
-    assert len(frame.data) == 2
+    assert len(frame) == 2
     assert frame.data[0].type == 133
     assert frame.data[1].type == 133
     frame.bytes()
@@ -158,4 +158,4 @@ def test_lpp_frame_iterator(frame):
     for val in frame:
         print(val)
         counter += 1
-    assert counter == 3
+    assert counter == len(frame)
