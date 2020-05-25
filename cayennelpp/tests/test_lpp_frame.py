@@ -11,7 +11,7 @@ def frame():
     return empty_frame
 
 
-def test_frame_empty(frame):
+def test_empty_frame(frame):
     assert not frame.data
     assert len(frame) == 0
     assert not frame.bytes()
@@ -140,17 +140,17 @@ def test_add_humidity(frame):
     assert frame.data[2].type == 104
 
 
-def test_lpp_frame_str_empty(frame):
+def test_print_empty_frame(frame):
     print(frame)
 
 
-def test_lpp_frame_str_data(frame):
+def test_print_data_frame(frame):
     frame.add_temperature(2, 12.3)
     frame.add_temperature(3, -32.1)
     print(frame)
 
 
-def test_lpp_frame_iterator(frame):
+def test_iterator(frame):
     frame.add_temperature(2, 12.3)
     frame.add_humidity(3, 45.6)
     frame.add_load(1, 160.987)
