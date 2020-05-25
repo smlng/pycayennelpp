@@ -403,22 +403,22 @@ def test_gps_invalid_val():
         lpp_gps_to_bytes((0, 0))
 
 
-def test_lpp_type_init_invalid_tid():
+def test_init_invalid_type():
     with pytest.raises(Exception):
         LppType("foo", "bar", 42, 42, None, None)
 
 
-def test_lpp_type_init_invalid_name():
+def test_init_invalid_name():
     with pytest.raises(Exception):
         LppType(42, 42, 42, 42, None, None)
 
 
-def test_lpp_type_init_invalid_size():
+def test_init_invalid_size():
     with pytest.raises(Exception):
         LppType(42, "foo", "foo", 42, None, None)
 
 
-def test_lpp_type_init_invalid_dim():
+def test_init_invalid_dim():
     with pytest.raises(Exception):
         LppType(42, "foo", 42, "foo", None, None)
 

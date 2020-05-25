@@ -15,7 +15,11 @@ class LppFrame(object):
     Attributes:
         data (list): a list of LppData objects
     """
+
     def __init__(self, data=None):
+        """Create a LppFrame object with (optional)
+        a list of LppData elements `data`
+        """
         self.data = data or []
         if not isinstance(self.data, list):
             raise AssertionError()
