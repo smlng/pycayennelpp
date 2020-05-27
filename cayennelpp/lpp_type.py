@@ -39,25 +39,35 @@ def __to_bytes(val, buflen):
     return buf
 
 
-def __to_s16(val):
+def __to_signed(val, bits):
     """
-    internal function to convert a 16bit number to signed
+    internal function to convert a unsigned integer to signed
+    of given bits length
     """
     logging.debug("  in:    value = %d", val)
-    if val >= (1 << 15):
-        val = -1 - (val ^ 0xffff)
+    mask = 0x00
+    for i in range(int(bits / 8)):
+        mask |= 0xff << (i * 8)
+    if val >= (1 << (bits - 1)):
+        val = -1 - (val ^ mask)
     logging.debug("  out:   value = %d", val)
     return val
 
 
+def __to_s16(val):
+    return __to_signed(val, 16)
+
+
 def __to_s24(val):
+    return __to_signed(val, 24)
+
+
+def __to_unsigned(val):
     """
-    internal function to convert a 24bit number to signed
+    convert signed (2 complement) value to unsigned
     """
-    logging.debug("  in:    value = %d", val)
-    if val >= (1 << 23):
-        val = -1 - (val ^ 0xffffff)
-    logging.debug("  out:   value = %d", val)
+    if val < 0:
+        val = ~(-val - 1)
     return val
 
 
@@ -136,8 +146,7 @@ def lpp_analog_io_to_bytes(data):
     logging.debug("  in:    value = %f", val)
     val_i = int(val * 100)
     logging.debug("  in:    value = %d", val_i)
-    if val_i < 0:
-        val_i = ~(-val_i - 1)
+    val_i = __to_unsigned(val_i)
     return __to_bytes(val_i, 2)
 
 
@@ -259,8 +268,7 @@ def lpp_temperature_to_bytes(data):
     logging.debug("  in:    value = %f", val)
     val_i = int(val * 10)
     logging.debug("  in:    value = %d", val_i)
-    if val_i < 0:
-        val_i = ~(-val_i - 1)
+    val_i = __to_unsigned(val_i)
     return __to_bytes(val_i, 2)
 
 
@@ -330,12 +338,9 @@ def lpp_accel_to_bytes(data):
     val_yi = int(val_y * 1000)
     val_zi = int(val_z * 1000)
     logging.debug("  in:    x = %d, y = %d, z = %d", val_xi, val_yi, val_zi)
-    if val_xi < 0:
-        val_xi = ~(-val_xi - 1)
-    if val_yi < 0:
-        val_yi = ~(-val_yi - 1)
-    if val_zi < 0:
-        val_zi = ~(-val_zi - 1)
+    val_xi = __to_unsigned(val_xi)
+    val_yi = __to_unsigned(val_yi)
+    val_zi = __to_unsigned(val_zi)
     logging.debug("  in:    x = %d, y = %d, z = %d", val_xi, val_yi, val_zi)
     buf = bytearray([0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
     buf[0:2] = __to_bytes(val_xi, 2)
@@ -411,12 +416,9 @@ def lpp_gyro_to_bytes(data):
     val_yi = int(val_y * 100)
     val_zi = int(val_z * 100)
     logging.debug("  in:    x = %d, y = %d, z = %d", val_xi, val_yi, val_zi)
-    if val_xi < 0:
-        val_xi = ~(-val_xi - 1)
-    if val_yi < 0:
-        val_yi = ~(-val_yi - 1)
-    if val_zi < 0:
-        val_zi = ~(-val_zi - 1)
+    val_xi = __to_unsigned(val_xi)
+    val_yi = __to_unsigned(val_yi)
+    val_zi = __to_unsigned(val_zi)
     logging.debug("  in:    x = %d, y = %d, z = %d", val_xi, val_yi, val_zi)
     buf = bytearray([0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
     buf[0:2] = __to_bytes(val_xi, 2)
@@ -471,12 +473,9 @@ def lpp_gps_to_bytes(data):
     alt_i = int(alt * 100)
     logging.debug("  in:    latitude = %d, longitude = %d, altitude = %d",
                   lat_i, lon_i, alt_i)
-    if lat_i < 0:
-        lat_i = ~(-lat_i - 1)
-    if lon_i < 0:
-        lon_i = ~(-lon_i - 1)
-    if alt_i < 0:
-        alt_i = ~(-alt_i - 1)
+    lat_i = __to_unsigned(lat_i)
+    lon_i = __to_unsigned(lon_i)
+    alt_i = __to_unsigned(alt_i)
     logging.debug("  in:    latitude = %d, longitude = %d, altitude = %d",
                   lat_i, lon_i, alt_i)
     buf = bytearray([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
@@ -511,8 +510,7 @@ def lpp_load_to_bytes(data):
     logging.debug("  in:    value = %f", val)
     val_i = int(val * 1000)
     logging.debug("  in:    value = %d", val_i)
-    if val_i < 0:
-        val_i = ~(-val_i - 1)
+    val_i = __to_unsigned(val_i)
     logging.debug("  in:    value = %d", val_i)
     return __to_bytes(val_i, 3)
 
