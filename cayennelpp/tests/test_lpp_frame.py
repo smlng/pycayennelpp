@@ -42,6 +42,20 @@ def test_frame_size(frame):
     assert frame.size == 6
 
 
+def test_frame_maxsize(frame):
+    frame.add_digital_input(0, 1)
+    assert frame.maxsize == 0
+    frame.maxsize = 6
+    assert frame.maxsize == 6
+
+
+def test_frame_invalid_maxsize(frame):
+    frame.add_digital_input(0, 1)
+    assert frame.maxsize == 0
+    with pytest.raises(Exception):
+        frame.maxsize(1)
+
+
 def test_frame_from_bytes():
     # 03 67 01 10 05 67 00 FF = 27.2C + 25.5C
     buf = bytearray([0x03, 0x67, 0x01, 0x10, 0x05, 0x67, 0x00, 0xff])
