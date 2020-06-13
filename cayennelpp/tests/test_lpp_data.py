@@ -90,5 +90,10 @@ def test_gps_from_bytes_invalid_size():
         LppData.from_bytes(buf)
 
 
+def test_lpp_data_size():
+    assert LppData(0, 0, 0).size == 3
+    assert LppData(0, 0, 0).bytes_size() == 3
+
+
 def test_lpp_data_str():
     print(LppData(0, 0, 0))

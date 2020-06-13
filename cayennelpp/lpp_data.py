@@ -35,6 +35,7 @@ class LppData(object):
         self.channel = chn
         self.type = type_
         self.value = value
+        self._size = get_lpp_type(type_).size + 2
 
     def __str__(self):
         """Return a pretty string representation of the LppData instance"""
@@ -67,7 +68,16 @@ class LppData(object):
         logging.debug("  out:   bytes = %s, length = %d", buf, len(buf))
         return buf
 
-    def bytes_size(self):
+    @property
+    def size(self):
         """Return the length of the LppData byte string representation"""
+        logging.debug("LppData.size")
+        return self._size
+
+    def bytes_size(self):
+        """
+        Return the length of the LppData byte string representation
+        This function is deprecated and will be removed.
+        """
         logging.debug("LppData.bytes_size")
-        return (get_lpp_type(self.type).size + 2)
+        return self.size
