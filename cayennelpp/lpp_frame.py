@@ -21,12 +21,12 @@ class LppFrame(object):
         a list of LppData elements `data`
         """
         self._maxsize = maxsize
-        self.data = data or []
-        if not isinstance(self.data, list):
-            raise AssertionError()
-        for d in self.data:
-            if not isinstance(d, LppData):
+        self.data = []
+        if data:
+            if not isinstance(self.data, list):
                 raise AssertionError()
+            for d in data:
+                self.__add_data_item(d)
 
     def __str__(self):
         """Return a pretty string representation of the LppFrame instance"""
@@ -70,6 +70,14 @@ class LppFrame(object):
                       strb64, len(strb64))
         return cls.from_bytes(base64.decodebytes(strb64.encode('ascii')))
 
+    def __add_data_item(self, item):
+        if not isinstance(item, LppData):
+            raise TypeError()
+        if self.maxsize > 0:
+            if self.size + item.size > self.maxsize:
+                raise BufferError()
+        self.data.append(item)
+
     def bytes(self):
         """Convert LppFrame instance into a byte string"""
         buf = bytearray()
@@ -106,62 +114,62 @@ class LppFrame(object):
     def add_digital_input(self, channel, value):
         """Create and add a digital input LppData"""
         din = LppData(channel, 0, (value, ))
-        self.data.append(din)
+        self.__add_data_item(din)
 
     def add_digital_output(self, channel, value):
         """Create and add a digital output LppData"""
         dout = LppData(channel, 1, (value, ))
-        self.data.append(dout)
+        self.__add_data_item(dout)
 
     def add_analog_input(self, channel, value):
         """Create and add an analog input LppData"""
         ain = LppData(channel, 2, (value, ))
-        self.data.append(ain)
+        self.__add_data_item(ain)
 
     def add_analog_output(self, channel, value):
         """Create and add an analog output LppData"""
         aout = LppData(channel, 3, (value, ))
-        self.data.append(aout)
+        self.__add_data_item(aout)
 
     def add_generic(self, channel, value):
         """Create and add a generic 4-byte unsigned integer LppData"""
         din = LppData(channel, 100, (value, ))
-        self.data.append(din)
+        self.__add_data_item(din)
 
     def add_luminosity(self, channel, value):
         """Create and add an illuminance sensor LppData"""
         lux = LppData(channel, 101, (value, ))
-        self.data.append(lux)
+        self.__add_data_item(lux)
 
     def add_presence(self, channel, value):
         """Create and add a presence sensor LppData"""
         pre = LppData(channel, 102, (value, ))
-        self.data.append(pre)
+        self.__add_data_item(pre)
 
     def add_temperature(self, channel, value):
         """Create and add a temperature sensor LppData"""
         temp = LppData(channel, 103, (value, ))
-        self.data.append(temp)
+        self.__add_data_item(temp)
 
     def add_humidity(self, channel, value):
         """Create and add a humidity sensor LppData"""
         hum = LppData(channel, 104, (value, ))
-        self.data.append(hum)
+        self.__add_data_item(hum)
 
     def add_unix_time(self, channel, value):
         """Create and add a unix time sensor LppData"""
         timestamp = LppData(channel, 133, (value, ))
-        self.data.append(timestamp)
+        self.__add_data_item(timestamp)
 
     def add_accelerometer(self, channel, x, y, z):
         """Create and add a accelerometer sensor LppData"""
         acc = LppData(channel, 113, (x, y, z, ))
-        self.data.append(acc)
+        self.__add_data_item(acc)
 
     def add_pressure(self, channel, value):
         """Create and add a barometer sensor LppData"""
         press = LppData(channel, 115, (value, ))
-        self.data.append(press)
+        self.__add_data_item(press)
 
     def add_barometer(self, channel, value):
         """Alias method to Create and add a barometer sensor LppData"""
@@ -170,19 +178,19 @@ class LppFrame(object):
     def add_gyrometer(self, channel, x, y, z):
         """Create and add a gyrometer sensor LppData"""
         gyro = LppData(channel, 134, (x, y, z, ))
-        self.data.append(gyro)
+        self.__add_data_item(gyro)
 
     def add_gps(self, channel, lat, lon, alt):
         """Create and add a GPS LppData"""
         gps = LppData(channel, 136, (lat, lon, alt, ))
-        self.data.append(gps)
+        self.__add_data_item(gps)
 
     def add_voltage(self, channel, value):
         """Create and add a voltage LppData"""
         voltage = LppData(channel, 116, (value, ))
-        self.data.append(voltage)
+        self.__add_data_item(voltage)
 
     def add_load(self, channel, value):
         """Create and add a load LppData"""
         load = LppData(channel, 122, (value, ))
-        self.data.append(load)
+        self.__add_data_item(load)
