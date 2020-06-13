@@ -34,6 +34,14 @@ def test_frame_reset(frame):
     assert len(frame) == 0
 
 
+def test_frame_size(frame):
+    assert frame.size == 0
+    frame.add_digital_input(0, 1)
+    assert frame.size == 3
+    frame.add_digital_output(1, 42)
+    assert frame.size == 6
+
+
 def test_frame_from_bytes():
     # 03 67 01 10 05 67 00 FF = 27.2C + 25.5C
     buf = bytearray([0x03, 0x67, 0x01, 0x10, 0x05, 0x67, 0x00, 0xff])

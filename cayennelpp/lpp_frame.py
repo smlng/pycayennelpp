@@ -80,6 +80,15 @@ class LppFrame(object):
         """Reset LppFrame by clearing the list of LppData instances"""
         self.data.clear()
 
+    @property
+    def size(self):
+        """Return the length of the LppFrame byte string representation"""
+        logging.debug("LppFrame.size")
+        size = 0
+        for d in self.data:
+            size += d.size
+        return size
+
     def add_digital_input(self, channel, value):
         """Create and add a digital input LppData"""
         din = LppData(channel, 0, (value, ))
