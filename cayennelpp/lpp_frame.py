@@ -16,10 +16,11 @@ class LppFrame(object):
         data (list): a list of LppData objects
     """
 
-    def __init__(self, data=None):
+    def __init__(self, data=None, maxsize=0):
         """Create a LppFrame object with (optional)
         a list of LppData elements `data`
         """
+        self._maxsize = maxsize
         self.data = data or []
         if not isinstance(self.data, list):
             raise AssertionError()
@@ -75,6 +76,19 @@ class LppFrame(object):
         for d in self.data:
             buf = buf + d.bytes()
         return buf
+
+    @property
+    def maxsize(self):
+        """Return max allowed byte size for this frame"""
+        return self._maxsize
+
+    @maxsize.setter
+    def maxsize(self, value):
+        if value < 0:
+            raise ValueError("Maxsize must be positive integer.")
+        if value > 0 and value < self.size:
+            raise ValueError("Maxsize must be greater than current frame size")
+        self._maxsize = value
 
     def reset(self):
         """Reset LppFrame by clearing the list of LppData instances"""
