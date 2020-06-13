@@ -53,7 +53,13 @@ def test_frame_invalid_maxsize(frame):
     frame.add_digital_input(0, 1)
     assert frame.maxsize == 0
     with pytest.raises(Exception):
-        frame.maxsize(1)
+        frame.maxsize = 1
+
+
+def test_frame_exceed_maxsize(frame):
+    frame.maxsize = 3
+    with pytest.raises(Exception):
+        frame.add_generic(0, 42)
 
 
 def test_frame_from_bytes():
