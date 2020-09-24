@@ -163,3 +163,18 @@ class LppFrame(object):
         """Create and add a load LppData"""
         load = LppData(channel, 122, (value, ))
         self.data.append(load)
+
+    def add_direction(self, channel, value):
+        """Create and add a load LppData"""
+        direction = LppData(channel, 132, (value, ))
+        self.data.append(direction)
+
+    def add_current(self, channel, value):
+        """Create and add a load LppData"""
+        current = LppData(channel, 117, (value, ))
+        self.data.append(current)
+
+    def add_power(self, channel, value):
+        """Create and add a load LppData"""
+        power = LppData(channel, 128, (value, ))
+        self.data.append(power)
