@@ -98,10 +98,10 @@ def lpp_voltage_from_bytes(buf):
     """
     logging.debug("lpp_voltage_from_bytes")
     val_i = __from_bytes(buf, 2)
-    if val_i >= (1 << 15):
-        logging.error("Negative Voltage value is not allowed")
-        raise AssertionError("Negative values are not allowed.")
+    
+    check_sign(val_i, 2)
     val = val_i / 100.0
+
     logging.debug("  out:   value = %f", val)
     return (val,)
 
@@ -116,7 +116,7 @@ def lpp_voltage_to_bytes(data):
     val = data[0]
     if val < 0:
         logging.error("Negative Voltage value is not allowed")
-        raise AssertionError("Negative values are not allowed")
+        raise ValueError("Negative values are not allowed")
     logging.debug("  in:    value = %f", val)
     val_i = int(val * 100)
     return __to_bytes(val_i, 2)
@@ -152,11 +152,17 @@ def lpp_analog_io_to_bytes(data):
 
 def lpp_generic_from_bytes(buf):
     """
-    Convert a 4 byte unsigned integer from bytes.
+    Decode generic from CyaenneLPP byte buffer,
+    and return the value as a tuple.
     """
     logging.debug("lpp_generic_from_bytes")
-    val_i = __from_bytes(buf, 4)
-    return (val_i,)
+    val = __from_bytes(buf, 4)
+
+    # Should generic max not be 2147483648 ? 
+    # check_sign(val, 4)  
+    
+    logging.debug("  out:   value = %f", val)
+    return (val,)
 
 
 def lpp_generic_to_bytes(data):
@@ -179,10 +185,11 @@ def lpp_unix_time_from_bytes(buf):
     Convert a 4 byte unix timestamp (unsigned integer) from bytes.
     """
     logging.debug("lpp_unix_time_from_bytes")
-    val_i = __from_bytes(buf, 4)
-    if val_i >= (1 << 31):
-        raise ValueError("Unix timestamp can not be negative.")
-    return (val_i,)
+    val = __from_bytes(buf, 4)
+    
+    check_sign(val, 4)
+    
+    return (val,)
 
 
 def lpp_unix_time_to_bytes(data):
@@ -200,11 +207,15 @@ def lpp_unix_time_to_bytes(data):
 
 def lpp_illuminance_from_bytes(buf):
     """
-    Decode illuminance sensor data from CyaenneLPP byte buffer,
-    and return the value as a tupel.
+    Decode illuminance from CyaenneLPP byte buffer,
+    and return the value as a tuple.
     """
     logging.debug("lpp_illuminance_from_bytes")
-    val = int(__from_bytes(buf, 2))
+    val = __from_bytes(buf, 2)
+    
+    check_sign(val, 2)
+    
+    logging.debug("  out:   value = %f", val)
     return (val,)
 
 
@@ -228,6 +239,9 @@ def lpp_presence_from_bytes(buf):
     """
     logging.debug("lpp_presence_from_bytes")
     val = __from_bytes(buf, 1)
+    
+    check_sign(val, 1)
+
     return (val,)
 
 
@@ -274,14 +288,18 @@ def lpp_temperature_to_bytes(data):
 
 def lpp_humidity_from_bytes(buf):
     """
-    Decode himidity sensor data from CyaenneLPP byte buffer,
-    and return the value as a tupel.
+    Decode humidity from CyaenneLPP byte buffer,
+    and return the value as a tuple.
     """
     logging.debug("lpp_humidity_from_bytes")
     val_i = __from_bytes(buf, 1)
-    val = val_i / 2.0
+    
+    check_sign(val_i, 1)
+    val = val_i / 2
+
     logging.debug("  out:   value = %f", val)
-    return (val, )
+    return (val,)
+
 
 
 def lpp_humidity_to_bytes(data):
@@ -352,12 +370,15 @@ def lpp_accel_to_bytes(data):
 
 def lpp_baro_from_bytes(buf):
     """
-    Decode barometer sensor data from CyaenneLPP byte buffer,
-    and return the value as a tupel.
+    Decode barometer from CyaenneLPP byte buffer,
+    and return the value as a tuple.
     """
     logging.debug("lpp_baro_from_bytes")
-    val = __from_bytes(buf, 2)
-    val = val / 10.0
+    val_i = __from_bytes(buf, 2)    
+
+    check_sign(val_i, 2)
+    val = val_i / 10
+
     logging.debug("  out:   value = %f", val)
     return (val,)
 
@@ -514,6 +535,86 @@ def lpp_load_to_bytes(data):
     logging.debug("  in:    value = %d", val_i)
     return __to_bytes(val_i, 3)
 
+def lpp_direction_from_bytes(buf):
+    """
+    Decode direction from CyaenneLPP byte buffer,
+    and return the value as a tuple.
+    """
+    logging.debug("lpp_direction_from_bytes")
+    val = __from_bytes(buf, 2)
+
+    check_sign(val, 2)
+    
+    logging.debug("  out:   value = %f", val)
+    return (val,)
+
+
+def lpp_direction_to_bytes(data):
+    """
+    Encode direction sensor data into CayenneLPP,
+    and return as a byte buffer
+    """
+    logging.debug("lpp_direction_to_bytes")
+    data = __assert_data_tuple(data, 1)
+    val_i = int(data[0])
+    if val_i < 0:
+        raise ValueError("Direction sensor values must be positive!")
+    return __to_bytes(val_i, 2)
+
+def lpp_current_from_bytes(buf):
+    """
+    Decode current from CyaenneLPP byte buffer,
+    and return the value as a tuple.
+    """
+    logging.debug("lpp_current_from_bytes")
+    val_i = __from_bytes(buf, 2)
+    
+    check_sign(val_i, 2)
+    val = val_i / 1000.0
+
+    logging.debug("  out:   value = %f", val)
+    return (val,)
+
+def lpp_current_to_bytes(data):
+    """
+    Encode current into CayenneLPP,
+    and return as a byte buffer
+    """
+    logging.debug("lpp_current_to_bytes")
+    data = __assert_data_tuple(data, 1)
+    val = data[0]
+    if val < 0:
+        logging.error("Negative Current value is not allowed")
+        raise ValueError("Negative values are not allowed")
+    logging.debug("  in:    value = %f", val)
+    val_i = int(val * 1000)
+    return __to_bytes(val_i, 2)
+
+
+def lpp_power_from_bytes(buf):
+    """
+    Decode power from CyaenneLPP byte buffer,
+    and return the value as a tuple.
+    """
+    logging.debug("lpp_power_from_bytes")
+    val = __from_bytes(buf, 2)
+
+    check_sign(val, 2)
+    
+    logging.debug("  out:   value = %f", val)
+    return (val,)
+
+def lpp_power_to_bytes(data):
+    """
+    Encode power sensor data into CayenneLPP,
+    and return as a byte buffer
+    """
+    logging.debug("lpp_power_to_bytes")
+    data = __assert_data_tuple(data, 1)
+    val_i = int(data[0])
+    if val_i < 0:
+        raise ValueError("Power sensor values must be positive!")
+    return __to_bytes(val_i, 2)
 
 class LppType(object):
     """Cayenne LPP type representation
@@ -570,8 +671,14 @@ LPP_TYPES = [
             lpp_baro_from_bytes, lpp_baro_to_bytes),
     LppType(116, 'Voltage', 2, 1,
             lpp_voltage_from_bytes, lpp_voltage_to_bytes),
+    LppType(117, 'Current', 2, 1,
+            lpp_current_from_bytes, lpp_current_to_bytes),
     LppType(122, 'Load', 3, 1,
             lpp_load_from_bytes, lpp_load_to_bytes),
+    LppType(128, 'Power', 2, 1,
+            lpp_power_from_bytes, lpp_power_to_bytes),
+    LppType(132, 'Direction', 2, 1,
+            lpp_direction_from_bytes, lpp_direction_to_bytes),
     LppType(133, 'Unix Timestamp', 4, 1,
             lpp_unix_time_from_bytes, lpp_unix_time_to_bytes),
     LppType(134, 'Gyrometer', 6, 3,
@@ -592,3 +699,9 @@ def get_lpp_type(type_):
         return next(filter(lambda x: x.type == type_, LPP_TYPES))
     except StopIteration:
         return None
+
+
+def check_sign(val, bufflen):
+    shift = 8*bufflen - 1
+    if val >= (1 << shift):
+        raise ValueError("Negative values are not allowed.")
