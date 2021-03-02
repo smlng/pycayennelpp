@@ -527,6 +527,41 @@ class LppType(object):
         encode:     encode function name
     """
 
+    __lpp_types = {
+        0:      ('Digital Input', 1, 1,
+                 lpp_digital_io_from_bytes, lpp_digital_io_to_bytes),
+        1:      ('Digital Output', 1, 1,
+                 lpp_digital_io_from_bytes, lpp_digital_io_to_bytes),
+        2:      ('Analog Input', 2, 1,
+                 lpp_analog_io_from_bytes, lpp_analog_io_to_bytes),
+        3:      ('Analog Output', 2, 1,
+                 lpp_analog_io_from_bytes, lpp_analog_io_to_bytes),
+        100:    ('Generic', 4, 1,
+                 lpp_generic_from_bytes, lpp_generic_to_bytes),
+        101:    ('Illuminance Sensor', 2, 1,
+                 lpp_illuminance_from_bytes, lpp_illuminance_to_bytes),
+        102:    ('Presence Sensor', 1, 1,
+                 lpp_presence_from_bytes, lpp_presence_to_bytes),
+        103:    ('Temperature Sensor', 2, 1,
+                 lpp_temperature_from_bytes, lpp_temperature_to_bytes),
+        104:    ('Humidity Sensor', 1, 1,
+                 lpp_humidity_from_bytes, lpp_humidity_to_bytes),
+        113:    ('Accelerometer', 6, 3,
+                 lpp_accel_from_bytes, lpp_accel_to_bytes),
+        115:    ('Barometer', 2, 1,
+                 lpp_baro_from_bytes, lpp_baro_to_bytes),
+        116:    ('Voltage', 2, 1,
+                 lpp_voltage_from_bytes, lpp_voltage_to_bytes),
+        122:    ('Load', 3, 1,
+                 lpp_load_from_bytes, lpp_load_to_bytes),
+        133:    ('Unix Timestamp', 4, 1,
+                 lpp_unix_time_from_bytes, lpp_unix_time_to_bytes),
+        134:    ('Gyrometer', 6, 3,
+                 lpp_gyro_from_bytes, lpp_gyro_to_bytes),
+        136:    ('GPS Location', 9, 3,
+                 lpp_gps_from_bytes, lpp_gps_to_bytes)
+    }
+
     def __init__(self, type_, name, size, dim, decode, encode):
         """Create a LppType object with given attributes"""
         if not isinstance(type_, int):
@@ -544,51 +579,14 @@ class LppType(object):
         self.decode = decode
         self.encode = encode
 
+    @classmethod
+    def get_lpp_type(cls, type_):
+        """
+        Returns a LppType instance for given type number or `None` if not found
+        """
+        if not isinstance(type_, int):
+            raise AssertionError()
 
-LPP_TYPES = [
-    LppType(0, 'Digital Input', 1, 1,
-            lpp_digital_io_from_bytes, lpp_digital_io_to_bytes),
-    LppType(1, 'Digital Output', 1, 1,
-            lpp_digital_io_from_bytes, lpp_digital_io_to_bytes),
-    LppType(2, 'Analog Input', 2, 1,
-            lpp_analog_io_from_bytes, lpp_analog_io_to_bytes),
-    LppType(3, 'Analog Output', 2, 1,
-            lpp_analog_io_from_bytes, lpp_analog_io_to_bytes),
-    LppType(100, 'Generic', 4, 1,
-            lpp_generic_from_bytes, lpp_generic_to_bytes),
-    LppType(101, 'Illuminance Sensor', 2, 1,
-            lpp_illuminance_from_bytes, lpp_illuminance_to_bytes),
-    LppType(102, 'Presence Sensor', 1, 1,
-            lpp_presence_from_bytes, lpp_presence_to_bytes),
-    LppType(103, 'Temperature Sensor', 2, 1,
-            lpp_temperature_from_bytes, lpp_temperature_to_bytes),
-    LppType(104, 'Humidity Sensor', 1, 1,
-            lpp_humidity_from_bytes, lpp_humidity_to_bytes),
-    LppType(113, 'Accelerometer', 6, 3,
-            lpp_accel_from_bytes, lpp_accel_to_bytes),
-    LppType(115, 'Barometer', 2, 1,
-            lpp_baro_from_bytes, lpp_baro_to_bytes),
-    LppType(116, 'Voltage', 2, 1,
-            lpp_voltage_from_bytes, lpp_voltage_to_bytes),
-    LppType(122, 'Load', 3, 1,
-            lpp_load_from_bytes, lpp_load_to_bytes),
-    LppType(133, 'Unix Timestamp', 4, 1,
-            lpp_unix_time_from_bytes, lpp_unix_time_to_bytes),
-    LppType(134, 'Gyrometer', 6, 3,
-            lpp_gyro_from_bytes, lpp_gyro_to_bytes),
-    LppType(136, 'GPS Location', 9, 3,
-            lpp_gps_from_bytes, lpp_gps_to_bytes)
-]
-
-
-def get_lpp_type(type_):
-    """Returns a LppType instance for a given `type` or `None` if not found"""
-    if not isinstance(type_, int):
-        raise AssertionError()
-    # `next` on MicroPython does not support `default` parameter
-    # use try/except construct instead
-    # https://docs.micropython.org/en/latest/genrst/modules.html#second-argument-to-next-is-not-implemented
-    try:
-        return next(filter(lambda x: x.type == type_, LPP_TYPES))
-    except StopIteration:
+        if type_ in cls.__lpp_types:
+            return cls(type_, *cls.__lpp_types[type_])
         return None
