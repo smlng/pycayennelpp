@@ -1,6 +1,5 @@
 from .lpp_data import LppData
 
-import base64
 try:
     import logging
 except ImportError:
@@ -62,13 +61,6 @@ class LppFrame(object):
             data.append(lppdata)
             i = i + lppdata.bytes_size()
         return cls(data)
-
-    @classmethod
-    def from_base64(cls, strb64):
-        """Parse LppFrame from a given base64 encoded string"""
-        logging.debug("LppFrame.from_base64: base64=%s, length=%d",
-                      strb64, len(strb64))
-        return cls.from_bytes(base64.decodebytes(strb64.encode('ascii')))
 
     def __add_data_item(self, item):
         if not isinstance(item, LppData):
