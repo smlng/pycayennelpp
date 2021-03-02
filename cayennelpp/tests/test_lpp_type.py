@@ -31,7 +31,6 @@ from cayennelpp.lpp_type import (lpp_digital_io_to_bytes,
                                  lpp_generic_from_bytes,
                                  lpp_unix_time_to_bytes,
                                  lpp_unix_time_from_bytes,
-                                 get_lpp_type,
                                  LppType)
 
 
@@ -425,4 +424,4 @@ def test_init_invalid_dim():
 
 def test_get_lpp_type_invalid():
     with pytest.raises(Exception):
-        get_lpp_type("foo")
+        LppType.get_lpp_type("foo")
