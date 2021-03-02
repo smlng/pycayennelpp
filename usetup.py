@@ -9,7 +9,7 @@ def readme():
 
 setup(
     name='micropython-pycayennelpp',
-    version='1.5.0',
+    version='2.0.0',
     description='Encoder and Decoder for CayenneLLP',
     long_description=readme(),
     long_description_content_type='text/markdown',
@@ -26,6 +26,5 @@ setup(
     license='MIT',
     packages=['cayennelpp'],
     cmdclass={'sdist': sdist_upip.sdist},
-    install_requires=['micropython-base64'],
     include_package_data=True
 )
