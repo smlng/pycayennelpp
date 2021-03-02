@@ -579,6 +579,9 @@ class LppType(object):
         self.decode = decode
         self.encode = encode
 
+    def __int__(self):
+        return self.type
+
     @classmethod
     def get_lpp_type(cls, type_):
         """

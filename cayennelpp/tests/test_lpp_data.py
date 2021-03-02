@@ -21,7 +21,7 @@ def test_generic_from_bytes():
     buff = bytearray([0x00, 0x64, 0xff, 0xff, 0xff, 0xfb])
     data = LppData.from_bytes(buff)
     assert buff == data.bytes()
-    assert data.type == 100
+    assert int(data.type) == 100
     assert data.value == (4294967291,)
 
 
