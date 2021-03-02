@@ -52,8 +52,6 @@ pip3 install pycayennelpp
 
 ### MicroPython Prerequisites
 
-MicroPython does not include the libraries `base64` and `logging` per default.
-While the latter rather optional for embedded devices, the former is essential.
 Using MicroPythons `upip` module PyCayenneLPP can be installed as follows
 within MicroPython:
 
@@ -67,8 +65,6 @@ Or alternatively run with in a shell:
 ```Shell
 micropython -m upip install micropython-pycayennelpp
 ```
-
-This will also install `micropython-base64` as a dependency.
 
 ### Usage Examples
 
