@@ -1,4 +1,5 @@
 import pytest
+import base64
 from datetime import datetime
 from datetime import timezone
 
@@ -70,9 +71,9 @@ def test_frame_from_bytes():
     assert len(frame) == 2
 
 
-def test_frame_from_base64():
-    base64 = "AYgILMMBiIMAAAACAAY="
-    frame = LppFrame.from_base64(base64)
+def test_frame_from_bytes_base64():
+    base64_str = "AYgILMMBiIMAAAACAAY="
+    frame = LppFrame.from_bytes(base64.decodebytes(base64_str.encode('ascii')))
     assert len(frame) == 2
 
 
