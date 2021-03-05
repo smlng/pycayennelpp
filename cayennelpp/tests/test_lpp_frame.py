@@ -12,6 +12,15 @@ def frame():
     return empty_frame
 
 
+@pytest.fixture
+def frame_hlt():
+    hlt = LppFrame()
+    hlt.add_humidity(3, 45.6)
+    hlt.add_load(1, 160.987)
+    hlt.add_temperature(2, 12.3)
+    return hlt
+
+
 def test_empty_frame(frame):
     assert not frame.data
     assert len(frame) == 0
@@ -173,18 +182,34 @@ def test_print_empty_frame(frame):
     print(frame)
 
 
-def test_print_data_frame(frame):
-    frame.add_temperature(2, 12.3)
-    frame.add_temperature(3, -32.1)
-    print(frame)
+def test_print_data_frame(frame_hlt):
+    print(frame_hlt)
 
 
-def test_iterator(frame):
-    frame.add_temperature(2, 12.3)
-    frame.add_humidity(3, 45.6)
-    frame.add_load(1, 160.987)
+def test_iterator(frame_hlt):
     counter = 0
-    for val in frame:
+    for val in frame_hlt:
         print(val)
         counter += 1
-    assert counter == len(frame)
+    assert counter == len(frame_hlt)
+
+
+def test_get_by_type(frame_hlt):
+    h_list = frame_hlt.get_by_type(104)
+    assert len(h_list) == 1
+    assert int(h_list[0].type) == 104
+    l_list = frame_hlt.get_by_type(122)
+    assert len(l_list) == 1
+    assert int(l_list[0].type) == 122
+    t_list = frame_hlt.get_by_type(103)
+    assert len(t_list) == 1
+    assert int(t_list[0].type) == 103
+    p_list = frame_hlt.get_by_type(102)
+    assert len(p_list) == 0
+
+
+def test_get_by_type_invalid(frame_hlt):
+    p_list = frame_hlt.get_by_type(102)
+    assert len(p_list) == 0
+    i_list = frame_hlt.get_by_type(666)
+    assert len(i_list) == 0
