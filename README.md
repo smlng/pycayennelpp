@@ -38,7 +38,9 @@ fly as soon as a certain number of new features and fixes have been made.
 ## Getting Started
 
 PyCayenneLPP does not have any external dependencies, but only uses builtin
-functions and types of Python 3. At least Python in version 3.4 is required.
+functions and types of Python 3. At least Python in version 3.6 is required,
+though Python 3.4 will do, 3.6 is the minimal officially supported version.
+
 Since version 1.2.0 MicroPython is supported, and published as a separate
 package under `micropython-pycayennelpp`.
 

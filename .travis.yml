@@ -1,9 +1,9 @@
 language: python
 python:
-  - "3.4"
-  - "3.5"
   - "3.6"
   - "3.7"
+  - "3.8"
+  - "3.9"
 # command to install dependencies
 install:
   - pip install flake8 pytest coverage "pytest-cov<2.6.0" codacy-coverage
