@@ -9,7 +9,8 @@ except ImportError:
 
 
 class LppData(object):
-    """A single LPP data object representation
+    """
+    A LPP data object.
 
     Attributes:
         chn (int):      data channel number
@@ -18,10 +19,7 @@ class LppData(object):
     """
 
     def __init__(self, chn, type_, value):
-        """
-        Create a LppData object with given attriubes
-        channel `chn`, type `type_`, and values in `value`
-        """
+        """Create a LppData object with given attriubes."""
         logging.debug("LppData.__init__")
         self.channel = chn
         self.type = LppType.get_lpp_type(type_)
@@ -39,14 +37,14 @@ class LppData(object):
                       chn, type_, len(value))
 
     def __str__(self):
-        """Return a pretty string representation of the LppData instance"""
+        """Return a pretty string representation of the LppData object."""
         logging.debug("LppData.__str__")
         return 'LppData(channel = {}, type = {}, value = {})'.format(
                 self.channel, self.type.name, str(self.value))
 
     @classmethod
     def from_bytes(class_object, buf):
-        """Parse LppData from given a byte string"""
+        """Parse a given byte string and return a LppData object."""
         logging.debug("LppData.from_bytes: buf=%s, length=%d",
                       buf, len(buf))
         if len(buf) < 3:
@@ -62,7 +60,7 @@ class LppData(object):
         return class_object(chn, type_, value)
 
     def bytes(self):
-        """Convert LppData instance into a byte string"""
+        """Return a byte string representation of this LppData object."""
         logging.debug("LppData.bytes")
         hdr_buf = bytearray([self.channel, int(self.type)])
         dat_buf = self.type.encode(self.value)
@@ -72,14 +70,6 @@ class LppData(object):
 
     @property
     def size(self):
-        """Return the length of the LppData byte string representation"""
+        """Return the length of the LppData byte string representation."""
         logging.debug("LppData.size")
         return self._size
-
-    def bytes_size(self):
-        """
-        Return the length of the LppData byte string representation
-        This function is deprecated and will be removed.
-        """
-        logging.debug("LppData.bytes_size")
-        return self.size
