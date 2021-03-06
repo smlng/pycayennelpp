@@ -107,9 +107,9 @@ class LppFrame(object):
             size += d.size
         return size
 
-    def get_by_type(self, type):
+    def get_by_type(self, type_):
         """Return sub list of LppFrame data with items matching given type."""
-        return list(filter(lambda t: (int(t.type) == type), self.data))
+        return list(filter(lambda t: (int(t.type) == type_), self.data))
 
     def add_digital_input(self, channel, value):
         """Create and add a digital input LppData item."""
