@@ -56,7 +56,7 @@ class LppFrame(object):
             logging.debug("  loop: index = %d", i)
             lppdata = LppData.from_bytes(buf[i:])
             data.append(lppdata)
-            i = i + lppdata.bytes_size()
+            i = i + lppdata.size
         return cls(data)
 
     def __add_data_item(self, item):
