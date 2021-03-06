@@ -20,10 +20,8 @@ class LppFrame(object):
         a list of LppData elements `data`
         """
         self._maxsize = maxsize
-        self.data = []
+        self._data = []
         if data:
-            if not isinstance(self.data, list):
-                raise AssertionError()
             for d in data:
                 self.__add_data_item(d)
 
@@ -31,22 +29,22 @@ class LppFrame(object):
         """Return a pretty string representation of the LppFrame instance"""
         logging.debug("LppFrame.__str__")
         out = "LppFrame(data = ["
-        if self.data:
+        if self._data:
             out = out + "\n"
-        for d in self.data:
+        for d in self._data:
             out = out + "  " + str(d) + "\n"
         out = out + "])"
         return out
 
     def __len__(self):
         """Return number of data elements in a LppFrame"""
-        return len(self.data)
+        return len(self._data)
 
     def __iter__(self):
         """Return an iterator over all data elements in a LppFrame"""
         count = 0
-        while count < len(self.data):
-            yield self.data[count]
+        while count < len(self._data):
+            yield self._data[count]
             count += 1
 
     @classmethod
@@ -68,14 +66,19 @@ class LppFrame(object):
         if self.maxsize > 0:
             if self.size + item.size > self.maxsize:
                 raise BufferError()
-        self.data.append(item)
+        self._data.append(item)
 
     def bytes(self):
         """Convert LppFrame instance into a byte string"""
         buf = bytearray()
-        for d in self.data:
+        for d in self._data:
             buf = buf + d.bytes()
         return buf
+
+    @property
+    def data(self):
+        """Return list of data items"""
+        return self._data
 
     @property
     def maxsize(self):
@@ -92,14 +95,14 @@ class LppFrame(object):
 
     def reset(self):
         """Reset LppFrame by clearing the list of LppData instances"""
-        self.data.clear()
+        self._data.clear()
 
     @property
     def size(self):
         """Return the length of the LppFrame byte string representation"""
         logging.debug("LppFrame.size")
         size = 0
-        for d in self.data:
+        for d in self._data:
             size += d.size
         return size
 
