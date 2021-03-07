@@ -59,14 +59,19 @@ def test_frame_maxsize(frame):
     assert frame.maxsize == 6
 
 
-def test_frame_invalid_maxsize(frame):
+def test_frame_maxsize_invalid(frame):
     frame.add_digital_input(0, 1)
     assert frame.maxsize == 0
     with pytest.raises(Exception):
         frame.maxsize = 1
 
 
-def test_frame_exceed_maxsize(frame):
+def test_frame_maxsize_negative(frame):
+    with pytest.raises(Exception):
+        frame.maxsize = -42
+
+
+def test_frame_maxsize_exceeded(frame):
     frame.maxsize = 3
     with pytest.raises(Exception):
         frame.add_generic(0, 42)
