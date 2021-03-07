@@ -6,13 +6,16 @@ python:
   - "3.9"
 # command to install dependencies
 install:
-  - pip install flake8 pytest coverage "pytest-cov<2.6.0" codacy-coverage
+  - pip install flake8 pytest coverage
+# preparce codacy coverage report
+before_script:
+  - bash <(curl -Ls https://coverage.codacy.com/get.sh) download
 # command to run tests
 script:
   - test -z "$(git log -E --grep='^(Merge|((chore|docs|feat|fix|refactor|style|tests)\:))' --invert-grep)"
   - python3 -m flake8
-  - python3 -m pytest --cov=cayennelpp
-  - python3 -m coverage xml
+  - python3 -m pytest
+  - python3 -m coverage run -m pytest
 # upload codacy results
 after_success:
-  - python3 -m codacy -r coverage.xml
+  - bash <(curl -Ls https://coverage.codacy.com/get.sh)
