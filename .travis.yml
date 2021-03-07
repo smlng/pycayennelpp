@@ -16,6 +16,7 @@ script:
   - python3 -m flake8
   - python3 -m pytest
   - python3 -m coverage run -m pytest
+  - python3 -m coverage xml
 # upload codacy results
 after_success:
-  - bash <(curl -Ls https://coverage.codacy.com/get.sh)
+  - bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r coverage.xml
