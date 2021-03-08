@@ -52,6 +52,41 @@ def __to_unsigned(val):
     return val
 
 
+def __from_bytes_s16(buf, scale):
+    """Decode 3D sensor data from byte buffer and return values tupel."""
+    if not len(buf) == 6:
+        raise AssertionError()
+    val_xi = __from_bytes(buf[0:2], 2)
+    val_yi = __from_bytes(buf[2:4], 2)
+    val_zi = __from_bytes(buf[4:6], 2)
+    val_xi = __to_s16(val_xi)
+    val_yi = __to_s16(val_yi)
+    val_zi = __to_s16(val_zi)
+    val_x = val_xi / scale
+    val_y = val_yi / scale
+    val_z = val_zi / scale
+    return (val_x, val_y, val_z,)
+
+
+def __to_bytes_s16(data, scale):
+    """Encode 3D Sensor data into CayenneLPP and return byte buffer."""
+    data = __assert_data_tuple(data, 3)
+    val_x = data[0]
+    val_y = data[1]
+    val_z = data[2]
+    val_xi = int(val_x * scale)
+    val_yi = int(val_y * scale)
+    val_zi = int(val_z * scale)
+    val_xi = __to_unsigned(val_xi)
+    val_yi = __to_unsigned(val_yi)
+    val_zi = __to_unsigned(val_zi)
+    buf = bytearray([0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+    buf[0:2] = __to_bytes(val_xi, 2)
+    buf[2:4] = __to_bytes(val_yi, 2)
+    buf[4:6] = __to_bytes(val_zi, 2)
+    return buf
+
+
 def lpp_digital_io_from_bytes(buf):
     """Decode digitial input/output from byte buffer and return value tuple."""
     val = __from_bytes(buf, 1)
@@ -200,37 +235,12 @@ def lpp_humidity_to_bytes(data):
 
 def lpp_accel_from_bytes(buf):
     """Decode accelerometer data byte buffer and return values tupel."""
-    if not len(buf) == 6:
-        raise AssertionError()
-    val_xi = __from_bytes(buf[0:2], 2)
-    val_yi = __from_bytes(buf[2:4], 2)
-    val_zi = __from_bytes(buf[4:6], 2)
-    val_xi = __to_s16(val_xi)
-    val_yi = __to_s16(val_yi)
-    val_zi = __to_s16(val_zi)
-    val_x = val_xi / 1000.0
-    val_y = val_yi / 1000.0
-    val_z = val_zi / 1000.0
-    return (val_x, val_y, val_z,)
+    return __from_bytes_s16(buf, 1000.0)
 
 
 def lpp_accel_to_bytes(data):
     """Encode accelerometer data into CayenneLPP and return byte buffer."""
-    data = __assert_data_tuple(data, 3)
-    val_x = data[0]
-    val_y = data[1]
-    val_z = data[2]
-    val_xi = int(val_x * 1000)
-    val_yi = int(val_y * 1000)
-    val_zi = int(val_z * 1000)
-    val_xi = __to_unsigned(val_xi)
-    val_yi = __to_unsigned(val_yi)
-    val_zi = __to_unsigned(val_zi)
-    buf = bytearray([0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
-    buf[0:2] = __to_bytes(val_xi, 2)
-    buf[2:4] = __to_bytes(val_yi, 2)
-    buf[4:6] = __to_bytes(val_zi, 2)
-    return buf
+    return __to_bytes_s16(data, 1000.0)
 
 
 def lpp_baro_from_bytes(buf):
@@ -252,37 +262,12 @@ def lpp_baro_to_bytes(data):
 
 def lpp_gyro_from_bytes(buf):
     """Decode gyrometer data byte buffer and return value tupel."""
-    if not len(buf) == 6:
-        raise AssertionError()
-    val_xi = __from_bytes(buf[0:2], 2)
-    val_yi = __from_bytes(buf[2:4], 2)
-    val_zi = __from_bytes(buf[4:6], 2)
-    val_xi = __to_s16(val_xi)
-    val_yi = __to_s16(val_yi)
-    val_zi = __to_s16(val_zi)
-    val_x = val_xi / 100.0
-    val_y = val_yi / 100.0
-    val_z = val_zi / 100.0
-    return (val_x, val_y, val_z,)
+    return __from_bytes_s16(buf, 100.0)
 
 
 def lpp_gyro_to_bytes(data):
     """Encode gyrometer data into CayenneLPP and return byte buffer."""
-    data = __assert_data_tuple(data, 3)
-    val_x = data[0]
-    val_y = data[1]
-    val_z = data[2]
-    val_xi = int(val_x * 100)
-    val_yi = int(val_y * 100)
-    val_zi = int(val_z * 100)
-    val_xi = __to_unsigned(val_xi)
-    val_yi = __to_unsigned(val_yi)
-    val_zi = __to_unsigned(val_zi)
-    buf = bytearray([0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
-    buf[0:2] = __to_bytes(val_xi, 2)
-    buf[2:4] = __to_bytes(val_yi, 2)
-    buf[4:6] = __to_bytes(val_zi, 2)
-    return buf
+    return __to_bytes_s16(data, 100.0)
 
 
 def lpp_gps_from_bytes(buf):
