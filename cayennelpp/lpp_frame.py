@@ -1,12 +1,5 @@
 from .lpp_data import LppData
 
-try:
-    import logging
-except ImportError:
-    class logging:
-        def debug(self, *args, **kwargs):
-            pass
-
 
 class LppFrame(object):
     """
@@ -26,7 +19,6 @@ class LppFrame(object):
 
     def __str__(self):
         """Return a pretty string representation of the LppFrame object."""
-        logging.debug("LppFrame.__str__")
         out = "LppFrame(data = ["
         if self._data:
             out = out + "\n"
@@ -49,11 +41,9 @@ class LppFrame(object):
     @classmethod
     def from_bytes(cls, buf):
         """Parse a given byte string and return as a LppFrame object."""
-        logging.debug("LppFrame.from_bytes: buf=%s, length=%d", buf, len(buf))
         i = 0
         data = []
         while i < len(buf):
-            logging.debug("  loop: index = %d", i)
             lppdata = LppData.from_bytes(buf[i:])
             data.append(lppdata)
             i = i + lppdata.size
@@ -101,7 +91,6 @@ class LppFrame(object):
     @property
     def size(self):
         """Return the length of the LppFrame byte string representation."""
-        logging.debug("LppFrame.size")
         size = 0
         for d in self._data:
             size += d.size
