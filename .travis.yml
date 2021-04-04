@@ -13,7 +13,7 @@ before_script:
 # command to run tests
 script:
   - test -z "$(git log -E --grep='^(Merge|((chore|docs|feat|fix|refactor|style|tests)\:))' --invert-grep)"
-  - python3 -m flake8
+  - python3 -m flake8 cayennelpp
   - python3 -m pytest
   - python3 -m coverage run -m pytest
   - python3 -m coverage xml
