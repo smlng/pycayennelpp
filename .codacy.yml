@@ -1,3 +1,10 @@
+---
 exclude_paths:
   - '**/tests/**'
-  - 'CODE_OF_CONDUCT.md'
+  - '*.md'
+  - 'LICENSE'
+  - 'MANIFEST.in'
+  - 'setup.cfg'
+  - 'setup.py'
+  - 'usetup.py'
+  - 'sdist_upip.py'
