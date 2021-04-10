@@ -135,9 +135,18 @@ def test_add_voltage(frame):
     assert len(frame) == 2
     assert int(frame.data[0].type) == 116
     assert int(frame.data[1].type) == 116
-    frame.add_voltage(2, -25)
     with pytest.raises(Exception):
-        frame.bytes()
+        frame.add_voltage(2, -25)
+
+
+def test_add_current(frame):
+    frame.add_current(0, 16.2)
+    frame.add_current(1, 32.3)
+    assert len(frame) == 2
+    assert int(frame.data[0].type) == 117
+    assert int(frame.data[1].type) == 117
+    with pytest.raises(Exception):
+        frame.add_current(2, -25)
 
 
 def test_add_load(frame):
