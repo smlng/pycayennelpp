@@ -53,7 +53,7 @@ class LppFrame(object):
         while i < len(buf):
             lppdata = LppData.from_bytes(buf[i:])
             data.append(lppdata)
-            i = i + lppdata.size
+            i = i + len(lppdata)
         return cls(data)
 
     def __add_data_item(self, item):
@@ -61,7 +61,7 @@ class LppFrame(object):
         if not isinstance(item, LppData):
             raise TypeError()
         if self.maxsize > 0:
-            if self.size + item.size > self.maxsize:
+            if self.size + len(item) > self.maxsize:
                 raise BufferError()
         self._data.append(item)
 
@@ -93,7 +93,7 @@ class LppFrame(object):
         """Return the length of the LppFrame byte string representation."""
         size = 0
         for d in self._data:
-            size += d.size
+            size += len(d)
         return size
 
     def get_by_type(self, type_):
