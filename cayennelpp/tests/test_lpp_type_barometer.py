@@ -1,8 +1,5 @@
 import pytest
 
-from datetime import datetime
-from datetime import timezone
-
 from cayennelpp.lpp_type import LppType
 
 
