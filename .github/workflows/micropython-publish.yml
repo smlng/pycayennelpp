@@ -28,4 +28,5 @@ jobs:
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
         python usetup.py sdist bdist_wheel
+        rm dist/*.orig
         twine upload dist/micropython*
