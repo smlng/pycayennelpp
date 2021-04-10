@@ -38,6 +38,13 @@ class LppFrame(object):
             yield self._data[count]
             count += 1
 
+    def __bytes__(self):
+        """Return this LppFrame object as a byte string."""
+        buf = bytearray()
+        for d in self._data:
+            buf = buf + bytes(d)
+        return bytes(buf)
+
     @classmethod
     def from_bytes(cls, buf):
         """Parse a given byte string and return as a LppFrame object."""
@@ -57,13 +64,6 @@ class LppFrame(object):
             if self.size + item.size > self.maxsize:
                 raise BufferError()
         self._data.append(item)
-
-    def bytes(self):
-        """Return this LppFrame object as a byte string."""
-        buf = bytearray()
-        for d in self._data:
-            buf = buf + bytes(d)
-        return buf
 
     @property
     def data(self):
