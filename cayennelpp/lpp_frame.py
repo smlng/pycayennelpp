@@ -180,6 +180,11 @@ class LppFrame(object):
         voltage = LppData(channel, 116, (value, ))
         self.__add_data_item(voltage)
 
+    def add_current(self, channel, value):
+        """Create and add a current sensor LppData item."""
+        current = LppData(channel, 117, (value, ))
+        self.__add_data_item(current)
+
     def add_load(self, channel, value):
         """Create and add a load sensor LppData item."""
         load = LppData(channel, 122, (value, ))
