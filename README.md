@@ -95,7 +95,7 @@ frame = LppFrame()
 frame.add_temperature(0, -1.2)
 frame.add_humidity(6, 34.5)
 # get byte buffer in CayenneLPP format
-buffer = frame.bytes()
+buffer = bytes(frame)
 ```
 
 ***Decoding***
