@@ -62,7 +62,7 @@ class LppFrame(object):
         """Return this LppFrame object as a byte string."""
         buf = bytearray()
         for d in self._data:
-            buf = buf + d.bytes()
+            buf = buf + bytes(d)
         return buf
 
     @property
