@@ -55,7 +55,7 @@ class LppType(object):
         self.signs = signs
 
     def __int__(self):
-        """Return LppType attribute as integer."""
+        """Return LppType as integer, i.e. its numeric type."""
         return self.type
 
     @staticmethod
@@ -106,7 +106,7 @@ class LppType(object):
 
     @classmethod
     def get_lpp_type(cls, type_):
-        """Returns LppType object for given type or `None` if not found."""
+        """Return LppType object for given type or `None` if not found."""
         if not isinstance(type_, int):
             raise TypeError('Parameter (type_) must be an integer!')
 
@@ -116,13 +116,16 @@ class LppType(object):
 
     @property
     def dimension(self):
+        """Return number of value dimensions."""
         return len(self.sizes)
 
     @property
     def size(self):
+        """Return size of byte string representation."""
         return sum(self.sizes)
 
     def decode(self, buf):
+        """Parse LppType from a byte string."""
         if len(buf) != sum(self.sizes):
             raise BufferError('Invalid buffer length!')
         data = []
@@ -138,6 +141,7 @@ class LppType(object):
         return tuple(data)
 
     def encode(self, data):
+        """Convert LppType into a byte string."""
         data = self.__assert_data_tuple(data, len(self.sizes))
         buf = bytearray(sum(self.sizes))
         pos = 0

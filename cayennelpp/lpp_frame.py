@@ -7,6 +7,7 @@ class LppFrame(object):
 
     Attributes:
         data (list): a list of LppData objects
+        maxsize (int): (otpional) byte size limit
     """
 
     def __init__(self, data=None, maxsize=0):
