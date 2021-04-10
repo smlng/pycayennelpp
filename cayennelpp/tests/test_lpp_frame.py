@@ -24,7 +24,7 @@ def frame_hlt():
 def test_empty_frame(frame):
     assert not frame.data
     assert len(frame) == 0
-    assert not frame.bytes()
+    assert not bytes(frame)
 
 
 def test_init_invalid_data_nolist():
@@ -79,9 +79,9 @@ def test_frame_maxsize_exceeded(frame):
 
 def test_frame_from_bytes():
     # 03 67 01 10 05 67 00 FF = 27.2C + 25.5C
-    buf = bytearray([0x03, 0x67, 0x01, 0x10, 0x05, 0x67, 0x00, 0xff])
+    buf = bytes([0x03, 0x67, 0x01, 0x10, 0x05, 0x67, 0x00, 0xff])
     frame = LppFrame.from_bytes(buf)
-    assert buf == frame.bytes()
+    assert buf == bytes(frame)
     assert len(frame) == 2
 
 
@@ -162,7 +162,6 @@ def test_add_unix_time(frame):
     assert len(frame) == 2
     assert int(frame.data[0].type) == 133
     assert int(frame.data[1].type) == 133
-    frame.bytes()
 
 
 def test_add_temperature(frame):
