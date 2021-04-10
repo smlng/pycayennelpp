@@ -146,11 +146,6 @@ class LppFrame(object):
         hum = LppData(channel, 104, (value, ))
         self.__add_data_item(hum)
 
-    def add_unix_time(self, channel, value):
-        """Create and add a unix time sensor LppData item."""
-        timestamp = LppData(channel, 133, (value, ))
-        self.__add_data_item(timestamp)
-
     def add_accelerometer(self, channel, x, y, z):
         """Create and add a accelerometer sensor LppData item."""
         acc = LppData(channel, 113, (x, y, z, ))
@@ -164,16 +159,6 @@ class LppFrame(object):
     def add_barometer(self, channel, value):
         """Alias method to Create and add a barometer sensor LppData item."""
         self.add_pressure(channel, value)
-
-    def add_gyrometer(self, channel, x, y, z):
-        """Create and add a gyrometer sensor LppData item."""
-        gyro = LppData(channel, 134, (x, y, z, ))
-        self.__add_data_item(gyro)
-
-    def add_gps(self, channel, lat, lon, alt):
-        """Create and add a GPS sensor LppData item."""
-        gps = LppData(channel, 136, (lat, lon, alt, ))
-        self.__add_data_item(gps)
 
     def add_voltage(self, channel, value):
         """Create and add a voltage sensor LppData item."""
@@ -189,3 +174,18 @@ class LppFrame(object):
         """Create and add a load sensor LppData item."""
         load = LppData(channel, 122, (value, ))
         self.__add_data_item(load)
+
+    def add_unix_time(self, channel, value):
+        """Create and add a unix time sensor LppData item."""
+        timestamp = LppData(channel, 133, (value, ))
+        self.__add_data_item(timestamp)
+
+    def add_gyrometer(self, channel, x, y, z):
+        """Create and add a gyrometer sensor LppData item."""
+        gyro = LppData(channel, 134, (x, y, z, ))
+        self.__add_data_item(gyro)
+
+    def add_gps(self, channel, lat, lon, alt):
+        """Create and add a GPS sensor LppData item."""
+        gps = LppData(channel, 136, (lat, lon, alt, ))
+        self.__add_data_item(gps)
