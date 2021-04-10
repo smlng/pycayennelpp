@@ -24,7 +24,6 @@ class LppData(object):
         if not len(value) == self.type.dimension:
             raise ValueError("Invalid number of data values!")
         self.value = value
-        self._size = self.type.size + 2
 
     def __bytes__(self):
         """Return a byte string representation of this LppData object."""
@@ -55,4 +54,4 @@ class LppData(object):
     @property
     def size(self):
         """Return the length of the LppData byte string representation."""
-        return self._size
+        return self.type.size + 2
