@@ -9,8 +9,8 @@
 A Cayenne Low Power Payload (CayenneLPP) decoder and encoder written in Python.
 
 PyCayenneLPP offers a concise interface with proper encoding and decoding
-functionality for the CayenneLPP format suporting many sensor types. Further, 
-the project aims for overall high code quality and good test coverage.
+functionality for the CayenneLPP format, supporting many sensor types.
+The project aims for overall high code quality and good test coverage.
 
 See also [myDevicesIoT/CayenneLPP](https://github.com/myDevicesIoT/CayenneLPP)
 for more information on the format and a reference implementation in C++.
@@ -37,6 +37,7 @@ The following table lists the currently supported data types with the LPP code
 | Accelerometer  | 113 |    6 |   3 |
 | Barometer      | 115 |    2 |   1 |
 | Voltage        | 116 |    2 |   1 |
+| Current        | 117 |    2 |   1 |
 | Load           | 122 |    3 |   1 |
 | Unix Time      | 133 |    4 |   1 |
 | Gyrometer      | 134 |    6 |   3 |
