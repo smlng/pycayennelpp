@@ -20,13 +20,16 @@ class LppType(object):
         102:    ('Presence Sensor', [1], [1], [False]),
         103:    ('Temperature Sensor', [2], [10], [True]),
         104:    ('Humidity Sensor', [1], [2], [False]),
-        113:    ('Accelerometer', [2,2,2], [1000,1000,1000], [True, True, True]),
+        113:    ('Accelerometer', [2, 2, 2], [1000, 1000, 1000],
+                 [True, True, True]),
         115:    ('Barometer', [2], [10], [False]),
         116:    ('Voltage', [2], [100], [False]),
         122:    ('Load', [3], [1000], [True]),
         133:    ('Unix Timestamp', [4], [1], [False]),
-        134:    ('Gyrometer', [2,2,2], [100,100,100], [True,True,True]),
-        136:    ('GPS Location', [3,3,3], [10000,10000,100], [True,True,True])
+        134:    ('Gyrometer', [2, 2, 2], [100, 100, 100],
+                 [True, True, True]),
+        136:    ('GPS Location', [3, 3, 3], [10000, 10000, 100],
+                 [True, True, True])
     }
 
     def __init__(self, type_, name, sizes, scales, signs):
@@ -44,7 +47,7 @@ class LppType(object):
         if type_ not in self.__lpp_types:
             raise ValueError('Invalid parameter: unknown type!')
         if len(sizes) != len(scales) or len(scales) != len(signs):
-            raise ValueError('Invalid parameters: (sizes, scales, signs) must be of equal length!')
+            raise ValueError('Invalid parameter length: sizes, scales, signs!')
         self.type = type_
         self.name = name
         self.sizes = sizes
@@ -116,7 +119,7 @@ class LppType(object):
 
     def decode(self, buf):
         if len(buf) != sum(self.sizes):
-            raise BufferError('Invalid buffer length, does not match data sizes!')
+            raise BufferError('Invalid buffer length!')
         data = []
         pos = 0
         for i in range(len(self.sizes)):
