@@ -23,6 +23,9 @@ class LppData(object):
             value = (value,)
         if not len(value) == self.type.dimension:
             raise ValueError("Invalid number of data values!")
+        for i in range(self.type.dimension):
+            if not self.type.signs[i] and value[i] < 0:
+                raise ValueError("Invalid value, must be positive!")
         self.value = value
 
     def __bytes__(self):
