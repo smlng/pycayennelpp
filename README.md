@@ -7,6 +7,19 @@
 [![GitHub](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/smlng/pycayennelpp/blob/master/LICENSE)
 
 A Cayenne Low Power Payload (CayenneLPP) decoder and encoder written in Python.
+
+PyCayenneLPP offers a concise interface with proper encoding and decoding
+functionality for the CayenneLPP format suporting many sensor types. Further, 
+the project aims for overall high code quality and good test coverage.
+
+See also [myDevicesIoT/CayenneLPP](https://github.com/myDevicesIoT/CayenneLPP)
+for more information on the format and a reference implementation in C++.
+
+The project is under active development. Releases will be published on the
+fly as soon as a certain number of new features and fixes have been made.
+
+## Supported Data Types
+
 The following table lists the currently supported data types with the LPP code
 (which equals IPSO code - 3200), data size in bytes, and data dimensions.
 
@@ -29,20 +42,15 @@ The following table lists the currently supported data types with the LPP code
 | Gyrometer      | 134 |    6 |   3 |
 | GPS Location   | 136 |    9 |   3 |
 
-See also [myDevicesIoT/CayenneLPP](https://github.com/myDevicesIoT/CayenneLPP)
-for more information on the format and a reference implementation in C++.
-
-The project is under active development. Releases will be published on the
-fly as soon as a certain number of new features and fixes have been made.
-
 ## Getting Started
 
-PyCayenneLPP does not have any external dependencies, but only uses builtin
-functions and types of Python 3. At least Python in version 3.6 is required,
-though Python 3.4 will do, 3.6 is the minimal officially supported version.
+PyCayenneLPP does not have any external dependencies and only uses builtin
+functions and types of Python 3. It is compatible with all the latest and 
+officially supported Python versions 3.6 and above, though even Python 3.4 
+will do.
 
-Since version 1.2.0 MicroPython is supported, and published as a separate
-package under `micropython-pycayennelpp`.
+Since PyCayenneLPP 1.2.0 MicroPython is officially supported, and published 
+as a separate package under `micropython-pycayennelpp`.
 
 ### Python 3 Prerequisites
 
