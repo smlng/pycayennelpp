@@ -32,6 +32,10 @@ class LppData(object):
         buf = hdr_buf + dat_buf
         return bytes(buf)
 
+    def __len__(self):
+        """Return the length of the LppData byte string representation."""
+        return self.type.size + 2
+
     def __str__(self):
         """Return a pretty string representation of the LppData object."""
         return 'LppData(channel = {}, type = {}, value = {})'.format(
@@ -50,8 +54,3 @@ class LppData(object):
             raise BufferError("Buffer too small!")
         value = lpp_type.decode(buf[2:(2 + size)])
         return class_object(chn, type_, value)
-
-    @property
-    def size(self):
-        """Return the length of the LppData byte string representation."""
-        return self.type.size + 2
