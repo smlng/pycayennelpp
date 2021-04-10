@@ -1,8 +1,5 @@
 import pytest
 
-from datetime import datetime
-from datetime import timezone
-
 from cayennelpp.lpp_type import LppType
 
 
@@ -37,4 +34,4 @@ def test_get_lpp_type_invalid():
 
 
 def test_get_lpp_type_none():
-    assert LppType.get_lpp_type(42) == None
+    assert not LppType.get_lpp_type(42)

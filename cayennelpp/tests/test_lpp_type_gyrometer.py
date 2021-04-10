@@ -1,8 +1,5 @@
 import pytest
 
-from datetime import datetime
-from datetime import timezone
-
 from cayennelpp.lpp_type import LppType
 
 
@@ -33,4 +30,3 @@ def test_gyrometer_invalid_val_type(gyro):
 def test_gyrometer_invalid_val(gyro):
     with pytest.raises(Exception):
         gyro.encode((0, 0))
-

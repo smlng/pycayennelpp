@@ -1,13 +1,12 @@
 import pytest
 
-from datetime import datetime
-from datetime import timezone
-
 from cayennelpp.lpp_type import LppType
+
 
 @pytest.fixture
 def dio():
     return LppType.get_lpp_type(0)
+
 
 def test_digital_io(dio):
     val = (0,)
