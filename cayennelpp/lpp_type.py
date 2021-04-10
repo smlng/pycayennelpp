@@ -58,7 +58,8 @@ class LppType(object):
         """Return LppType attribute as integer."""
         return self.type
 
-    def __assert_data_tuple(self, data, num):
+    @staticmethod
+    def __assert_data_tuple(data, num):
         """Internal helper to ensure data is a tuple of given `num` length."""
         if not isinstance(data, tuple):
             data = (data,)
@@ -66,7 +67,8 @@ class LppType(object):
             raise AssertionError()
         return data
 
-    def __from_bytes(self, buf):
+    @staticmethod
+    def __from_bytes(buf):
         """Internal helper to parse a number from buffer."""
         buflen = len(buf)
         val = 0
@@ -75,7 +77,8 @@ class LppType(object):
             val |= buf[i] << shift
         return val
 
-    def __to_bytes(self, val, buflen):
+    @staticmethod
+    def __to_bytes(val, buflen):
         """Internal helper to write a value to a buffer."""
         buf = bytearray(buflen)
         val = int(val)
@@ -84,7 +87,8 @@ class LppType(object):
             buf[i] = (val >> shift) & 0xff
         return buf
 
-    def __to_signed(self, val, size):
+    @staticmethod
+    def __to_signed(val, size):
         """Internal helper to convert unsigned int to signed."""
         mask = 0x00
         for i in range(size):
@@ -93,7 +97,8 @@ class LppType(object):
             val = -1 - (val ^ mask)
         return val
 
-    def __to_unsigned(self, val):
+    @staticmethod
+    def __to_unsigned(val):
         """Convert signed (2 complement) value to unsigned."""
         if val < 0:
             val = ~(-val - 1)
