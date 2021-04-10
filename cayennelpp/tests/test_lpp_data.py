@@ -5,61 +5,61 @@ from cayennelpp.lpp_data import LppData
 
 def test_temperature_from_bytes():
     # 01 67 FF D7 = -4.1C
-    temp_buf = bytearray([0x01, 0x67, 0xFF, 0xD7])
+    temp_buf = bytes([0x01, 0x67, 0xFF, 0xD7])
     temp_dat = LppData.from_bytes(temp_buf)
-    assert temp_buf == temp_dat.bytes()
+    assert temp_buf == bytes(temp_dat)
 
 
 def test_accelerometer_from_bytes():
     # 06 71 04 D2 FB 2E 00 00
-    acc_buf = bytearray([0x06, 0x71, 0x04, 0xD2, 0xFB, 0x2E, 0x00, 0x00])
+    acc_buf = bytes([0x06, 0x71, 0x04, 0xD2, 0xFB, 0x2E, 0x00, 0x00])
     acc_dat = LppData.from_bytes(acc_buf)
-    assert acc_buf == acc_dat.bytes()
+    assert acc_buf == bytes(acc_dat)
 
 
 def test_generic_from_bytes():
-    buff = bytearray([0x00, 0x64, 0xff, 0xff, 0xff, 0xfb])
+    buff = bytes([0x00, 0x64, 0xff, 0xff, 0xff, 0xfb])
     data = LppData.from_bytes(buff)
-    assert buff == data.bytes()
+    assert buff == bytes(data)
     assert int(data.type) == 100
     assert data.value == (4294967291,)
 
 
 def test_generic_from_bytes_invalid_size():
     with pytest.raises(Exception):
-        buf = bytearray([0x00, 0x64, 0x00, 0x00, 0x00])
+        buf = bytes([0x00, 0x64, 0x00, 0x00, 0x00])
         LppData.from_bytes(buf)
 
 
 def test_gps_from_bytes():
     # 01 88 06 76 5f f2 96 0a 00 03 e8
-    gps_buf = bytearray([0x01, 0x88, 0x06, 0x76,
-                         0x5f, 0xf2, 0x96, 0x0a,
-                         0x00, 0x03, 0xe8])
+    gps_buf = bytes([0x01, 0x88, 0x06, 0x76,
+                    0x5f, 0xf2, 0x96, 0x0a,
+                    0x00, 0x03, 0xe8])
     gps_dat = LppData.from_bytes(gps_buf)
-    assert gps_buf == gps_dat.bytes()
+    assert gps_buf == bytes(gps_dat)
 
 
 def test_voltage_from_bytes():
     # 25V on channel 1
-    buff = bytearray([0x01, 0x74, 0x9, 0xc4])
+    buff = bytes([0x01, 0x74, 0x9, 0xc4])
     data = LppData.from_bytes(buff)
-    assert buff == data.bytes()
+    assert buff == bytes(data)
     assert data.value == (25,)
 
 
 def test_load_from_bytes():
     # 42.321kg on channel 0
-    buff = bytearray([0x00, 0x7A, 0x00, 0xA5, 0x51])
+    buff = bytes([0x00, 0x7A, 0x00, 0xA5, 0x51])
     data = LppData.from_bytes(buff)
-    assert buff == data.bytes()
+    assert buff == bytes(data)
 
 
 def test_unix_time_from_bytes():
     # 1970-01-01T08:00Z (ie unix time 0)
-    buff = bytearray([0x01, 0x85, 0x00, 0x00, 0x00, 0x00])
+    buff = bytes([0x01, 0x85, 0x00, 0x00, 0x00, 0x00])
     data = LppData.from_bytes(buff)
-    assert buff == data.bytes()
+    assert buff == bytes(data)
     assert data.value == (0,)
 
 
@@ -80,13 +80,13 @@ def test_init_invalid_dimension():
 
 def test_any_from_bytes_invalid_size():
     with pytest.raises(Exception):
-        buf = bytearray([0x00, 0x00])
+        buf = bytes([0x00, 0x00])
         LppData.from_bytes(buf)
 
 
 def test_gps_from_bytes_invalid_size():
     with pytest.raises(Exception):
-        buf = bytearray([0x00, 0x88, 0x00])
+        buf = bytes([0x00, 0x88, 0x00])
         LppData.from_bytes(buf)
 
 
