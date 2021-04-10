@@ -24,6 +24,7 @@ class LppType(object):
                  [True, True, True]),
         115:    ('Barometer', [2], [10], [False]),
         116:    ('Voltage', [2], [100], [False]),
+        117:    ('Current', [2], [1000], [False]),
         122:    ('Load', [3], [1000], [True]),
         133:    ('Unix Timestamp', [4], [1], [False]),
         134:    ('Gyrometer', [2, 2, 2], [100, 100, 100],
