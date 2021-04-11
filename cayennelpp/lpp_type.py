@@ -45,8 +45,6 @@ class LppType(object):
             raise TypeError('Parameter (scales) must be a list of integers!')
         if not isinstance(signs, list):
             raise TypeError('Parameter (signs) must be a list of integers!')
-        if type_ not in self.__lpp_types:
-            raise ValueError('Invalid parameter: unknown type!')
         if len(sizes) != len(scales) or len(scales) != len(signs):
             raise ValueError('Invalid parameter length: sizes, scales, signs!')
         self.type = type_
