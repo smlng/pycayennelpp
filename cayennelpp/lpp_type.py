@@ -147,13 +147,13 @@ class LppType(object):
         for i in range(len(self.sizes)):
             size = self.sizes[i]
             value = data[i]
-            value *= self.scales[i]
-            if not self.signs[i]:
-                if value < 0:
-                    raise ValueError('Invalid data, must be non negative!')
-                maxval = 1 << (size * 8)
-                if value >= maxval:
-                    raise ValueError('Invalid data, exceed value range!')
+            if not self.signs[i] and value < 0:
+                raise ValueError('Invalid data, must be non negative!')
+            value = int(value * self.scales[i])
+            maxval = 1 << (size * 8)
+            if value >= maxval:
+                raise ValueError('Invalid data, exceed value range!')
+            if self.signs[i]:
                 value = self.__to_unsigned(value)
             buf[pos:(pos + size)] = self.__to_bytes(value, size)
             pos += size
