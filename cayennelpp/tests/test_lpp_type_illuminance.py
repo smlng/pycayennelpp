@@ -9,9 +9,21 @@ def lum():
 
 
 def test_illuminance(lum):
+    val = (0,)
+    lum_buf = lum.encode(val)
+    assert lum.decode(lum_buf) == val
     val = (12345,)
     lum_buf = lum.encode(val)
     assert lum.decode(lum_buf) == val
+
+
+def test_illuminance_max_value(lum):
+    val = (65535,)
+    lum_buf = lum.encode(val)
+    assert lum.decode(lum_buf) == val
+    with pytest.raises(ValueError):
+        val = (65536,)
+        lum_buf = lum.encode(val)
 
 
 def test_illuminance_invalid_buf(lum):

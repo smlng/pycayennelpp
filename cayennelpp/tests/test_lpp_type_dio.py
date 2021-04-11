@@ -17,6 +17,15 @@ def test_digital_io(dio):
     assert dio.decode(dio_buf) == val
 
 
+def test_digital_io_max_value(dio):
+    val = (255,)
+    dio_buf = dio.encode(val)
+    assert dio.decode(dio_buf) == val
+    with pytest.raises(ValueError):
+        val = (256,)
+        dio_buf = dio.encode(val)
+
+
 def test_digital_io_invalid_buf(dio):
     with pytest.raises(Exception):
         dio.decode(bytearray([0x00, 0x00]))
