@@ -149,6 +149,14 @@ def test_add_current(frame):
         frame.add_current(2, -25)
 
 
+def test_add_frequency(frame):
+    frame.add_frequency(0, 4294967295)
+    frame.add_frequency(1, 1)
+    assert len(frame) == 2
+    assert int(frame.data[0].type) == 118
+    assert int(frame.data[1].type) == 118
+
+
 def test_add_load(frame):
     frame.add_load(0, -5.432)
     frame.add_load(1, 160.987)

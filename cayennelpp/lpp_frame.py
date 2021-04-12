@@ -170,6 +170,11 @@ class LppFrame(object):
         current = LppData(channel, 117, (value, ))
         self.__add_data_item(current)
 
+    def add_frequency(self, channel, value):
+        """Create and add a frequency sensor LppData item."""
+        frequency = LppData(channel, 118, (value, ))
+        self.__add_data_item(frequency)
+
     def add_load(self, channel, value):
         """Create and add a load sensor LppData item."""
         load = LppData(channel, 122, (value, ))
