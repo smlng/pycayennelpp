@@ -175,6 +175,11 @@ class LppFrame(object):
         frequency = LppData(channel, 118, (value, ))
         self.__add_data_item(frequency)
 
+    def add_percentage(self, channel, value):
+        """Create and add a percentage LppData item."""
+        percentage = LppData(channel, 120, (value, ))
+        self.__add_data_item(percentage)
+
     def add_load(self, channel, value):
         """Create and add a load sensor LppData item."""
         load = LppData(channel, 122, (value, ))

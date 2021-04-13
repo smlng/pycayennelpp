@@ -205,6 +205,14 @@ def test_add_temperature(frame):
     assert int(frame.data[1].type) == 103
 
 
+def test_add_percentage(frame):
+    frame.add_percentage(2, 10)
+    frame.add_percentage(3, 100)
+    assert len(frame) == 2
+    assert int(frame.data[0].type) == 120
+    assert int(frame.data[1].type) == 120
+
+
 def test_add_humidity(frame):
     frame.add_humidity(2, 12.3)
     frame.add_humidity(3, 45.6)
