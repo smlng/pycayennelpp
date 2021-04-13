@@ -275,6 +275,12 @@ def test_add_humidity(frame):
     assert int(frame.data[2].type) == 104
 
 
+def test_add_colour(frame):
+    frame.add_colour(2, 42, 42, 42)
+    assert len(frame) == 1
+    assert int(frame.data[0].type) == 135
+
+
 def test_print_empty_frame(frame):
     print(frame)
 
