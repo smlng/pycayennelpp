@@ -215,3 +215,7 @@ class LppFrame(object):
     def add_gps(self, channel, lat, lon, alt):
         """Create and add a GPS sensor LppData item."""
         self.add_by_type(136, channel, (lat, lon, alt))
+
+    def add_switch(self, channel, value):
+        """Create and add a switch LppData item."""
+        self.add_by_type(142, channel, (value, ))
