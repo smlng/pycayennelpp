@@ -21,27 +21,40 @@ fly as soon as a certain number of new features and fixes have been made.
 ## Supported Data Types
 
 The following table lists the currently supported data types with the LPP code
-(which equals IPSO code - 3200), data size in bytes, and data dimensions.
+(which equals IPSO code - 3200), data size in bytes, dimensions, signedness,
+and data resolution.
 
-| Type Name      | LPP | Size | Dim |
-|----------------|-----|------|-----|
-| Digital Input  |   0 |    1 |   1 |
-| Digital Output |   1 |    1 |   1 |
-| Analog Input   |   2 |    2 |   1 |
-| Analog Output  |   3 |    2 |   1 |
-| Generic        | 100 |    4 |   1 |
-| Illuminance    | 101 |    2 |   1 |
-| Presence       | 102 |    1 |   1 |
-| Temperature    | 103 |    2 |   1 |
-| Humidity       | 104 |    1 |   1 |
-| Accelerometer  | 113 |    6 |   3 |
-| Barometer      | 115 |    2 |   1 |
-| Voltage        | 116 |    2 |   1 |
-| Current        | 117 |    2 |   1 |
-| Load           | 122 |    3 |   1 |
-| Unix Time      | 133 |    4 |   1 |
-| Gyrometer      | 134 |    6 |   3 |
-| GPS Location   | 136 |    9 |   3 |
+| Type Name      | LPP | Size | Dim | Signed | Resolution |
+|----------------|-----|------|-----|--------|------------|
+| Digital Input  |   0 |    1 |   1 | False  | 1          |
+| Digital Output |   1 |    1 |   1 | False  | 1          |
+| Analog Input   |   2 |    2 |   1 | True   | 0.01       |
+| Analog Output  |   3 |    2 |   1 | True   | 0.01       |
+| Generic        | 100 |    4 |   1 | False  | 1          |
+| Illuminance    | 101 |    2 |   1 | False  | 1 Lux      |
+| Presence       | 102 |    1 |   1 | False  | 1          |
+| Temperature    | 103 |    2 |   1 | True   | 0.1°C      |
+| Humidity       | 104 |    1 |   1 | False  | 0.5 %      |
+| Accelerometer  | 113 |    6 |   3 | True   | 0.001 G    |
+| Barometer      | 115 |    2 |   1 | False  | 0.1 hPa    |
+| Voltage        | 116 |    2 |   1 | False  | 0.01 V     |
+| Current        | 117 |    2 |   1 | False  | 0.001 A    |
+| Frequency      | 118 |    4 |   1 | False  | 1 Hz       |
+| Percentage     | 120 |    1 |   1 | False  | 1 %        |
+| Altitude       | 121 |    2 |   1 | True   | 1 m        |
+| Load           | 122 |    3 |   1 | True   | 0.001 kg   |
+| Concentration  | 125 |    2 |   1 | False  | 1          |
+| Power          | 128 |    2 |   1 | False  | 1          |
+| Distance       | 130 |    4 |   1 | False  | 0.001 km   |
+| Energy         | 131 |    4 |   1 | False  | 0.001 kJ   |
+| Direction      | 132 |    2 |   1 | False  | 1 °        |
+| Unix Time      | 133 |    4 |   1 | False  | 1 s        |
+| Gyrometer      | 134 |    6 |   3 | True   | 0.01 °/s   |
+| Colour         | 135 |    3 |   3 | False  | 1 RGB      |
+| GPS Location   | 136 |    9 |   3 | True   | 0.00001 lat|
+|                |     |      |     |        | 0.00001 lon|
+|                |     |      |     |        | 0.01 alt   |
+| Switch         | 142 |    1 |   1 | False  | 1 on/off   |
 
 ## Getting Started
 
