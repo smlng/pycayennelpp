@@ -253,6 +253,18 @@ def test_add_energy(frame):
     assert int(frame.data[1].type) == 131
 
 
+def test_add_direction(frame):
+    frame.add_direction(2, 30)
+    frame.add_direction(2, 120)
+    frame.add_direction(3, 210)
+    frame.add_direction(3, 300)
+    assert len(frame) == 4
+    assert int(frame.data[0].type) == 132
+    assert int(frame.data[1].type) == 132
+    assert int(frame.data[2].type) == 132
+    assert int(frame.data[3].type) == 132
+
+
 def test_add_humidity(frame):
     frame.add_humidity(2, 12.3)
     frame.add_humidity(3, 45.6)
