@@ -208,6 +208,10 @@ class LppFrame(object):
         """Create and add a gyrometer sensor LppData item."""
         self.add_by_type(134, channel, (x, y, z))
 
+    def add_colour(self, channel, red, green, blue):
+        """Create and add a color sensor LppData item."""
+        self.add_by_type(135, channel, (red, green, blue))
+
     def add_gps(self, channel, lat, lon, alt):
         """Create and add a GPS sensor LppData item."""
         self.add_by_type(136, channel, (lat, lon, alt))

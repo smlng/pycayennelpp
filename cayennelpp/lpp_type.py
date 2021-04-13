@@ -37,6 +37,8 @@ class LppType(object):
         133:    ('Unix Timestamp', [4], [1], [False]),
         134:    ('Gyrometer', [2, 2, 2], [100, 100, 100],
                  [True, True, True]),
+        135:    ('Colour', [1, 1, 1], [1, 1, 1],
+                 [False, False, False]),
         136:    ('GPS Location', [3, 3, 3], [10000, 10000, 100],
                  [True, True, True])
     }
