@@ -229,6 +229,14 @@ def test_add_concentration(frame):
     assert int(frame.data[1].type) == 125
 
 
+def test_add_power(frame):
+    frame.add_power(2, 10)
+    frame.add_power(3, 10000)
+    assert len(frame) == 2
+    assert int(frame.data[0].type) == 128
+    assert int(frame.data[1].type) == 128
+
+
 def test_add_humidity(frame):
     frame.add_humidity(2, 12.3)
     frame.add_humidity(3, 45.6)

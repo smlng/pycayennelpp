@@ -184,6 +184,10 @@ class LppFrame(object):
         """Create and add a concentration LppData item."""
         self.add_by_type(125, channel, (value, ))
 
+    def add_power(self, channel, value):
+        """Create and add a power sensor LppData item."""
+        self.add_by_type(128, channel, (value, ))
+
     def add_unix_time(self, channel, value):
         """Create and add a unix timestamp LppData item."""
         self.add_by_type(133, channel, (value, ))
