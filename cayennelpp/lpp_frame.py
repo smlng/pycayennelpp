@@ -192,6 +192,10 @@ class LppFrame(object):
         """Create and add a distance LppData item."""
         self.add_by_type(130, channel, (value, ))
 
+    def add_energy(self, channel, value):
+        """Create and add a energy sensor LppData item."""
+        self.add_by_type(131, channel, (value, ))
+
     def add_unix_time(self, channel, value):
         """Create and add a unix timestamp LppData item."""
         self.add_by_type(133, channel, (value, ))
