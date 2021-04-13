@@ -40,7 +40,8 @@ class LppType(object):
         135:    ('Colour', [1, 1, 1], [1, 1, 1],
                  [False, False, False]),
         136:    ('GPS Location', [3, 3, 3], [10000, 10000, 100],
-                 [True, True, True])
+                 [True, True, True]),
+        142:    ('Switch', [1], [1], [False])
     }
 
     def __init__(self, type_, name, sizes, scales, signs):

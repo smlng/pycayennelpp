@@ -281,6 +281,14 @@ def test_add_colour(frame):
     assert int(frame.data[0].type) == 135
 
 
+def test_add_switch(frame):
+    frame.add_switch(2, 0)
+    frame.add_switch(2, 1)
+    assert len(frame) == 2
+    assert int(frame.data[0].type) == 142
+    assert int(frame.data[1].type) == 142
+
+
 def test_print_empty_frame(frame):
     print(frame)
 
