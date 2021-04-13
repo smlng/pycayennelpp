@@ -237,6 +237,14 @@ def test_add_power(frame):
     assert int(frame.data[1].type) == 128
 
 
+def test_add_distance(frame):
+    frame.add_distance(2, 1.2345)
+    frame.add_distance(3, 1234.5)
+    assert len(frame) == 2
+    assert int(frame.data[0].type) == 130
+    assert int(frame.data[1].type) == 130
+
+
 def test_add_humidity(frame):
     frame.add_humidity(2, 12.3)
     frame.add_humidity(3, 45.6)

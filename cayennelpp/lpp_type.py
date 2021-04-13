@@ -31,6 +31,7 @@ class LppType(object):
         122:    ('Load', [3], [1000], [True]),
         125:    ('Concentration', [2], [1], [False]),
         128:    ('Power', [2], [1], [False]),
+        130:    ('Distance', [4], [1000], [False]),
         133:    ('Unix Timestamp', [4], [1], [False]),
         134:    ('Gyrometer', [2, 2, 2], [100, 100, 100],
                  [True, True, True]),
