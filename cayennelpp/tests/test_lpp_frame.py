@@ -213,6 +213,14 @@ def test_add_percentage(frame):
     assert int(frame.data[1].type) == 120
 
 
+def test_add_altitude(frame):
+    frame.add_altitude(2, 4242)
+    frame.add_altitude(3, -4242)
+    assert len(frame) == 2
+    assert int(frame.data[0].type) == 121
+    assert int(frame.data[1].type) == 121
+
+
 def test_add_humidity(frame):
     frame.add_humidity(2, 12.3)
     frame.add_humidity(3, 45.6)

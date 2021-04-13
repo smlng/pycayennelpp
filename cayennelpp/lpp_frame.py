@@ -180,6 +180,11 @@ class LppFrame(object):
         percentage = LppData(channel, 120, (value, ))
         self.__add_data_item(percentage)
 
+    def add_altitude(self, channel, value):
+        """Create and add a altitude LppData item."""
+        altitude = LppData(channel, 121, (value, ))
+        self.__add_data_item(altitude)
+
     def add_load(self, channel, value):
         """Create and add a load sensor LppData item."""
         load = LppData(channel, 122, (value, ))
