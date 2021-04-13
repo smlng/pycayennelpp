@@ -305,6 +305,11 @@ def test_iterator(frame_hlt):
     assert counter == len(frame_hlt)
 
 
+def test_add_by_type(frame):
+    with pytest.raises(TypeError):
+        frame.add_by_type(0, 1, 42)
+
+
 def test_get_by_type(frame_hlt):
     h_list = frame_hlt.get_by_type(104)
     assert len(h_list) == 1
