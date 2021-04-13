@@ -27,6 +27,7 @@ class LppType(object):
         117:    ('Current', [2], [1000], [False]),
         118:    ('Frequency', [4], [1], [False]),
         120:    ('Percentage', [1], [1], [False]),
+        121:    ('Altitude', [2], [1], [True]),
         122:    ('Load', [3], [1000], [True]),
         133:    ('Unix Timestamp', [4], [1], [False]),
         134:    ('Gyrometer', [2, 2, 2], [100, 100, 100],
