@@ -190,6 +190,11 @@ class LppFrame(object):
         load = LppData(channel, 122, (value, ))
         self.__add_data_item(load)
 
+    def add_concentration(self, channel, value):
+        """Create and add a concentration LppData item."""
+        concentration = LppData(channel, 125, (value, ))
+        self.__add_data_item(concentration)
+
     def add_unix_time(self, channel, value):
         """Create and add a unix time sensor LppData item."""
         timestamp = LppData(channel, 133, (value, ))
