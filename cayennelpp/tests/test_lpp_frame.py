@@ -337,6 +337,7 @@ def test_get_by_name(frame_hlt):
     b_list = frame_hlt.get_by_name("Barometer")
     assert len(b_list) == 0
 
+
 def test_get_by_type_invalid(frame_hlt):
     p_list = frame_hlt.get_by_type(102)
     assert len(p_list) == 0
