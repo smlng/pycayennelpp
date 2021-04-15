@@ -99,11 +99,12 @@ class LppFrame(object):
 
     def get_by_type(self, type_):
         """Return sub list of data with items matching given type."""
-        return list(filter(lambda t: (int(t.type) == type_), self.data))
+        return [d for d in self.data if int(d.type) == type_]
 
     def get_by_name(self, name):
         """Return sub list of data with items matching given name."""
-        return list(filter(lambda t: (str(t.type).lower() == name.lower()), self.data))
+        name = name.strip().lower()
+        return [d for d in self.data if str(d.type).lower().startswith(name)]
 
     def add_by_type(self, type_, channel, value_tuple):
         """Generic helper to add LppDate to this LppFrame."""
