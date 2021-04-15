@@ -320,9 +320,22 @@ def test_get_by_type(frame_hlt):
     t_list = frame_hlt.get_by_type(103)
     assert len(t_list) == 1
     assert int(t_list[0].type) == 103
-    p_list = frame_hlt.get_by_type(102)
-    assert len(p_list) == 0
+    b_list = frame_hlt.get_by_type(102)
+    assert len(b_list) == 0
 
+
+def test_get_by_name(frame_hlt):
+    h_list = frame_hlt.get_by_name("Humidity")
+    assert len(h_list) == 1
+    assert int(h_list[0].type) == 104
+    l_list = frame_hlt.get_by_name("Load")
+    assert len(l_list) == 1
+    assert int(l_list[0].type) == 122
+    t_list = frame_hlt.get_by_name("Temperature")
+    assert len(t_list) == 1
+    assert int(t_list[0].type) == 103
+    b_list = frame_hlt.get_by_name("Barometer")
+    assert len(b_list) == 0
 
 def test_get_by_type_invalid(frame_hlt):
     p_list = frame_hlt.get_by_type(102)
