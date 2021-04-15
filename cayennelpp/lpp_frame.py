@@ -149,12 +149,12 @@ class LppFrame(object):
         self.add_by_type(113, channel, (x, y, z))
 
     def add_pressure(self, channel, value):
-        """Create and add a barometer sensor LppData item."""
-        self.add_by_type(115, channel, (value, ))
+        """Alias method for add_barometer()."""
+        self.add_barometer(channel, value)
 
     def add_barometer(self, channel, value):
-        """Alias method to Create and add a barometer sensor LppData item."""
-        self.add_pressure(channel, value)
+        """Create and add a barometer sensor LppData item."""
+        self.add_by_type(115, channel, (value, ))
 
     def add_voltage(self, channel, value):
         """Create and add a voltage sensor LppData item."""
@@ -213,7 +213,11 @@ class LppFrame(object):
         self.add_by_type(135, channel, (red, green, blue))
 
     def add_gps(self, channel, lat, lon, alt):
-        """Create and add a GPS sensor LppData item."""
+        """Alias method for add_location()."""
+        self.add_location(channel, lat, lon, alt)
+
+    def add_location(self, channel, lat, lon, alt):
+        """Create and add a location LppData item."""
         self.add_by_type(136, channel, (lat, lon, alt))
 
     def add_switch(self, channel, value):

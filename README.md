@@ -30,7 +30,7 @@ and data resolution.
 | Digital Output |   1 |    1 |   1 | False  | 1          |
 | Analog Input   |   2 |    2 |   1 | True   | 0.01       |
 | Analog Output  |   3 |    2 |   1 | True   | 0.01       |
-| Generic        | 100 |    4 |   1 | False  | 1          |
+| Generic Sensor | 100 |    4 |   1 | False  | 1          |
 | Illuminance    | 101 |    2 |   1 | False  | 1 Lux      |
 | Presence       | 102 |    1 |   1 | False  | 1          |
 | Temperature    | 103 |    2 |   1 | True   | 0.1°C      |
@@ -48,10 +48,10 @@ and data resolution.
 | Distance       | 130 |    4 |   1 | False  | 0.001 km   |
 | Energy         | 131 |    4 |   1 | False  | 0.001 kJ   |
 | Direction      | 132 |    2 |   1 | False  | 1 °        |
-| Unix Time      | 133 |    4 |   1 | False  | 1 s        |
+| Time           | 133 |    4 |   1 | False  | 1 s        |
 | Gyrometer      | 134 |    6 |   3 | True   | 0.01 °/s   |
 | Colour         | 135 |    3 |   3 | False  | 1 RGB      |
-| GPS Location   | 136 |    9 |   3 | True   | 0.00001 lat|
+| Location       | 136 |    9 |   3 | True   | 0.00001 lat|
 |                |     |      |     |        | 0.00001 lon|
 |                |     |      |     |        | 0.01 alt   |
 | Switch         | 142 |    1 |   1 | False  | 1 on/off   |
