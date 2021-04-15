@@ -68,6 +68,10 @@ class LppType(object):
         """Return LppType as integer, i.e. its numeric type."""
         return self.type
 
+    def __str__(self):
+        """Return LppType as string, i.e. its name."""
+        return self.name
+
     @staticmethod
     def __assert_data_tuple(data, num):
         """Internal helper to ensure data is a tuple of given `num` length."""

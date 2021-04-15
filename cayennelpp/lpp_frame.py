@@ -98,8 +98,12 @@ class LppFrame(object):
         return size
 
     def get_by_type(self, type_):
-        """Return sub list of LppFrame data with items matching given type."""
+        """Return sub list of data with items matching given type."""
         return list(filter(lambda t: (int(t.type) == type_), self.data))
+
+    def get_by_name(self, name):
+        """Return sub list of data with items matching given name."""
+        return list(filter(lambda t: (str(t.type).lower() == name.lower()), self.data))
 
     def add_by_type(self, type_, channel, value_tuple):
         """Generic helper to add LppDate to this LppFrame."""
