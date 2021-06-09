@@ -6,5 +6,6 @@ functionality for the CayenneLPP format, supporting many sensor types.
 
 from .lpp_data import LppData
 from .lpp_frame import LppFrame
+from .lpp_util import LppUtil
 
-__all__ = ['LppData', 'LppFrame']
+__all__ = ['LppData', 'LppFrame', 'LppUtil']
