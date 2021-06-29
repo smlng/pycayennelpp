@@ -1,6 +1,10 @@
 class LppType(object):
-    """
-    Cayenne LPP type object.
+    """Cayenne LPP type object.
+
+    The LppType provides a simple wrapper to all sensor types of
+    the Cayenne LPP standard (and beyond). It ensures proper
+    encoding and decoding with sensible checks. This class is for
+    internal use only and thus is not (directly) exposed.
 
     Attributes:
         type (int): LPP type ID number
@@ -113,7 +117,7 @@ class LppType(object):
 
     @staticmethod
     def __to_unsigned(val):
-        """Convert signed (2 complement) value to unsigned."""
+        """Convert signed (two's complement) value to unsigned."""
         if val < 0:
             val = ~(-val - 1)
         return val

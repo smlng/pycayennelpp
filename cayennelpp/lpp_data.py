@@ -2,8 +2,11 @@ from .lpp_type import LppType
 
 
 class LppData(object):
-    """
-    A LPP data object.
+    """A LPP data object.
+
+    A LppData contains all information related to a single sensor
+    value, i.e. its type, value, and the channel for multiplexing
+    various sensor devices with values of the same type.
 
     Attributes:
         chn (int):      data channel number

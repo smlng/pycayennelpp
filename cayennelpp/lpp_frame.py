@@ -2,8 +2,11 @@ from .lpp_data import LppData
 
 
 class LppFrame(object):
-    """
-    A LPP frame instance which can hold multiple LppData objects.
+    """A LPP frame instance.
+
+    A LppFrame can hold multiple LppData objects to be encoded or
+    decoded at once. It also provides convenient helper functions
+    to easily add sensor values of certain type.
 
     Attributes:
         data (list): a list of LppData objects
