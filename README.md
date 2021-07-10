@@ -127,6 +127,35 @@ frame = LppFrame().from_bytes(buffer)
 print(frame)
 ```
 
+***JSON Encoding***
+
+The LppUtil class provides helper function for proper JSON encoding of 
+PyCayenneLpp types, i.e. LppFrame, LppData and LppType.
+
+```python
+import json
+
+from cayennelpp import LppFrame, LppUtil
+
+# create empty frame
+frame = LppFrame()
+# add some sensor data
+frame.add_temperature(0, -1.2)
+frame.add_humidity(6, 34.5)
+# json encoding
+print(json.dumps(frame, default=LppUtil.json_encode, indent=2))
+```
+
+There are two wrapper functions to explicitly encode the LPP type as a 
+number or string, number being default for `LppUtil.json_encode` (see above):
+
+```python
+# type as number
+print(json.dumps(frame, default=LppUtil.json_encode_type_int, indent=2))
+# type as string
+print(json.dumps(frame, default=LppUtil.json_encode_type_str, indent=2))
+```
+
 ## Contributing
 
 Contributing to a free open source software project can take place in many
