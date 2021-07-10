@@ -15,7 +15,7 @@ class LppData(object):
     """
 
     def __init__(self, chn, type_, value):
-        """Create a LppData object with given attriubes."""
+        """Create a LppData object with given attributes."""
         self.channel = chn
         self.type = LppType.get_lpp_type(type_)
         if self.type is None:
