@@ -47,6 +47,10 @@ class LppData(object):
         return 'LppData(channel = {}, type = {}, value = {})'.format(
                 self.channel, self.type.name, str(self.value))
 
+    def to_bytes(self):
+        """Explicit wrapper for MicroPython support."""
+        return self.__bytes__()
+
     @classmethod
     def from_bytes(class_object, buf):
         """Parse a given byte string and return a LppData object."""

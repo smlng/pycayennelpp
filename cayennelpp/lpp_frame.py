@@ -46,7 +46,14 @@ class LppFrame(object):
         """Return this LppFrame object as a byte string."""
         buf = bytearray()
         for d in self._data:
-            buf = buf + bytes(d)
+            buf += bytes(d)
+        return bytes(buf)
+
+    def to_bytes(self):
+        """Return this LppFrame object as a byte string (for MicroPython)."""
+        buf = bytearray()
+        for d in self._data:
+            buf += d.to_bytes()
         return bytes(buf)
 
     @classmethod
