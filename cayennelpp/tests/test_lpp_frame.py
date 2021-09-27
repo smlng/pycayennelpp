@@ -82,22 +82,26 @@ def test_frame_from_bytes():
     buf = bytes([0x03, 0x67, 0x01, 0x10, 0x05, 0x67, 0x00, 0xff])
     frame = LppFrame.from_bytes(buf)
     assert buf == bytes(frame)
+    assert buf == frame.to_bytes()
     assert len(frame) == 2
     # 01 67 FF D7
     buf = bytes([0x01, 0x67, 0xFF, 0xD7])
     frame = LppFrame.from_bytes(buf)
     assert buf == bytes(frame)
+    assert buf == frame.to_bytes()
     assert len(frame) == 1
     # 06 71 04 D2 FB 2E 00 00
     buf = bytes([0x06, 0x71, 0x04, 0xD2, 0xFB, 0x2E, 0x00, 0x00])
     frame = LppFrame.from_bytes(buf)
     assert buf == bytes(frame)
+    assert buf == frame.to_bytes()
     assert len(frame) == 1
     # 01 88 06 76 5f f2 96 0a 00 03 e8
     buf = bytes([0x01, 0x88, 0x06, 0x76, 0x5f, 0xf2,
                  0x96, 0x0a, 0x00, 0x03, 0xe8])
     frame = LppFrame.from_bytes(buf)
     assert buf == bytes(frame)
+    assert buf == frame.to_bytes()
     assert len(frame) == 1
 
 
