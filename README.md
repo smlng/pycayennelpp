@@ -112,6 +112,10 @@ frame.add_humidity(6, 34.5)
 buffer = bytes(frame)
 ```
 
+**Note:** MicroPython does not support `bytes(frame)` utilising the internal 
+method `LppFrame.__bytes__(self)` (yet). 
+Hence, you need to use `LppFrame.to_bytes(self)` instead.
+
 ***Decoding***
 
 ```Python
