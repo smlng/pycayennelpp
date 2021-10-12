@@ -9,7 +9,7 @@ def readme():
 
 setup(
     name='micropython-pycayennelpp',
-    version='2.3.0',
+    version='2.4.0',
     description='Encoder and Decoder for CayenneLLP',
     long_description=readme(),
     long_description_content_type='text/markdown',
