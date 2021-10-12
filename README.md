@@ -59,11 +59,11 @@ and data resolution.
 ## Getting Started
 
 PyCayenneLPP does not have any external dependencies and only uses builtin
-functions and types of Python 3. It is compatible with all the latest and 
-officially supported Python versions 3.6 and above, though even Python 3.4 
+functions and types of Python 3. It is compatible with all the latest and
+officially supported Python versions 3.6 and above, though even Python 3.4
 will do.
 
-Since PyCayenneLPP 1.2.0 MicroPython is officially supported, and published 
+Since PyCayenneLPP 1.2.0 MicroPython is officially supported, and published
 as a separate package under `micropython-pycayennelpp`.
 
 ### Python 3 Prerequisites
@@ -112,8 +112,8 @@ frame.add_humidity(6, 34.5)
 buffer = bytes(frame)
 ```
 
-**Note:** MicroPython does not support `bytes(frame)` utilising the internal 
-method `LppFrame.__bytes__(self)` (yet). 
+**Note:** MicroPython does not support `bytes(frame)` utilising the internal
+method `LppFrame.__bytes__(self)` (yet).
 Hence, you need to use `LppFrame.to_bytes(self)` instead.
 
 ***Decoding***
@@ -133,7 +133,7 @@ print(frame)
 
 ***JSON Encoding***
 
-The LppUtil class provides helper function for proper JSON encoding of 
+The LppUtil class provides helper function for proper JSON encoding of
 PyCayenneLpp types, i.e. LppFrame, LppData and LppType.
 
 ```python
@@ -150,7 +150,7 @@ frame.add_humidity(6, 34.5)
 print(json.dumps(frame, default=LppUtil.json_encode, indent=2))
 ```
 
-There are two wrapper functions to explicitly encode the LPP type as a 
+There are two wrapper functions to explicitly encode the LPP type as a
 number or string, number being default for `LppUtil.json_encode` (see above):
 
 ```python
